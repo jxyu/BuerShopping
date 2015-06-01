@@ -7,6 +7,7 @@
 //
 
 #import "IndexViewController.h"
+#import "CommenDef.h"
 #import "AppDelegate.h"
 
 @interface IndexViewController ()
@@ -18,6 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    _ScrollView_backView.contentSize=CGSizeMake(SCREEN_WIDTH, 1000);
 }
 
 - (void)didReceiveMemoryWarning {

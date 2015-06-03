@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterViewController">
@@ -31,7 +31,7 @@
                                 <constraint firstAttribute="width" constant="51" id="V5A-97-o2a"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
@@ -69,13 +69,13 @@
                         </mask>
                         <mask key="constraints">
                             <exclude reference="943-hy-kYn"/>
-                            <exclude reference="HOS-mB-6Xl"/>
-                            <exclude reference="l15-tv-24R"/>
-                            <exclude reference="vFe-mE-kLW"/>
                             <exclude reference="Fs3-En-UMu"/>
                             <exclude reference="JDC-dR-pW4"/>
                             <exclude reference="SWE-8b-WiI"/>
                             <exclude reference="wrR-IQ-Zx7"/>
+                            <exclude reference="HOS-mB-6Xl"/>
+                            <exclude reference="l15-tv-24R"/>
+                            <exclude reference="vFe-mE-kLW"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -85,13 +85,13 @@
                         </mask>
                         <mask key="constraints">
                             <include reference="943-hy-kYn"/>
-                            <include reference="HOS-mB-6Xl"/>
-                            <include reference="l15-tv-24R"/>
-                            <include reference="vFe-mE-kLW"/>
                             <include reference="Fs3-En-UMu"/>
                             <include reference="JDC-dR-pW4"/>
                             <include reference="SWE-8b-WiI"/>
                             <include reference="wrR-IQ-Zx7"/>
+                            <include reference="HOS-mB-6Xl"/>
+                            <include reference="l15-tv-24R"/>
+                            <include reference="vFe-mE-kLW"/>
                         </mask>
                     </variation>
                 </view>
@@ -172,7 +172,7 @@
                                 <constraint firstAttribute="width" constant="51" id="yZP-ur-NIf"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
@@ -189,7 +189,7 @@
                             <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
                             <color key="backgroundColor" red="0.83529411760000005" green="0.83529411760000005" blue="0.83529411760000005" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                            <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                         </textField>
                     </subviews>
                     <color key="backgroundColor" red="0.83529411760000005" green="0.83529411760000005" blue="0.83529411760000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -284,20 +284,20 @@
                     <exclude reference="3AC-t3-0ub"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="Ci6-0b-I0V"/>
-                    <exclude reference="hfg-QV-rSO"/>
-                    <exclude reference="w6n-vN-0tB"/>
+                    <exclude reference="0ZY-Wb-sgH"/>
+                    <exclude reference="BbX-2o-iyA"/>
+                    <exclude reference="aHA-gO-ZXx"/>
+                    <exclude reference="Fw1-kC-iO0"/>
+                    <exclude reference="kNs-Oy-La9"/>
                     <exclude reference="CHG-e2-mfK"/>
                     <exclude reference="ikU-8d-J7t"/>
                     <exclude reference="pgA-gs-R34"/>
                     <exclude reference="gdg-ux-FBa"/>
                     <exclude reference="iaD-3v-1LR"/>
                     <exclude reference="kxl-I9-uQP"/>
-                    <exclude reference="Fw1-kC-iO0"/>
-                    <exclude reference="kNs-Oy-La9"/>
-                    <exclude reference="0ZY-Wb-sgH"/>
-                    <exclude reference="BbX-2o-iyA"/>
-                    <exclude reference="aHA-gO-ZXx"/>
+                    <exclude reference="Ci6-0b-I0V"/>
+                    <exclude reference="hfg-QV-rSO"/>
+                    <exclude reference="w6n-vN-0tB"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -309,20 +309,20 @@
                     <include reference="3AC-t3-0ub"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="Ci6-0b-I0V"/>
-                    <include reference="hfg-QV-rSO"/>
-                    <include reference="w6n-vN-0tB"/>
+                    <include reference="0ZY-Wb-sgH"/>
+                    <include reference="BbX-2o-iyA"/>
+                    <include reference="aHA-gO-ZXx"/>
+                    <include reference="Fw1-kC-iO0"/>
+                    <include reference="kNs-Oy-La9"/>
                     <include reference="CHG-e2-mfK"/>
                     <include reference="ikU-8d-J7t"/>
                     <include reference="pgA-gs-R34"/>
                     <include reference="gdg-ux-FBa"/>
                     <include reference="iaD-3v-1LR"/>
                     <include reference="kxl-I9-uQP"/>
-                    <include reference="Fw1-kC-iO0"/>
-                    <include reference="kNs-Oy-La9"/>
-                    <include reference="0ZY-Wb-sgH"/>
-                    <include reference="BbX-2o-iyA"/>
-                    <include reference="aHA-gO-ZXx"/>
+                    <include reference="Ci6-0b-I0V"/>
+                    <include reference="hfg-QV-rSO"/>
+                    <include reference="w6n-vN-0tB"/>
                 </mask>
             </variation>
         </view>

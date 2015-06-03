@@ -8,6 +8,10 @@
 
 #import "AppDelegate.h"
 #import "CommenDef.h"
+#import "DataProvider.h"
+
+#define appKey @"7bf8c19274e0"
+#define appSecret @"a9544d5cdd5854a62ba4f5978be3ef6f"
 
 @interface AppDelegate ()
 
@@ -19,6 +23,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    
+    /**
+     *  短信验证添加
+     */
+    [SMS_SDK registerApp:appKey withSecret:appSecret];
+    
+    
+    
+    /**
+     设置根VC
+     */
     firstCol=[[FirstScrollController alloc]init];
     _tabBarViewCol = [[CustomTabBarViewController alloc] init];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds] ];
@@ -35,6 +50,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeRootView) name:@"changeRootView" object:nil];
     
     [self.window makeKeyAndVisible];
+    
+    
+    
+    
     return YES;
 }
 
@@ -55,6 +74,17 @@
 -(CustomTabBarViewController *)getTabBar
 {
     return _tabBarViewCol;
+}
+
+/**
+ *  注册
+ *
+ *  @param prm 参数
+ */
+-(void)RegisterUserInfo:(id)prm
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider RegisterUserInfo:prm];
 }
 
 

@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseNavigationController.h"
+#import "SDCycleScrollView.h"
+#import "UIImageView+WebCache.h"
+#import "CycleScrollView.h"
 
-@interface IndexViewController : BaseNavigationController
-@property (weak, nonatomic) IBOutlet UIScrollView *ScrollView_backView;
-@property (weak, nonatomic) IBOutlet UIView *RoundImage;
-@property (weak, nonatomic) IBOutlet UIView *ClassifyView;
-@property (weak, nonatomic) IBOutlet UIView *ShowOrderView;
-@property (weak, nonatomic) IBOutlet UIView *SprciallOffer;
+@interface IndexViewController : BaseNavigationController <UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *TableView_BackView;
+
 
 @end

@@ -13,7 +13,12 @@
     id CallBackObject;
     NSString * callBackFunctionName;
 }
-
+/**
+ *  注册
+ *
+ *  @param prm 参数
+ */
+-(void)RegisterUserInfo:(id)prm;
 
 
 

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8026275E1B202723009E02D7 /* ResTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8026275C1B202723009E02D7 /* ResTableViewCell.m */; };
+		8026275F1B202723009E02D7 /* ResTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8026275D1B202723009E02D7 /* ResTableViewCell.xib */; };
 		803FCC491B1C44AF003A0D4C /* SDCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 803FCC3C1B1C44AF003A0D4C /* SDCollectionViewCell.m */; };
 		803FCC4A1B1C44AF003A0D4C /* SDCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 803FCC3E1B1C44AF003A0D4C /* SDCycleScrollView.m */; };
 		803FCC4B1B1C44AF003A0D4C /* TAAbstractDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 803FCC401B1C44AF003A0D4C /* TAAbstractDotView.m */; };
@@ -113,6 +115,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8026275B1B202723009E02D7 /* ResTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResTableViewCell.h; sourceTree = "<group>"; };
+		8026275C1B202723009E02D7 /* ResTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResTableViewCell.m; sourceTree = "<group>"; };
+		8026275D1B202723009E02D7 /* ResTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResTableViewCell.xib; sourceTree = "<group>"; };
 		803FCC3B1B1C44AF003A0D4C /* SDCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCollectionViewCell.h; sourceTree = "<group>"; };
 		803FCC3C1B1C44AF003A0D4C /* SDCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCollectionViewCell.m; sourceTree = "<group>"; };
 		803FCC3D1B1C44AF003A0D4C /* SDCycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCycleScrollView.h; sourceTree = "<group>"; };
@@ -467,6 +472,9 @@
 				80941DB01B1EE067007CA325 /* GoodsTableViewCell.h */,
 				80941DB11B1EE067007CA325 /* GoodsTableViewCell.m */,
 				80941DB21B1EE067007CA325 /* GoodsTableViewCell.xib */,
+				8026275B1B202723009E02D7 /* ResTableViewCell.h */,
+				8026275C1B202723009E02D7 /* ResTableViewCell.m */,
+				8026275D1B202723009E02D7 /* ResTableViewCell.xib */,
 			);
 			path = Index;
 			sourceTree = "<group>";
@@ -768,6 +776,7 @@
 				80F113C31B1DD33B00DFBB11 /* shouji@2x.png in Resources */,
 				807D3C871B1959FC00FBB530 /* ShoppingCar_icrn_unselected@2x.png in Resources */,
 				807D3C981B19921400FBB530 /* index_icon@2x.png in Resources */,
+				8026275F1B202723009E02D7 /* ResTableViewCell.xib in Resources */,
 				807D3CA71B199A5500FBB530 /* Mine_icon.png in Resources */,
 				80F113BD1B1DD33B00DFBB11 /* bangong@2x.png in Resources */,
 				80F113C21B1DD33B00DFBB11 /* shenghuo@2x.png in Resources */,
@@ -820,6 +829,7 @@
 				80941DB31B1EE067007CA325 /* GoodsTableViewCell.m in Sources */,
 				807D3CC21B19A7C200FBB530 /* AFURLConnectionOperation.m in Sources */,
 				80F113AD1B1D938000DFBB11 /* UIImage+MultiFormat.m in Sources */,
+				8026275E1B202723009E02D7 /* ResTableViewCell.m in Sources */,
 				807D3C201B194AFC00FBB530 /* ViewController.m in Sources */,
 				80F113A71B1D938000DFBB11 /* SDWebImageDownloader.m in Sources */,
 				807D3C6D1B1955EC00FBB530 /* UIImage+NSBundle.m in Sources */,

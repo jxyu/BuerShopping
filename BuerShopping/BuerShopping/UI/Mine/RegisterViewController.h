@@ -18,5 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *txt_PhoneNo;
 @property (weak, nonatomic) IBOutlet UITextField *txt_VerifyCode;
 @property (weak, nonatomic) IBOutlet UITextField *txt_pwd;
+@property(nonatomic,strong)NSString * viewTitle;
+@property(nonatomic)BOOL resetPwd;
 
 @end

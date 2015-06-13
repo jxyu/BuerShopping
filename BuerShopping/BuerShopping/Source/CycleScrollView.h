@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface CycleScrollView : UIView
 
 @property (nonatomic , readonly) UIScrollView *scrollView;

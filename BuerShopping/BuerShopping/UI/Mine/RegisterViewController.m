@@ -10,19 +10,20 @@
 #import <SMS_SDK/SMS_SDK.h>
 #import <SMS_SDK/CountryAndAreaCode.h>
 #import "DataProvider.h"
+#import "AppDelegate.h"
+#import "LoginViewController.h"
 
 
 @interface RegisterViewController ()
-
+@property(nonatomic,strong)LoginViewController *myLogin;
 @end
 
 @implementation RegisterViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTitle:@"注册"];
-//    [self addLeftButton:<#(NSString *)#>]
-    // Do any additional setup after loading the view from its nib.
+    [self setTitle:_viewTitle];
+    [self addLeftButton:@"Icon_Back@2x.png"];
     _FirstView.layer.masksToBounds=YES;
     _FirstView.layer.cornerRadius=6;
     _VerifyBackView.layer.masksToBounds=YES;
@@ -72,22 +73,47 @@
 -(void)SubmitInfoToReg
 {
     if (_txt_PhoneNo.text.length==11&&_txt_VerifyCode.text&&_txt_pwd.text) {
-        DataProvider * dataprovider=[[DataProvider alloc] init];
-        [dataprovider setDelegateObject:self setBackFunctionName:@"registerBackCall:"];
-        NSDictionary * prm=@{@"mobile":_txt_PhoneNo.text,@"password":[_txt_pwd.text stringByReplacingOccurrencesOfString:@" " withString:@""],@"verify_code":_txt_VerifyCode.text,@"client":@"ios"};
-        [dataprovider RegisterUserInfo:prm];
+        if (_resetPwd) {
+            DataProvider * dataprovider=[[DataProvider alloc] init];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"resetPWDBackCall:"];
+            NSDictionary * prm=@{@"mobile":_txt_PhoneNo.text,@"password":[_txt_pwd.text stringByReplacingOccurrencesOfString:@" " withString:@""],@"verify_code":_txt_VerifyCode.text,@"client":@"ios"};
+            [dataprovider ResetPwd:prm];
+        }
+        else
+        {
+            DataProvider * dataprovider=[[DataProvider alloc] init];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"registerBackCall:"];
+            NSDictionary * prm=@{@"mobile":_txt_PhoneNo.text,@"password":[_txt_pwd.text stringByReplacingOccurrencesOfString:@" " withString:@""],@"verify_code":_txt_VerifyCode.text,@"client":@"ios"};
+            [dataprovider RegisterUserInfo:prm];
+            
+        }
+    }
+}
+
+-(void)resetPWDBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    NSLog(@"%@",dict[@"datas"]);
+    if ([dict[@"datas"] isEqual:@"1"]) {
+        [self.navigationController popoverPresentationController];
     }
 }
 
 -(void)registerBackCall:(id)dict
 {
     NSLog(@"%@",dict);
+    if (dict[@"datas"][@"error"]==[NSNull null]) {
+        _myLogin=[[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:[NSBundle mainBundle]];
+        [self.navigationController pushViewController:_myLogin animated:YES];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] hiddenTabBar];
+}
 
 @end

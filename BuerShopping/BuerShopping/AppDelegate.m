@@ -86,6 +86,43 @@
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider RegisterUserInfo:prm];
 }
+/**
+ *  登录
+ *
+ *  @param mobel 手机号
+ *  @param pwd   密码
+ */
+-(void)Login:(NSString *)mobel andpwd:(NSString *)pwd
+{
+    DataProvider *dataprovider=[[DataProvider alloc] init];
+    [dataprovider Login:mobel andpwd:pwd];
+}
+/**
+ *  重置密码
+ *
+ *  @param prm <#prm description#>
+ */
+-(void)ResetPwd:(id)prm
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider ResetPwd:prm];
+}
+-(void)ChangeUserName:(NSString *)username andkey:(NSString *)key
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider ChangeUserName:username andkey:key];
+}
+
+-(void)UpLoadImage:(NSString *)imagePath andkey:(NSString *)key
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider UpLoadImage:imagePath andkey:key];
+}
+-(void)SaveAvatarWithAvatarName:(NSString *)avatarname andkey:(NSString *)key
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider SaveAvatarWithAvatarName:avatarname andkey:key];
+}
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

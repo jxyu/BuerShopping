@@ -12,7 +12,7 @@
 #import "UIImageView+WebCache.h"
 #import "CycleScrollView.h"
 
-@interface IndexViewController : BaseNavigationController <UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
+@interface IndexViewController : BaseNavigationController <UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *TableView_BackView;
 
 

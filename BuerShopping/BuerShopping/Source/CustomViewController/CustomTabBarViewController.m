@@ -26,6 +26,7 @@
     NSArray *_arrayImages;
     UIButton *_btnSelected;
     UIView *_tabBarBG;
+    UIButton *btnTabBar;
 }
 @end
 
@@ -51,6 +52,7 @@
     _tabBarBG = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - TabBar_HEIGHT, SCREEN_WIDTH, TabBar_HEIGHT)];
       _tabBarBG.backgroundColor = [UIColor colorWithRed:0.99 green:0.99 blue:0.99 alpha:1];
     
+//    UIView *tabbar_headview=[[UIView alloc] initWithFrame:CGRectMake(0, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)]
     //_tabBarBG.backgroundColor=[UIColor clearColor];
     //_tabBarBG.alpha=0.9;
     [self.view addSubview:_tabBarBG];
@@ -64,7 +66,7 @@
 	{
         if (i==2) {
             CGRect frame=CGRectMake(i * tabBarWitdh, SCREEN_HEIGHT -tabBarWitdh, tabBarWitdh, tabBarWitdh);
-            UIButton * btnTabBar = [[UIButton alloc] initWithFrame:frame];
+            btnTabBar = [[UIButton alloc] initWithFrame:frame];
             [btnTabBar setImage: [UIImage imageWithBundleName:[arrayImages objectAtIndex:i]] forState:UIControlStateNormal];
             [btnTabBar setImage:[UIImage imageWithBundleName:[arrayImages_H objectAtIndex:i]]forState:UIControlStateSelected] ;
             btnTabBar.tag = i + 1000;
@@ -74,12 +76,12 @@
         else
         {
             CGRect frame=CGRectMake(i * tabBarWitdh, 0, tabBarWitdh, 49);
-            UIButton * btnTabBar = [[UIButton alloc] initWithFrame:frame];
-            [btnTabBar setImage: [UIImage imageWithBundleName:[arrayImages objectAtIndex:i]] forState:UIControlStateNormal];
-            [btnTabBar setImage:[UIImage imageWithBundleName:[arrayImages_H objectAtIndex:i]]forState:UIControlStateSelected] ;
-            btnTabBar.tag = i + 1000;
-            [btnTabBar addTarget:self action:@selector(onTabButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-            [_tabBarBG addSubview:btnTabBar];
+            UIButton * btnTabBar1 = [[UIButton alloc] initWithFrame:frame];
+            [btnTabBar1 setImage: [UIImage imageWithBundleName:[arrayImages objectAtIndex:i]] forState:UIControlStateNormal];
+            [btnTabBar1 setImage:[UIImage imageWithBundleName:[arrayImages_H objectAtIndex:i]]forState:UIControlStateSelected] ;
+            btnTabBar1.tag = i + 1000;
+            [btnTabBar1 addTarget:self action:@selector(onTabButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [_tabBarBG addSubview:btnTabBar1];
         }
 		
         
@@ -173,6 +175,7 @@
 {
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:0.3];
+    btnTabBar.frame=CGRectMake(btnTabBar.frame.origin.x, SCREEN_HEIGHT, btnTabBar.frame.size.width, btnTabBar.frame.size.height);
 	_tabBarBG.frame=CGRectMake(0, SCREEN_HEIGHT, 320, _tabBarBG.frame.size.height);
 	[UIView commitAnimations];
 	
@@ -182,6 +185,7 @@
 {
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:0.3];
+    btnTabBar.frame=CGRectMake(btnTabBar.frame.origin.x, SCREEN_HEIGHT-btnTabBar.frame.size.height, btnTabBar.frame.size.width, btnTabBar.frame.size.height);
 	_tabBarBG.frame=CGRectMake(0, SCREEN_HEIGHT - TabBar_HEIGHT, SCREEN_WIDTH, _tabBarBG.frame.size.height);
 	[UIView commitAnimations];
 }

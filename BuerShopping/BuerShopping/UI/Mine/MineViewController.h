@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "BaseNavigationController.h"
 #import "RegisterViewController.h"
+#import "LoginViewController.h"
+#import "SetViewController.h"
 
-@interface MineViewController : BaseNavigationController
+@interface MineViewController : BaseNavigationController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 @property(nonatomic,strong)RegisterViewController * myRegister;
-
+@property (weak, nonatomic) IBOutlet UITableView *TableView_Mine;
+@property(nonatomic,strong)LoginViewController *myLogin;
+@property(nonatomic,strong)SetViewController * mySet;
 @end

@@ -18,6 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    _lblTitle.text=@"购物车";
 }
 
 - (void)didReceiveMemoryWarning {

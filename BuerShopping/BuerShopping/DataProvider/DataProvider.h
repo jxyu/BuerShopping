@@ -19,9 +19,39 @@
  *  @param prm 参数
  */
 -(void)RegisterUserInfo:(id)prm;
-
-
-
+/**
+ *  登录
+ *
+ *  @param mobel 手机号
+ *  @param pwd   密码
+ */
+-(void)Login:(NSString *)mobel andpwd:(NSString *)pwd;
+/**
+ *  重置密码
+ *
+ *  @param prm <#prm description#>
+ */
+-(void)ResetPwd:(id)prm;
+/**
+ *  修改昵称
+ *
+ *  @param username 昵称
+ *  @param key      登录令牌
+ */
+-(void)ChangeUserName:(NSString *)username andkey:(NSString *)key;
+/**
+ *  上传头像
+ *
+ *  @param imagePath 图片在沙盒的路径
+ */
+-(void)UpLoadImage:(NSString *)imagePath andkey:(NSString *)key;
+/**
+ *  保存头像
+ *
+ *  @param avatarname 上传成功后返回的
+ *  @param key        key
+ */
+-(void)SaveAvatarWithAvatarName:(NSString *)avatarname andkey:(NSString *)key;
 
 
 

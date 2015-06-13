@@ -63,7 +63,7 @@
     _imgLeft.center = CGPointMake(_imgLeft.center.x, _lblTitle.center.y);
     [self.view addSubview:_imgLeft];
     
-    _lblLeft = [[UILabel alloc] initWithFrame:CGRectMake(0,_orginY+NavigationBar_HEIGHT-10 ,60,40)];
+    _lblLeft = [[UILabel alloc] initWithFrame:CGRectMake(0,_orginY ,60,40)];
     
     _lblLeft.numberOfLines = 0;
     _lblLeft.textAlignment=NSTextAlignmentCenter;
@@ -86,7 +86,7 @@
     _imgRight.center = CGPointMake(_imgRight.center.x, _imgLeft.center.y);
     [self.view addSubview:_imgRight];
     
-    _lblRight = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60-10 ,_orginY+NavigationBar_HEIGHT-10 ,60,40)];
+    _lblRight = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60-10 ,_orginY ,60,40)];
     
     _lblRight.numberOfLines = 0;
     _lblRight.textAlignment=NSTextAlignmentCenter;

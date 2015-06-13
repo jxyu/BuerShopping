@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "GoodsTableViewCell.h"
 #import "ResTableViewCell.h"
+#import "CCLocationManager.h"
 
 
 @interface IndexViewController ()
@@ -20,20 +21,63 @@
 
 @implementation IndexViewController
 {
+    UITextField * txt_searchtext;
+    UIButton * btn_select;
     UITableView * tableView_GessYouLike;
     UITableView * tableView_GoodResEveryday;
+    NSArray* selectArray;
+    UIView * select_Backview;
+    BOOL isSelectViewShow;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    _lblTitle.text=@"首页";
+    isSelectViewShow=NO;
     [self initView];
-    
-    
 }
 
 -(void)initView
 {
+    /**********************************head搜索栏开始***********************************/
+    selectArray=@[@"宝贝",@"店铺"];
+    [[CCLocationManager shareLocation] getCity:^(NSString *addressString) {
+        NSArray *array = [addressString componentsSeparatedByString:@"省"]; //从字符A中分隔成2个元素的数组
+    [self addLeftbuttontitle:[array[1] substringWithRange:NSMakeRange(0, 3)]];
+        _lblLeft.font=[UIFont systemFontOfSize:13];
+        UIImageView * img_icon_down=[[UIImageView alloc] initWithFrame:CGRectMake(_btnLeft.frame.size.width-8, 18, 8, 5)];
+        img_icon_down.image=[UIImage imageNamed:@"menu_down"];
+        [_btnLeft addSubview:img_icon_down];
+    }];
+    
+    //增加监听，当键盘出现或改变时收出消息
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    UIView * BackView_Serch=[[UIView alloc] initWithFrame:CGRectMake(_btnLeft.frame.size.width+_btnLeft.frame.origin.x+10, 18, SCREEN_WIDTH-_btnLeft.frame.size.width-_btnLeft.frame.origin.x-22, 40)];
+    BackView_Serch.layer.masksToBounds=YES;
+    BackView_Serch.layer.cornerRadius=3;
+    BackView_Serch.backgroundColor=[UIColor whiteColor];
+    btn_select=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
+    [btn_select setTitle:selectArray[0] forState:UIControlStateNormal];
+    btn_select.titleLabel.font=[UIFont systemFontOfSize:15];
+    [btn_select setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn_select addTarget:self action:@selector(changeSelectToSearch:) forControlEvents:UIControlEventTouchUpInside];
+    [BackView_Serch addSubview:btn_select];
+    UIImageView * img_down=[[UIImageView alloc] initWithFrame:CGRectMake(btn_select.frame.size.width-10, 16, 10, 8)];
+    img_down.image=[UIImage imageNamed:@"select_down"];
+    [btn_select addSubview:img_down];
+    txt_searchtext=[[UITextField alloc] initWithFrame:CGRectMake(btn_select.frame.origin.x+btn_select.frame.size.width+5, 8, BackView_Serch.frame.size.width-btn_select.frame.origin.x-btn_select.frame.size.width, 30)];
+    txt_searchtext.placeholder=@"搜索附近商品、商铺";
+    [txt_searchtext setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
+    [BackView_Serch addSubview:txt_searchtext];
+    txt_searchtext.delegate=self;
+    [self.view addSubview:BackView_Serch];
+     /**********************************head搜索栏结束***********************************/
+    
+    
     
     _TableView_BackView.delegate=self;
     _TableView_BackView.dataSource=self;
@@ -108,6 +152,69 @@
     
 }
 
+-(void)changeSelectToSearch:(UIButton *)sender
+{
+    if (!isSelectViewShow) {
+        CGFloat x=sender.superview.frame.origin.x;
+        select_Backview=[[UIView alloc] initWithFrame:CGRectMake(x, 50, 80, 90)];
+        UIImageView * img_backimage=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, select_Backview.frame.size.width, select_Backview.frame.size.width)];
+        img_backimage.image=[UIImage imageNamed:@"Select_BackImage"];
+        [select_Backview addSubview:img_backimage];
+        UIButton * btn_baobei=[[UIButton alloc] initWithFrame:CGRectMake(0, 10, select_Backview.frame.size.width, 35)];
+        [btn_baobei setImage:[UIImage imageNamed:@"icon_baobei"] forState:UIControlStateNormal];
+        btn_baobei.imageView.frame=CGRectMake(5, 10, 20, 20);
+        btn_baobei.titleLabel.frame=CGRectMake(btn_baobei.imageView.frame.origin.x+btn_baobei.imageView.frame.size.width+20, 10, 40, 20);
+        btn_baobei.titleLabel.font=[UIFont systemFontOfSize:15];
+        btn_baobei.tag=0;
+        [btn_baobei setTitle:@"   宝贝" forState:UIControlStateNormal];
+        [btn_baobei addTarget:self action:@selector(selectChangeToSearch:) forControlEvents:UIControlEventTouchUpInside];
+        [select_Backview addSubview:btn_baobei];
+        UIButton * btn_dianpu=[[UIButton alloc] initWithFrame:CGRectMake(0, btn_baobei.frame.origin.y+btn_baobei.frame.size.height, select_Backview.frame.size.width, 35)];
+        btn_dianpu.imageView.frame=CGRectMake(5, 10, 20, 20);
+        btn_dianpu.titleLabel.frame=CGRectMake(btn_dianpu.imageView.frame.origin.x+btn_dianpu.imageView.frame.size.width+20, 10, 40, 20);
+        btn_dianpu.titleLabel.font=[UIFont systemFontOfSize:15];
+        btn_dianpu.tag=1;
+        [btn_dianpu setImage:[UIImage imageNamed:@"icon_dianpu"] forState:UIControlStateNormal];
+        [btn_dianpu setTitle:@"   店铺" forState:UIControlStateNormal];
+        [btn_dianpu addTarget:self action:@selector(selectChangeToSearch:) forControlEvents:UIControlEventTouchUpInside];
+        [select_Backview addSubview:btn_dianpu];
+        [self.view addSubview:select_Backview];
+        isSelectViewShow=YES;
+    }
+    else
+    {
+        [select_Backview removeFromSuperview];
+        isSelectViewShow=NO;
+    }
+    
+}
+-(void)selectChangeToSearch:(UIButton *)sender
+{
+    [btn_select setTitle:selectArray[sender.tag] forState:UIControlStateNormal];
+    [select_Backview removeFromSuperview];
+}
+
+
+//当键盘出现或改变时调用
+- (void)keyboardWillShow:(NSNotification *)aNotification
+{
+    //获取键盘的高度
+    NSDictionary *userInfo = [aNotification userInfo];
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [aValue CGRectValue];
+    int height = keyboardRect.size.height;
+    UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64-height)];
+    [btn_zhezhao addTarget:self action:@selector(btn_zhezhaoClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:btn_zhezhao];
+}
+
+-(void)btn_zhezhaoClick:(UIButton *)sender
+{
+    [txt_searchtext resignFirstResponder];
+    [sender removeFromSuperview];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -134,7 +241,7 @@
                 lbl_moreSpecialprice.textAlignment=NSTextAlignmentRight;
                 lbl_moreSpecialprice.textColor=[UIColor colorWithRed:183/255.0 green:183/255.0 blue:183/255.0 alpha:1.0];
                 [BackView_SpecialPrice addSubview:lbl_moreSpecialprice];
-                UIImageView * img_go=[[UIImageView alloc] initWithFrame:CGRectMake(lbl_moreSpecialprice.frame.origin.x+lbl_moreSpecialprice.frame.size.width+3, 7, 8, 16)];
+                UIImageView * img_go=[[UIImageView alloc] initWithFrame:CGRectMake(lbl_moreSpecialprice.frame.origin.x+lbl_moreSpecialprice.frame.size.width+3, 9, 7, 12)];
                 img_go.image=[UIImage imageNamed:@"index_go"];
                 [BackView_SpecialPrice addSubview:img_go];
                 UIButton * btn_morespecialprice=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_SpecialPrice.frame.size.width, 30)];
@@ -156,7 +263,7 @@
                 lbl_moreSpecialprice.font=[UIFont systemFontOfSize:13];
                 lbl_moreSpecialprice.textAlignment=NSTextAlignmentRight;
                 [BackView_SpecialPrice addSubview:lbl_moreSpecialprice];
-                UIImageView * img_go=[[UIImageView alloc] initWithFrame:CGRectMake(lbl_moreSpecialprice.frame.origin.x+lbl_moreSpecialprice.frame.size.width+3, 7, 8, 16)];
+                UIImageView * img_go=[[UIImageView alloc] initWithFrame:CGRectMake(lbl_moreSpecialprice.frame.origin.x+lbl_moreSpecialprice.frame.size.width+3, 9, 7, 12)];
                 img_go.image=[UIImage imageNamed:@"index_go"];
                 [BackView_SpecialPrice addSubview:img_go];
                 UIButton * btn_morespecialprice=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_SpecialPrice.frame.size.width, 30)];
@@ -177,7 +284,7 @@
                 lbl_moreSpecialprice.font=[UIFont systemFontOfSize:13];
                 lbl_moreSpecialprice.textAlignment=NSTextAlignmentRight;
                 [BackView_SpecialPrice addSubview:lbl_moreSpecialprice];
-                UIImageView * img_go=[[UIImageView alloc] initWithFrame:CGRectMake(lbl_moreSpecialprice.frame.origin.x+lbl_moreSpecialprice.frame.size.width+3, 7, 8, 16)];
+                UIImageView * img_go=[[UIImageView alloc] initWithFrame:CGRectMake(lbl_moreSpecialprice.frame.origin.x+lbl_moreSpecialprice.frame.size.width+3, 9, 7, 12)];
                 img_go.image=[UIImage imageNamed:@"index_go"];
                 [BackView_SpecialPrice addSubview:img_go];
                 UIButton * btn_morespecialprice=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_SpecialPrice.frame.size.width, 30)];
@@ -199,7 +306,7 @@
                 lbl_moreSpecialprice.font=[UIFont systemFontOfSize:13];
                 lbl_moreSpecialprice.textAlignment=NSTextAlignmentRight;
                 [BackView_SpecialPrice addSubview:lbl_moreSpecialprice];
-                UIImageView * img_go=[[UIImageView alloc] initWithFrame:CGRectMake(lbl_moreSpecialprice.frame.origin.x+lbl_moreSpecialprice.frame.size.width+3, 7, 8, 16)];
+                UIImageView * img_go=[[UIImageView alloc] initWithFrame:CGRectMake(lbl_moreSpecialprice.frame.origin.x+lbl_moreSpecialprice.frame.size.width+3, 9, 7, 12)];
                 img_go.image=[UIImage imageNamed:@"index_go"];
                 [BackView_SpecialPrice addSubview:img_go];
                 UIButton * btn_morespecialprice=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_SpecialPrice.frame.size.width, 30)];
@@ -287,12 +394,14 @@
             UILabel * lbl_goodName=[[UILabel alloc] initWithFrame:CGRectMake(img_Specialprice.frame.origin.x+img_Specialprice.frame.size.width+10, 30, 150, 20)];
             lbl_goodName.text=@"产品名称";
             [BackView_Specialprice addSubview:lbl_goodName];
-            UITextView * txt_goodDetial=[[UITextView alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, lbl_goodName.frame.origin.y+lbl_goodName.frame.size.height+4, SCREEN_WIDTH-img_Specialprice.frame.origin.x-img_Specialprice.frame.size.width-40, 40)];
-            txt_goodDetial.text=@"产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介";
-            txt_goodDetial.scrollEnabled=YES;
-            txt_goodDetial.editable=NO;
-            [BackView_Specialprice addSubview:txt_goodDetial];
-            UILabel * lbl_priceNow=[[UILabel alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, txt_goodDetial.frame.origin.y+txt_goodDetial.frame.size.height+4, 60, 20)];
+            
+            UILabel * lbl_GoodDetial=[[UILabel alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, lbl_goodName.frame.origin.y+lbl_goodName.frame.size.height+4, SCREEN_WIDTH-img_Specialprice.frame.origin.x-img_Specialprice.frame.size.width-40, 40)];
+            lbl_GoodDetial.text=@"产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介";
+            lbl_GoodDetial.textColor=[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0];
+            lbl_GoodDetial.numberOfLines=2;
+            lbl_GoodDetial.font=[UIFont systemFontOfSize:14];
+            [BackView_Specialprice addSubview:lbl_GoodDetial];
+            UILabel * lbl_priceNow=[[UILabel alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, lbl_GoodDetial.frame.origin.y+lbl_GoodDetial.frame.size.height+4, 60, 20)];
             lbl_priceNow.text=@"¥88";
             lbl_priceNow.textColor=[UIColor redColor];
             [BackView_Specialprice addSubview:lbl_priceNow];
@@ -323,7 +432,7 @@
                 [item addSubview:lbl_niceName];
                 UIView * BackView_OrderDetial=[[UIView alloc] initWithFrame:CGRectMake(0, img_head.frame.origin.y+img_head.frame.size.height+10, item.frame.size.width, 90)];
                 BackView_OrderDetial.backgroundColor=[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0];
-                UIImageView * img_orderImg=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+                UIImageView * img_orderImg=[[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 60, 60)];
                 [img_orderImg sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"muying"]];
                 [BackView_OrderDetial addSubview:img_orderImg];
                 UILabel * lbl_orderTitle=[[UILabel alloc] initWithFrame:CGRectMake(img_orderImg.frame.size.width+10, 10, BackView_OrderDetial.frame.size.width-100, 18)];
@@ -334,6 +443,7 @@
                 lbl_OrderDetial.numberOfLines=2;
                 lbl_OrderDetial.text=@"到了旷古绝今反对设立科技发动机范德雷克撒娇说的对是非得失了空间的索科洛夫就阿萨德飞";
                 [lbl_OrderDetial setLineBreakMode:NSLineBreakByWordWrapping];
+                lbl_OrderDetial.font=[UIFont systemFontOfSize:14];
                 lbl_OrderDetial.textColor=[UIColor colorWithRed:164/255.0 green:164/255.0 blue:164/255.0 alpha:1.0];
                 [BackView_OrderDetial addSubview:lbl_OrderDetial];
                 UIButton * btn_dianzan=[[UIButton alloc] initWithFrame:CGRectMake(lbl_OrderDetial.frame.origin.x, lbl_OrderDetial.frame.origin.y+lbl_OrderDetial.frame.size.height+3, 40, 15)];

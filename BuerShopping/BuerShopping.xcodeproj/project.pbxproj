@@ -76,6 +76,19 @@
 		807D3CC41B19A7C200FBB530 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 807D3CBA1B19A7C200FBB530 /* AFURLResponseSerialization.m */; };
 		807D3CC51B19A7C200FBB530 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 807D3CBC1B19A7C200FBB530 /* AFURLSessionManager.m */; };
 		807D3CC81B19A80800FBB530 /* DataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 807D3CC71B19A80800FBB530 /* DataProvider.m */; };
+		808293AA1B2FA59B0050F268 /* DuihuanDetialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808293A81B2FA59B0050F268 /* DuihuanDetialViewController.m */; };
+		808293AB1B2FA59B0050F268 /* DuihuanDetialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 808293A91B2FA59B0050F268 /* DuihuanDetialViewController.xib */; };
+		808293AD1B2FA8C20050F268 /* add_Address_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 808293AC1B2FA8C20050F268 /* add_Address_icon@2x.png */; };
+		808293B01B2FC75F0050F268 /* AddressManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808293AF1B2FC75F0050F268 /* AddressManageViewController.m */; };
+		808293B41B2FCCBF0050F268 /* AddressCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 808293B21B2FCCBF0050F268 /* AddressCellTableViewCell.m */; };
+		808293B51B2FCCBF0050F268 /* AddressCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 808293B31B2FCCBF0050F268 /* AddressCellTableViewCell.xib */; };
+		808293B81B2FCF860050F268 /* addres_isdefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 808293B61B2FCF860050F268 /* addres_isdefault.png */; };
+		808293B91B2FCF860050F268 /* address_isnotdefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 808293B71B2FCF860050F268 /* address_isnotdefault.png */; };
+		808293BC1B2FFB080050F268 /* AddaddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808293BB1B2FFB080050F268 /* AddaddressViewController.m */; };
+		8083CE611B2E56DA0055E11F /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8083CE601B2E56DA0055E11F /* HttpRequest.m */; };
+		8083CE641B2E69BA0055E11F /* JiFenShangChengViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8083CE631B2E69BA0055E11F /* JiFenShangChengViewController.m */; };
+		8083CE681B2E6EBC0055E11F /* JiFenCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8083CE661B2E6EBC0055E11F /* JiFenCellTableViewCell.m */; };
+		8083CE691B2E6EBC0055E11F /* JiFenCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8083CE671B2E6EBC0055E11F /* JiFenCellTableViewCell.xib */; };
 		809211371B27D03900A37949 /* my_title_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 809211361B27D03900A37949 /* my_title_bg@2x.png */; };
 		809211391B27D06800A37949 /* head_icon_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 809211381B27D06800A37949 /* head_icon_placeholder@2x.png */; };
 		8092113B1B27D44500A37949 /* showorder_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8092113A1B27D44500A37949 /* showorder_icon@2x.png */; };
@@ -254,6 +267,26 @@
 		807D3CBC1B19A7C200FBB530 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		807D3CC61B19A80800FBB530 /* DataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataProvider.h; sourceTree = "<group>"; };
 		807D3CC71B19A80800FBB530 /* DataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataProvider.m; sourceTree = "<group>"; };
+		808293A71B2FA59B0050F268 /* DuihuanDetialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuihuanDetialViewController.h; sourceTree = "<group>"; };
+		808293A81B2FA59B0050F268 /* DuihuanDetialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuihuanDetialViewController.m; sourceTree = "<group>"; };
+		808293A91B2FA59B0050F268 /* DuihuanDetialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DuihuanDetialViewController.xib; sourceTree = "<group>"; };
+		808293AC1B2FA8C20050F268 /* add_Address_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_Address_icon@2x.png"; sourceTree = "<group>"; };
+		808293AE1B2FC75F0050F268 /* AddressManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressManageViewController.h; sourceTree = "<group>"; };
+		808293AF1B2FC75F0050F268 /* AddressManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressManageViewController.m; sourceTree = "<group>"; };
+		808293B11B2FCCBF0050F268 /* AddressCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressCellTableViewCell.h; sourceTree = "<group>"; };
+		808293B21B2FCCBF0050F268 /* AddressCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressCellTableViewCell.m; sourceTree = "<group>"; };
+		808293B31B2FCCBF0050F268 /* AddressCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressCellTableViewCell.xib; sourceTree = "<group>"; };
+		808293B61B2FCF860050F268 /* addres_isdefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addres_isdefault.png; sourceTree = "<group>"; };
+		808293B71B2FCF860050F268 /* address_isnotdefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address_isnotdefault.png; sourceTree = "<group>"; };
+		808293BA1B2FFB080050F268 /* AddaddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddaddressViewController.h; sourceTree = "<group>"; };
+		808293BB1B2FFB080050F268 /* AddaddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddaddressViewController.m; sourceTree = "<group>"; };
+		8083CE5F1B2E56DA0055E11F /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
+		8083CE601B2E56DA0055E11F /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
+		8083CE621B2E69BA0055E11F /* JiFenShangChengViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JiFenShangChengViewController.h; sourceTree = "<group>"; };
+		8083CE631B2E69BA0055E11F /* JiFenShangChengViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JiFenShangChengViewController.m; sourceTree = "<group>"; };
+		8083CE651B2E6EBC0055E11F /* JiFenCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JiFenCellTableViewCell.h; sourceTree = "<group>"; };
+		8083CE661B2E6EBC0055E11F /* JiFenCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JiFenCellTableViewCell.m; sourceTree = "<group>"; };
+		8083CE671B2E6EBC0055E11F /* JiFenCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JiFenCellTableViewCell.xib; sourceTree = "<group>"; };
 		809211361B27D03900A37949 /* my_title_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_title_bg@2x.png"; sourceTree = "<group>"; };
 		809211381B27D06800A37949 /* head_icon_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "head_icon_placeholder@2x.png"; sourceTree = "<group>"; };
 		8092113A1B27D44500A37949 /* showorder_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "showorder_icon@2x.png"; sourceTree = "<group>"; };
@@ -596,6 +629,21 @@
 				80EB67601B2AB7B5000B4BC8 /* SetViewController.h */,
 				80EB67611B2AB7B5000B4BC8 /* SetViewController.m */,
 				80EB67621B2AB7B5000B4BC8 /* SetViewController.xib */,
+				8083CE621B2E69BA0055E11F /* JiFenShangChengViewController.h */,
+				8083CE631B2E69BA0055E11F /* JiFenShangChengViewController.m */,
+				8083CE651B2E6EBC0055E11F /* JiFenCellTableViewCell.h */,
+				8083CE661B2E6EBC0055E11F /* JiFenCellTableViewCell.m */,
+				8083CE671B2E6EBC0055E11F /* JiFenCellTableViewCell.xib */,
+				808293A71B2FA59B0050F268 /* DuihuanDetialViewController.h */,
+				808293A81B2FA59B0050F268 /* DuihuanDetialViewController.m */,
+				808293A91B2FA59B0050F268 /* DuihuanDetialViewController.xib */,
+				808293AE1B2FC75F0050F268 /* AddressManageViewController.h */,
+				808293AF1B2FC75F0050F268 /* AddressManageViewController.m */,
+				808293B11B2FCCBF0050F268 /* AddressCellTableViewCell.h */,
+				808293B21B2FCCBF0050F268 /* AddressCellTableViewCell.m */,
+				808293B31B2FCCBF0050F268 /* AddressCellTableViewCell.xib */,
+				808293BA1B2FFB080050F268 /* AddaddressViewController.h */,
+				808293BB1B2FFB080050F268 /* AddaddressViewController.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -698,6 +746,9 @@
 		807D3C731B1956EB00FBB530 /* Img_Mine */ = {
 			isa = PBXGroup;
 			children = (
+				808293B61B2FCF860050F268 /* addres_isdefault.png */,
+				808293B71B2FCF860050F268 /* address_isnotdefault.png */,
+				808293AC1B2FA8C20050F268 /* add_Address_icon@2x.png */,
 				8092EEB71B292AA800247599 /* address_icon@2x.png */,
 				8092EEB81B292AA800247599 /* first_icon@2x.png */,
 				8092EEB91B292AA800247599 /* fourth_icon@2x.png */,
@@ -746,6 +797,8 @@
 			children = (
 				809425FA1B2C16ED00DFEDF7 /* VPImageCropperViewController.h */,
 				809425FB1B2C16ED00DFEDF7 /* VPImageCropperViewController.m */,
+				8083CE5F1B2E56DA0055E11F /* HttpRequest.h */,
+				8083CE601B2E56DA0055E11F /* HttpRequest.m */,
 			);
 			name = UpLoadImage;
 			path = ../../../../jxyu/barGuoTakeOutForIOS/BGTakeOut/BGTakeOut/Source/UpLoadImage;
@@ -880,15 +933,18 @@
 				807D3C991B19921400FBB530 /* Mine_icon_gray@2x.png in Resources */,
 				8092EEC41B292AA800247599 /* Mine_go@2x.png in Resources */,
 				80941DBE1B1EF824007CA325 /* dianzan@2x.png in Resources */,
+				8083CE691B2E6EBC0055E11F /* JiFenCellTableViewCell.xib in Resources */,
 				80941DBF1B1EF824007CA325 /* pinglun@2x.png in Resources */,
 				800B28B71B26E3B700D8433C /* icon_dianpu@2x.png in Resources */,
 				8092EEC71B292AA800247599 /* shoucang_icon@2x.png in Resources */,
 				807D3C5B1B19549300FBB530 /* ShoppingCarViewController.xib in Resources */,
+				808293AB1B2FA59B0050F268 /* DuihuanDetialViewController.xib in Resources */,
 				807D3C601B1954AE00FBB530 /* ClassifyViewController.xib in Resources */,
 				8092EECF1B2979D000247599 /* UserInfo.plist in Resources */,
 				800B28B61B26E3B700D8433C /* icon_baobei@2x.png in Resources */,
 				80941DAF1B1E9233007CA325 /* Specialprice@2x.png in Resources */,
 				8092113D1B2844D200A37949 /* Mine_qiandao@2x.png in Resources */,
+				808293B81B2FCF860050F268 /* addres_isdefault.png in Resources */,
 				8092EEC31B292AA800247599 /* jifenshangcheng_icon@2x.png in Resources */,
 				80F113C31B1DD33B00DFBB11 /* shouji@2x.png in Resources */,
 				807D3C871B1959FC00FBB530 /* ShoppingCar_icrn_unselected@2x.png in Resources */,
@@ -904,6 +960,7 @@
 				800B28B31B26E25500D8433C /* Select_BackImage@2x.png in Resources */,
 				80F113C01B1DD33B00DFBB11 /* nanshi@2x.png in Resources */,
 				805A527D1B1D4E3700C93A97 /* SVProgressHUD.bundle in Resources */,
+				808293B91B2FCF860050F268 /* address_isnotdefault.png in Resources */,
 				800B28A91B26827100D8433C /* Icon_Back@2x.png in Resources */,
 				807D3C281B194AFD00FBB530 /* LaunchScreen.xib in Resources */,
 				807D3CA81B199A5500FBB530 /* shop_icon.png in Resources */,
@@ -930,6 +987,8 @@
 				807D3C961B19921400FBB530 /* Classify_icon@2x.png in Resources */,
 				807D3C9B1B19921400FBB530 /* shop_icon_gray@2x.png in Resources */,
 				800B28AF1B269BB900D8433C /* menu_down@2x.png in Resources */,
+				808293AD1B2FA8C20050F268 /* add_Address_icon@2x.png in Resources */,
+				808293B51B2FCCBF0050F268 /* AddressCellTableViewCell.xib in Resources */,
 				8092EEC81B292AA800247599 /* third_icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -950,6 +1009,7 @@
 			files = (
 				807D3C5F1B1954AE00FBB530 /* ClassifyViewController.m in Sources */,
 				803FCC4D1B1C44AF003A0D4C /* TADotView.m in Sources */,
+				808293B01B2FC75F0050F268 /* AddressManageViewController.m in Sources */,
 				80941DBB1B1EEB45007CA325 /* NSTimer+Addition.m in Sources */,
 				807D3C4C1B194C8200FBB530 /* CustomTabBarViewController.m in Sources */,
 				80F113A91B1D938000DFBB11 /* SDWebImageManager.m in Sources */,
@@ -982,13 +1042,16 @@
 				807D3CC11B19A7C200FBB530 /* AFSecurityPolicy.m in Sources */,
 				80F113AC1B1D938000DFBB11 /* UIImage+GIF.m in Sources */,
 				80F113B01B1D938000DFBB11 /* UIImageView+WebCache.m in Sources */,
+				808293BC1B2FFB080050F268 /* AddaddressViewController.m in Sources */,
 				807D3C1D1B194AFC00FBB530 /* AppDelegate.m in Sources */,
 				80F113A41B1D938000DFBB11 /* SDImageCache.m in Sources */,
 				807D3CC01B19A7C200FBB530 /* AFNetworkReachabilityManager.m in Sources */,
 				805A527E1B1D4E3700C93A97 /* SVProgressHUD.m in Sources */,
 				803FCC4C1B1C44AF003A0D4C /* TAAnimatedDotView.m in Sources */,
 				800B28AD1B269A6600D8433C /* CCLocationManager.m in Sources */,
+				8083CE641B2E69BA0055E11F /* JiFenShangChengViewController.m in Sources */,
 				803FCC4E1B1C44AF003A0D4C /* TAPageControl.m in Sources */,
+				8083CE611B2E56DA0055E11F /* HttpRequest.m in Sources */,
 				80F113A81B1D938000DFBB11 /* SDWebImageDownloaderOperation.m in Sources */,
 				807D3CC51B19A7C200FBB530 /* AFURLSessionManager.m in Sources */,
 				807D3C6A1B19559900FBB530 /* Toolkit.m in Sources */,
@@ -998,12 +1061,15 @@
 				807D3CC81B19A80800FBB530 /* DataProvider.m in Sources */,
 				807D3C551B19547900FBB530 /* ShopViewController.m in Sources */,
 				80F113AB1B1D938000DFBB11 /* UIButton+WebCache.m in Sources */,
+				808293AA1B2FA59B0050F268 /* DuihuanDetialViewController.m in Sources */,
 				805A527C1B1D4E3700C93A97 /* SVIndefiniteAnimatedView.m in Sources */,
 				807D3C641B1954EB00FBB530 /* IndexViewController.m in Sources */,
 				807D3CC41B19A7C200FBB530 /* AFURLResponseSerialization.m in Sources */,
 				80F113B11B1D938000DFBB11 /* UIView+WebCacheOperation.m in Sources */,
 				80F113A21B1D938000DFBB11 /* MKAnnotationView+WebCache.m in Sources */,
+				808293B41B2FCCBF0050F268 /* AddressCellTableViewCell.m in Sources */,
 				807D3C8B1B1961B300FBB530 /* FirstScrollController.m in Sources */,
+				8083CE681B2E6EBC0055E11F /* JiFenCellTableViewCell.m in Sources */,
 				803FCC491B1C44AF003A0D4C /* SDCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

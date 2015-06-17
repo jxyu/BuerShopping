@@ -10,6 +10,7 @@
 #import "AFHTTPRequestOperation.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "AFURLRequestSerialization.h"
+//#import "HttpRequest.h"
 
 #define Url @"http://115.28.21.137/mobile/"
 
@@ -57,21 +58,74 @@
     }
 }
 
+-(void)signIn:(NSString *)key
+{
+    if (key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_index&op=signin",Url];
+        NSDictionary * prm=@{@"key":key};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
 -(void)UpLoadImage:(NSString *)imagePath andkey:(NSString *)key
 {
     if (imagePath&&key) {
-        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_index&op=avatar_upload",KURL];
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_index&op=avatar_upload",Url];
         NSDictionary * prm=@{@"key":key,@"name":@"avatar"};
-        [self uploadImageWithImage:imagePath andurl:url andprm:prm];
+        [self uploadImageWithImage:imagePath andurl:url andprm:prm andkey:key];
     }
 }
 -(void)SaveAvatarWithAvatarName:(NSString *)avatarname andkey:(NSString *)key
 {
     if (avatarname&&key) {
-        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_index&op=avatar_upload",KURL];
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_index&op=avatar_save",Url];
         NSDictionary * prm=@{@"key":key,@"avatar":avatarname};
         [self PostRequest:url andpram:prm];
     }
+}
+
+-(void)GetProList:(NSString *)key
+{
+    if (key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_points&op=goods_list",Url];
+        NSDictionary * prm=@{@"key":key};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)GetAddressList:(NSString *)key
+{
+    if (key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_address&op=address_list",Url];
+        NSDictionary * prm=@{@"key":key};
+        [self PostRequest:url andpram:prm];
+    }
+
+}
+
+-(void)GetArrayListwithareaid:(NSString *)area_id andkey:(NSString *)key
+{
+    if (key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_address&op=area_list",Url];
+        NSDictionary * prm=@{@"key":key,@"area_id":area_id};
+        [self PostRequest:url andpram:prm];
+    }
+}
+-(void)addAddress:(id)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_address&op=address_add",Url];
+        [self PostRequest:url andpram:prm];
+    }
+}
+-(void)SetDefaultAddressWithaddressid:(NSString *)address_id andkey:(NSString *)key
+{
+    if (key&&address_id) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_address&op=address_default",Url];
+        NSDictionary * prm=@{@"key":key,@"address_id":address_id};
+        [self PostRequest:url andpram:prm];
+    }
+
 }
 
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram
@@ -133,11 +187,11 @@
     }];
 }
 
-- (void)uploadImageWithImage:(NSString *)imagePath andurl:(NSString *)url andprm:(NSDictionary *)prm
+- (void)uploadImageWithImage:(NSString *)imagePath andurl:(NSString *)url andprm:(NSDictionary *)prm andkey:(NSString *)key
 {
     NSData *data=[NSData dataWithContentsOfFile:imagePath];
     NSURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:url parameters:prm constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:data name:@"FILES" fileName:@"avatar.png" mimeType:@"image/png"];
+        [formData appendPartWithFileData:data name:@"FILES" fileName:@"avatar.jpg" mimeType:@"image/jpg"];
     }];
     
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
@@ -161,7 +215,15 @@
     //执行
     NSOperationQueue * queue =[[NSOperationQueue alloc] init];
     [queue addOperation:op];
-    
+//    FileDetail *file = [FileDetail fileWithName:@"avatar.jpg" data:data];
+//    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+//                            file,@"FILES",
+//                            @"avatar",@"name",
+//                            key, @"key", nil];
+//    NSDictionary *result = [HttpRequest upload:[NSString stringWithFormat:@"%@index.php?act=member_index&op=avatar_upload",Url] widthParams:params];
+//    NSLog(@"%@",result);
 }
+
+
 
 @end

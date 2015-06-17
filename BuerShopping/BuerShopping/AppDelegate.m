@@ -123,7 +123,45 @@
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider SaveAvatarWithAvatarName:avatarname andkey:key];
 }
+/**
+ *  签到
+ *
+ *  @param key <#key description#>
+ */
+-(void)signIn:(NSString *)key
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider signIn:key];
+}
 
+-(void)GetProList:(NSString *)key
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider GetProList:key];
+}
+-(void)GetAddressList:(NSString *)key
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider GetAddressList:key];
+}
+
+-(void)GetArrayListwithareaid:(NSString *)area_id andkey:(NSString *)key
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider GetArrayListwithareaid:area_id andkey:key];
+}
+
+-(void)addAddress:(id)prm
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider addAddress:prm];
+}
+
+-(void)SetDefaultAddressWithaddressid:(NSString *)address_id andkey:(NSString *)key
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider SetDefaultAddressWithaddressid:address_id andkey:key];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

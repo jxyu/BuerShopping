@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="123" id="KGk-i7-Jjw" customClass="AddressCellTableViewCell">
+            <rect key="frame" x="0.0" y="1" width="320" height="123"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="姓名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVh-XU-Pg7">
+                        <rect key="frame" x="10" y="14" width="103" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="4Oe-fS-eNu"/>
+                            <constraint firstAttribute="width" constant="103" id="bpd-7w-FyW"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15165519504" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IuM-Hz-fpd">
+                        <rect key="frame" x="113" y="14" width="137" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Hti-qM-LRp"/>
+                            <constraint firstAttribute="width" constant="137" id="gXY-yf-RSU"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="乐凯高架道路金德拉克反对苏里科夫的时间来反馈撒的礼服款式点击发送的旅客飞机离开； 发动机收费卡的" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nen-MA-gqa">
+                        <rect key="frame" x="10" y="43" width="240" height="63"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="63" id="M9W-fj-bIS"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="address_isnotdefault.png" translatesAutoresizingMaskIntoConstraints="NO" id="SFb-oc-B0G">
+                        <rect key="frame" x="287" y="43" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="HYF-I0-qs2"/>
+                            <constraint firstAttribute="width" constant="20" id="Q9l-J4-BIa"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ivT-ZJ-g2l">
+                        <rect key="frame" x="258" y="8" width="54" height="106"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="54" id="KaB-pj-x3R"/>
+                        </constraints>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="nen-MA-gqa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="3aZ-c4-S3n"/>
+                    <constraint firstItem="UVh-XU-Pg7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="6XJ-xC-jhA"/>
+                    <constraint firstItem="ivT-ZJ-g2l" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="8YV-PE-VuD"/>
+                    <constraint firstItem="SFb-oc-B0G" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="35" id="Deg-U2-UOJ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="ivT-ZJ-g2l" secondAttribute="bottom" id="Ewa-bv-Jie"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="SFb-oc-B0G" secondAttribute="trailing" constant="5" id="bMI-Qw-M35"/>
+                    <constraint firstItem="UVh-XU-Pg7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="cvs-o3-G2a"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="nen-MA-gqa" secondAttribute="trailing" constant="62" id="fXZ-w2-Jtt"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="nen-MA-gqa" secondAttribute="bottom" constant="8" id="no3-ua-8ql"/>
+                    <constraint firstItem="IuM-Hz-fpd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="stD-89-eki"/>
+                    <constraint firstItem="ivT-ZJ-g2l" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="xEw-1g-wXs"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="IuM-Hz-fpd" secondAttribute="trailing" constant="62" id="yS6-B0-q1W"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="Btn_setdefault" destination="ivT-ZJ-g2l" id="AaJ-hl-chC"/>
+                <outlet property="addres_isdefault" destination="SFb-oc-B0G" id="Zv4-J3-hy6"/>
+                <outlet property="addres_tel" destination="IuM-Hz-fpd" id="Jwj-56-qIO"/>
+                <outlet property="address_addres" destination="nen-MA-gqa" id="NL1-ax-kAj"/>
+                <outlet property="address_name" destination="UVh-XU-Pg7" id="kuy-Fh-zJQ"/>
+            </connections>
+            <point key="canvasLocation" x="405" y="254.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="address_isnotdefault.png" width="68" height="68"/>
+    </resources>
+</document>

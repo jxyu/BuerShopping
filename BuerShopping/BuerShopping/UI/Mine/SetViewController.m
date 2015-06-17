@@ -68,8 +68,10 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell * cell=[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, _my_tableView.frame.size.width, 40)];
+    UITableViewCell * cell=[[UITableViewCell alloc] init];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.layer.masksToBounds=YES;
+    cell.bounds=CGRectMake(0, 0, _my_tableView.frame.size.width, 40);
     switch (indexPath.section) {
         case 0:
         {

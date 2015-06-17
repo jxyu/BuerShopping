@@ -12,6 +12,7 @@
 #import "UIImageView+WebCache.h"
 #import "DataProvider.h"
 #import "VPImageCropperViewController.h"
+#import "AddressManageViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #define ORIGINAL_MAX_WIDTH 640.0f
@@ -19,6 +20,7 @@
 
 @interface MineViewController () <UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIActionSheetDelegate, VPImageCropperDelegate>
 @property (nonatomic, strong) UIImageView *portraitImageView;
+@property(nonatomic,strong)AddressManageViewController * myAddressManager;
 
 @end
 
@@ -26,6 +28,8 @@
 {
     NSDictionary* userinfoWithFile;
     NSString * nickName;
+    UILabel * lbl_jifeneveryday;
+    UILabel * lbl_qiandaoBack;
 }
 
 - (void)viewDidLoad {
@@ -136,14 +140,14 @@
         [BackView_jifen addSubview:lbl_jifenTitle];
         [BackHeaderViewbottom addSubview:BackView_jifen];
         UIView * BackView_qiandao=[[UIView alloc] initWithFrame:CGRectMake(BackView_jifen.frame.origin.x+BackView_jifen.frame.size.width, 0, BackHeaderViewbottom.frame.size.width/3+15, BackHeaderViewbottom.frame.size.height)];
-        UILabel * lbl_jifeneveryday=[[UILabel alloc] initWithFrame:CGRectMake(2, 1, 30, 30)];
+        lbl_jifeneveryday=[[UILabel alloc] initWithFrame:CGRectMake(2, 1, 30, 30)];
         lbl_jifeneveryday.layer.masksToBounds=YES;
         lbl_jifeneveryday.layer.cornerRadius=15;
         lbl_jifeneveryday.text=@"+5";
         lbl_jifeneveryday.textAlignment=NSTextAlignmentCenter;
         lbl_jifeneveryday.backgroundColor=[UIColor colorWithRed:243/255.0 green:152/255.0 blue:1/255.0 alpha:1.0];
         lbl_jifeneveryday.textColor=[UIColor whiteColor];
-        UILabel * lbl_qiandaoBack=[[UILabel alloc] initWithFrame:CGRectMake(0, (BackView_qiandao.frame.size.height-32)/2, BackView_qiandao.frame.size.width+32, 32)];
+        lbl_qiandaoBack=[[UILabel alloc] initWithFrame:CGRectMake(0, (BackView_qiandao.frame.size.height-32)/2, BackView_qiandao.frame.size.width+32, 32)];
         lbl_qiandaoBack.layer.masksToBounds=YES;
         lbl_qiandaoBack.text=@"签到送积分      ";
         lbl_qiandaoBack.layer.cornerRadius=16;
@@ -296,7 +300,7 @@
             img_go.image=[UIImage imageNamed:@"index_go"];
             [BackView_SpecialPrice addSubview:img_go];
             UIButton * btn_morespecialprice=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_SpecialPrice.frame.size.width, 30)];
-            [btn_morespecialprice addTarget:self action:@selector(btn_MorespecialPriceClick) forControlEvents:UIControlEventTouchUpInside];
+            [btn_morespecialprice addTarget:self action:@selector(jumpToAddressManager:) forControlEvents:UIControlEventTouchUpInside];
             [BackView_SpecialPrice addSubview:btn_morespecialprice];
             UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, btn_morespecialprice.frame.size.height, BackView_SpecialPrice.frame.size.width-20, 1)];
             fenge.backgroundColor=[UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
@@ -350,7 +354,7 @@
             img_go.image=[UIImage imageNamed:@"index_go"];
             [BackView_SpecialPrice addSubview:img_go];
             UIButton * btn_morespecialprice=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_SpecialPrice.frame.size.width, 30)];
-            [btn_morespecialprice addTarget:self action:@selector(Btn_GuessYoulike) forControlEvents:UIControlEventTouchUpInside];
+            [btn_morespecialprice addTarget:self action:@selector(JumpToJiFenShangCheng:) forControlEvents:UIControlEventTouchUpInside];
             [BackView_SpecialPrice addSubview:btn_morespecialprice];
             UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, btn_morespecialprice.frame.size.height, BackView_SpecialPrice.frame.size.width-20, 1)];
             fenge.backgroundColor=[UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
@@ -398,6 +402,20 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 5;
+}
+
+-(void)jumpToAddressManager:(UIButton *)sender
+{
+    _myAddressManager=[[AddressManageViewController alloc] init];
+    _myAddressManager.userkey=userinfoWithFile[@"key"];
+    [self.navigationController pushViewController:_myAddressManager animated:YES];
+}
+
+-(void)JumpToJiFenShangCheng:(UIButton *)sender
+{
+    _myJifen=[[JiFenShangChengViewController alloc] init];
+    _myJifen.userkey=userinfoWithFile[@"key"];
+    [self.navigationController pushViewController:_myJifen animated:YES];
 }
 
 /**
@@ -519,14 +537,14 @@
     [BackView_jifen addSubview:lbl_jifenTitle];
     [BackHeaderViewbottom addSubview:BackView_jifen];
     UIView * BackView_qiandao=[[UIView alloc] initWithFrame:CGRectMake(BackView_jifen.frame.origin.x+BackView_jifen.frame.size.width, 0, BackHeaderViewbottom.frame.size.width/3+15, BackHeaderViewbottom.frame.size.height)];
-    UILabel * lbl_jifeneveryday=[[UILabel alloc] initWithFrame:CGRectMake(2, 1, 30, 30)];
+    lbl_jifeneveryday=[[UILabel alloc] initWithFrame:CGRectMake(2, 1, 30, 30)];
     lbl_jifeneveryday.layer.masksToBounds=YES;
     lbl_jifeneveryday.layer.cornerRadius=15;
     lbl_jifeneveryday.text=@"+5";
     lbl_jifeneveryday.textAlignment=NSTextAlignmentCenter;
     lbl_jifeneveryday.backgroundColor=[UIColor colorWithRed:243/255.0 green:152/255.0 blue:1/255.0 alpha:1.0];
     lbl_jifeneveryday.textColor=[UIColor whiteColor];
-    UILabel * lbl_qiandaoBack=[[UILabel alloc] initWithFrame:CGRectMake(0, (BackView_qiandao.frame.size.height-32)/2, BackView_qiandao.frame.size.width+32, 32)];
+    lbl_qiandaoBack=[[UILabel alloc] initWithFrame:CGRectMake(0, (BackView_qiandao.frame.size.height-32)/2, BackView_qiandao.frame.size.width+32, 32)];
     lbl_qiandaoBack.layer.masksToBounds=YES;
     lbl_qiandaoBack.text=@"签到送积分      ";
     lbl_qiandaoBack.layer.cornerRadius=16;
@@ -536,10 +554,38 @@
     lbl_qiandaoBack.layer.borderWidth=1;
     lbl_qiandaoBack.layer.borderColor=(__bridge CGColorRef)([UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1.0]);
     [lbl_qiandaoBack addSubview:lbl_jifeneveryday];
+    UIButton * btn_sigein=[[UIButton alloc] initWithFrame:lbl_qiandaoBack.frame];
+    [btn_sigein addTarget:self action:@selector(SigninFunc) forControlEvents:UIControlEventTouchUpInside];
+    
     [BackView_qiandao addSubview:lbl_qiandaoBack];
+    [BackView_qiandao addSubview:btn_sigein];
     [BackHeaderViewbottom addSubview:BackView_qiandao];
     [_TableView_Mine setTableHeaderView:myHeaderView];
     
+}
+
+-(void)SigninFunc
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"SigninClickBackcall:"];
+    [dataprovider signIn:userinfoWithFile[@"key"]];
+}
+-(void)SigninClickBackcall:(id)dict
+{
+    NSLog(@"%@",dict);
+    if ([dict[@"datas"] isEqual:@"1"]) {
+        [SVProgressHUD showSuccessWithStatus:@"签到成功" maskType:SVProgressHUDMaskTypeBlack];
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:@"已签到" maskType:SVProgressHUDMaskTypeBlack];
+    }
+    if (lbl_qiandaoBack) {
+        for (UIView * items in lbl_qiandaoBack.subviews) {
+            [items removeFromSuperview];
+        }
+        lbl_qiandaoBack.text=@"已签到";
+    }
 }
 -(void)changenickName
 {
@@ -630,9 +676,9 @@
     self.portraitImageView.image = editedImage;
     [cropperViewController dismissViewControllerAnimated:YES completion:^{
         // TO DO
-        [self saveImage:editedImage withName:@"avatar.png"];
+        [self saveImage:editedImage withName:@"avatar.jpg"];
         
-        NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"avatar.png"];
+        NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"avatar.jpg"];
         NSLog(@"选择完成");
         [SVProgressHUD showWithStatus:@"加载中.." maskType:SVProgressHUDMaskTypeBlack];
         //        NSData* imageData = UIImagePNGRepresentation(editedImage);

@@ -52,7 +52,44 @@
  *  @param key        key
  */
 -(void)SaveAvatarWithAvatarName:(NSString *)avatarname andkey:(NSString *)key;
-
+/**
+ *  签到
+ *
+ *  @param key key
+ */
+-(void)signIn:(NSString *)key;
+/**
+ *  获得兑换奖品
+ *
+ *  @param key key
+ */
+-(void)GetProList:(NSString *)key;
+/**
+ *  获取收货地址列表
+ *
+ *  @param key key
+ */
+-(void)GetAddressList:(NSString *)key;
+/**
+ *  获取地区列表
+ *
+ *  @param area_id areaid获取第一级列表传空即可
+ *  @param key     key
+ */
+-(void)GetArrayListwithareaid:(NSString *)area_id andkey:(NSString *)key;
+/**
+ *  添加收货地址
+ *
+ *  @param prm <#prm description#>
+ */
+-(void)addAddress:(id)prm;
+/**
+ *  设置默认收货地址
+ *
+ *  @param address_id 收货地址的id
+ *  @param key        key
+ */
+-(void)SetDefaultAddressWithaddressid:(NSString *)address_id andkey:(NSString *)key;
 
 
 /**

@@ -11,10 +11,12 @@
 #import "RegisterViewController.h"
 #import "LoginViewController.h"
 #import "SetViewController.h"
+#import "JiFenShangChengViewController.h"
 
 @interface MineViewController : BaseNavigationController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 @property(nonatomic,strong)RegisterViewController * myRegister;
 @property (weak, nonatomic) IBOutlet UITableView *TableView_Mine;
 @property(nonatomic,strong)LoginViewController *myLogin;
 @property(nonatomic,strong)SetViewController * mySet;
+@property(nonatomic,strong)JiFenShangChengViewController * myJifen;
 @end

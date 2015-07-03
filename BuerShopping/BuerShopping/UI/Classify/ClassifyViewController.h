@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BaseNavigationController.h"
 
-@interface ClassifyViewController : BaseNavigationController
+@interface ClassifyViewController : BaseNavigationController<UITextFieldDelegate>
 
 @end

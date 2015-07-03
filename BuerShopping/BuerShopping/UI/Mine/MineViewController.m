@@ -14,6 +14,7 @@
 #import "VPImageCropperViewController.h"
 #import "AddressManageViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "JifenDetialViewController.h"
 
 #define ORIGINAL_MAX_WIDTH 640.0f
 
@@ -21,7 +22,7 @@
 @interface MineViewController () <UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIActionSheetDelegate, VPImageCropperDelegate>
 @property (nonatomic, strong) UIImageView *portraitImageView;
 @property(nonatomic,strong)AddressManageViewController * myAddressManager;
-
+@property(nonatomic,strong)JifenDetialViewController * myjifenDetial;
 @end
 
 @implementation MineViewController
@@ -30,6 +31,7 @@
     NSString * nickName;
     UILabel * lbl_jifeneveryday;
     UILabel * lbl_qiandaoBack;
+    BOOL isLogin;
 }
 
 - (void)viewDidLoad {
@@ -38,7 +40,7 @@
     _lblTitle.textColor=[UIColor whiteColor];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess) name:@"Login_success" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ExistSuccess) name:@"Exit_success" object:nil];
-    [self addRightbuttontitle:@"注册"];
+    
     [self LoadDataUserInfo];
     [self initAllTheView];
 }
@@ -57,10 +59,13 @@
     if (userinfoWithFile[@"key"]) {
         [self BuildHeaderViewAfterLogin];
         nickName=userinfoWithFile[@"username"];
+        isLogin=YES;
     }
     else
     {
+        isLogin=NO;
         nickName=@"";
+        [self addRightbuttontitle:@"注册"];
         UIView * myHeaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 205)];
         myHeaderView.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/25.0 alpha:1.0];
         UIImageView * img_Back=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, myHeaderView.frame.size.width, 110)];
@@ -407,6 +412,7 @@
 -(void)jumpToAddressManager:(UIButton *)sender
 {
     _myAddressManager=[[AddressManageViewController alloc] init];
+    _myAddressManager.isfromDuihuan=NO;
     _myAddressManager.userkey=userinfoWithFile[@"key"];
     [self.navigationController pushViewController:_myAddressManager animated:YES];
 }
@@ -438,12 +444,12 @@
 -(void)loginSuccess
 {
     NSLog(@"Mine 登录成功");
+    [_lblRight removeFromSuperview];
     [self BuildHeaderViewAfterLogin];
 }
 
 -(void)BuildHeaderViewAfterLogin
 {
-    NSLog(@"我要推荐");
     NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                               NSUserDomainMask, YES) objectAtIndex:0];
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
@@ -535,6 +541,9 @@
     lbl_jifenTitle.font=[UIFont systemFontOfSize:15];
     lbl_jifenTitle.textAlignment=NSTextAlignmentCenter;
     [BackView_jifen addSubview:lbl_jifenTitle];
+    UIButton * btn_jifen=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_jifen.frame.size.width, BackView_jifen.frame.size.height)];
+    [btn_jifen addTarget:self action:@selector(jumpToJiFenDetial:) forControlEvents:UIControlEventTouchUpInside];
+    [BackView_jifen addSubview:btn_jifen];
     [BackHeaderViewbottom addSubview:BackView_jifen];
     UIView * BackView_qiandao=[[UIView alloc] initWithFrame:CGRectMake(BackView_jifen.frame.origin.x+BackView_jifen.frame.size.width, 0, BackHeaderViewbottom.frame.size.width/3+15, BackHeaderViewbottom.frame.size.height)];
     lbl_jifeneveryday=[[UILabel alloc] initWithFrame:CGRectMake(2, 1, 30, 30)];
@@ -556,12 +565,18 @@
     [lbl_qiandaoBack addSubview:lbl_jifeneveryday];
     UIButton * btn_sigein=[[UIButton alloc] initWithFrame:lbl_qiandaoBack.frame];
     [btn_sigein addTarget:self action:@selector(SigninFunc) forControlEvents:UIControlEventTouchUpInside];
-    
     [BackView_qiandao addSubview:lbl_qiandaoBack];
     [BackView_qiandao addSubview:btn_sigein];
     [BackHeaderViewbottom addSubview:BackView_qiandao];
     [_TableView_Mine setTableHeaderView:myHeaderView];
     
+}
+
+-(void)jumpToJiFenDetial:(UIButton *)sender
+{
+    _myjifenDetial=[[JifenDetialViewController alloc] init];
+    _myjifenDetial.userkey=userinfoWithFile[@"key"];
+    [self.navigationController pushViewController:_myjifenDetial animated:YES];
 }
 
 -(void)SigninFunc
@@ -638,10 +653,12 @@
 
 -(void)clickRightButton:(UIButton *)sender
 {
-    _myRegister=[[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:[NSBundle mainBundle]];
-    _myRegister.viewTitle=@"注册";
-    _myRegister.resetPwd=NO;
-    [self.navigationController pushViewController:_myRegister animated:YES];
+    if (!isLogin) {
+        _myRegister=[[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:[NSBundle mainBundle]];
+        _myRegister.viewTitle=@"注册";
+        _myRegister.resetPwd=NO;
+        [self.navigationController pushViewController:_myRegister animated:YES];
+    }
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -885,6 +902,7 @@
     NSLog(@"%@",dict);
 //    [img_touxiang setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",KURL,dict[@"data"][@"url"]]]]]
 //     ];
+    [SVProgressHUD dismiss];
     if (![dict[@"datas"] objectForKey:@"error"]&&dict[@"datas"][@"avatar"]) {
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"ChangeAvatarBackCall:"];
@@ -899,6 +917,19 @@
 -(void)ChangeAvatarBackCall:(id)dict
 {
     NSLog(@"%@",dict);
+    
+    if(![dict[@"datas"] objectForKey:@"error"])
+    {
+        [userinfoWithFile setValue:dict[@"datas"][@"avatar"] forKey: @"avatar"];
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+        BOOL result= [userinfoWithFile writeToFile:plistPath atomically:YES];
+        if (result) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Login_success" object:nil];
+        }
+        
+    }
     
 }
 

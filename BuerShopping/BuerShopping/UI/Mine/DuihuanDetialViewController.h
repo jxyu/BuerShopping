@@ -20,5 +20,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *btn_duihuan;
 @property(nonatomic,strong)NSDictionary *goods_dict;
+@property(nonatomic,strong)NSString * userkey;
 
 @end

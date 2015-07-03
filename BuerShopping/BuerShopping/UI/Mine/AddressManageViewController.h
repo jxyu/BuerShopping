@@ -10,6 +10,6 @@
 #import "BaseNavigationController.h"
 
 @interface AddressManageViewController : BaseNavigationController<UITableViewDataSource,UITableViewDelegate>
-
+@property(nonatomic) BOOL  isfromDuihuan;
 @property(nonatomic,strong)NSString * userkey;
 @end

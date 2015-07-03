@@ -46,7 +46,7 @@
     //隐藏系统tabbar
     self.tabBar.hidden = YES;
     self.hidesBottomBarWhenPushed = YES;
-     NSArray *arrayImages_H = [[NSArray alloc] initWithObjects:@"index_icon@2x.png",@"Classify_icon@2x.png" ,@"ShoppingCar_icon_selected@2x.png",@"shop_icon.png",@"Mine_icon.png",  nil];
+     NSArray *arrayImages_H = [[NSArray alloc] initWithObjects:@"index_icon@2x.png",@"Classify_icon@2x.png" ,@"ShoppingCar_icon_selected@2x.png",@"shop_icon@2x.png",@"Mine_icon@2x.png",  nil];
  	NSArray *arrayImages = [[NSArray alloc] initWithObjects:@"index_icon_gray@2x.png",@"Classify_icon_gray@2x.png",@"ShoppingCar_icrn_unselected@2x.png",@"shop_icon_gray@2x.png", @"Mine_icon_gray@2x.png",  nil];
  
     _tabBarBG = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - TabBar_HEIGHT, SCREEN_WIDTH, TabBar_HEIGHT)];

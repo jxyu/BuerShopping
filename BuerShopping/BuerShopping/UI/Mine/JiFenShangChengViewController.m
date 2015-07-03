@@ -84,6 +84,11 @@
     return 100;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"jifencellTableViewCellIdentifier";
@@ -119,6 +124,7 @@
         NSLog(@"跳转兑换详情");
         _myduihuan=[[DuihuanDetialViewController alloc] initWithNibName:@"DuihuanDetialViewController" bundle:[NSBundle mainBundle]];
         _myduihuan.goods_dict=selectData;
+        _myduihuan.userkey=_userkey;
         [self.navigationController pushViewController:_myduihuan animated:YES];
     }
 }
@@ -130,6 +136,11 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
+}
+
+-(void)clickRightButton:(UIButton *)sender
+{
+    //DuiHuanJiluViewController
 }
 
 - (void)didReceiveMemoryWarning {

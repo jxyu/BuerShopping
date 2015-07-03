@@ -46,10 +46,10 @@ static CGFloat const kAnimateDuration = 1;
 
 - (void)initialization
 {
-    self.backgroundColor    = [UIColor clearColor];
+    self.backgroundColor    = [UIColor whiteColor];
     self.layer.cornerRadius = CGRectGetWidth(self.frame) / 2;
     self.layer.borderColor  = [UIColor whiteColor].CGColor;
-    self.layer.borderWidth  = 2;
+    self.layer.borderWidth  = 1;
 }
 
 
@@ -66,7 +66,8 @@ static CGFloat const kAnimateDuration = 1;
 - (void)animateToActiveState
 {
     [UIView animateWithDuration:kAnimateDuration delay:0 usingSpringWithDamping:.5 initialSpringVelocity:-20 options:UIViewAnimationOptionCurveLinear animations:^{
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor colorWithRed:115/255.0 green:73/255.0 blue:139/255.0 alpha:1.0];
+        self.layer.borderColor  = [UIColor colorWithRed:115/255.0 green:73/255.0 blue:139/255.0 alpha:1.0].CGColor;
         self.transform = CGAffineTransformMakeScale(1.4, 1.4);
     } completion:nil];
 }
@@ -74,7 +75,8 @@ static CGFloat const kAnimateDuration = 1;
 - (void)animateToDeactiveState
 {
     [UIView animateWithDuration:kAnimateDuration delay:0 usingSpringWithDamping:.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor whiteColor];
+        self.layer.borderColor  = [UIColor whiteColor].CGColor;
         self.transform = CGAffineTransformIdentity;
     } completion:nil];
 }

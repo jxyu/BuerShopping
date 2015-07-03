@@ -125,7 +125,109 @@
         NSDictionary * prm=@{@"key":key,@"address_id":address_id};
         [self PostRequest:url andpram:prm];
     }
+}
 
+-(void)DelAddressWithAddressid:(NSString *)address_id andkey:(NSString *)key
+{
+    if (key&&address_id) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_address&op=address_del",Url];
+        NSDictionary * prm=@{@"key":key,@"address_id":address_id};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)EditAddressWithPrm:(id)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_address&op=address_edit",Url];
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)DuihuanFunction:(id)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_points&op=exchange",Url];
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)GetjifenDetial:(NSString *)key
+{
+    if (key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_points&op=points_log",Url];
+        NSDictionary * prm=@{@"key":key};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)GetClassify
+{
+    NSString * url=[NSString stringWithFormat:@"%@index.php?act=goods_class",Url];
+    [self PostRequest:url andpram:nil];
+}
+
+-(void)GetClassifyNext:(NSString *)gc_id
+{
+    NSString * url=[NSString stringWithFormat:@"%@index.php?act=goods_class&gc_id=%@",Url,gc_id];
+    [self PostRequest:url andpram:nil];
+}
+
+-(void)GetcityInfoWithlng:(NSString *)lng andlat:(NSString *)lat
+{
+    if (lng&&lat) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=area&op=location",Url];
+        NSDictionary * prm=@{@"lng":lng,@"lat":lat};
+        [self GetRequest:url andpram:prm];
+    }
+}
+
+-(void)GetIndexDataWithAreaid:(NSString *)areaid andlng:(NSString *)lng andlat:(NSString *)lat
+{
+    if (areaid&&lng&&lat) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=index",Url];
+        NSDictionary * prm=@{@"lng":lng,@"lat":lat,@"city_id":areaid};
+        [self GetRequest:url andpram:prm];
+    }
+}
+
+-(void)GetGoodsListWithKeyWord:(NSDictionary *)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=goods&op=goods_list",Url];
+        [self GetRequest:url andpram:prm];
+    }
+}
+
+-(void)getClassifyForStore
+{
+    NSString * url=[NSString stringWithFormat:@"%@index.php?act=store&op=store_class",Url];
+    [self GetRequest:url andpram:nil];
+}
+
+-(void)GetStoreList:(NSDictionary *)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=store&op=store_list",Url];
+        [self GetRequest:url andpram:prm];
+    }
+}
+
+-(void)GetStoreDetialInfoWithKey:(NSString *)key andstoreid:(NSString *)store_id
+{
+    if (key&&store_id) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=store&op=store_info",Url];
+        NSDictionary * prm=@{@"key":key,@"store_id":store_id};
+        [self GetRequest:url andpram:prm];
+    }
+}
+
+-(void)GetStoreGoodList:(id)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=store&op=store_goods",Url];
+        [self GetRequest:url andpram:prm];
+    }
 }
 
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram
@@ -159,6 +261,8 @@
     }];
 }
 
+
+
 -(void)GetRequest:(NSString *)url andpram:(NSDictionary *)pram
 {
     AFHTTPRequestOperationManager * manage=[[AFHTTPRequestOperationManager alloc] init];
@@ -191,7 +295,7 @@
 {
     NSData *data=[NSData dataWithContentsOfFile:imagePath];
     NSURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:url parameters:prm constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:data name:@"FILES" fileName:@"avatar.jpg" mimeType:@"image/jpg"];
+        [formData appendPartWithFileData:data name:@"avatar" fileName:@"avatar.jpg" mimeType:@"image/jpg"];
     }];
     
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];

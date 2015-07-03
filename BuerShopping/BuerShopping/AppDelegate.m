@@ -71,6 +71,10 @@
 {
     [_tabBarViewCol hideCustomTabBar];
 }
+- (void)selectTableBarIndex:(NSInteger)index
+{
+    [_tabBarViewCol selectTableBarIndex:index];
+}
 -(CustomTabBarViewController *)getTabBar
 {
     return _tabBarViewCol;
@@ -161,6 +165,42 @@
 {
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider SetDefaultAddressWithaddressid:address_id andkey:key];
+}
+
+-(void)DelAddressWithAddressid:(NSString *)address_id andkey:(NSString *)key
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider DelAddressWithAddressid:address_id andkey:key];
+}
+
+-(void)EditAddressWithPrm:(id)prm
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider EditAddressWithPrm:prm];
+}
+
+-(void)DuihuanFunction:(id)prm
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider DuihuanFunction:prm];
+}
+
+-(void)GetjifenDetial:(NSString *)key
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider GetjifenDetial:key];
+}
+
+-(void)GetClassify
+{
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider GetClassify];
+}
+
+-(void)GetClassifyNext:(NSString *)gc_id
+{
+    DataProvider * dataprovider=[DataProvider alloc];
+    [dataprovider GetClassifyNext:gc_id];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

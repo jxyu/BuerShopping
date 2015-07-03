@@ -19,6 +19,7 @@
 
 - (void)showTabBar;
 - (void)hiddenTabBar;
+- (void)selectTableBarIndex:(NSInteger)index;
 -(CustomTabBarViewController *)getTabBar;
 @property (strong, nonatomic) UIWindow *window;
 

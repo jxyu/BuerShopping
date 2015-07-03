@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -22,8 +23,12 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xPy-kt-5EN">
-                        <rect key="frame" x="270" y="4" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xPy-kt-5EN">
+                        <rect key="frame" x="252" y="4" width="60" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="xtD-OF-Sjy"/>
+                            <constraint firstAttribute="height" constant="21" id="yU1-Vg-VPk"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.63921568630000003" green="0.63921568630000003" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -51,7 +56,20 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="xPy-kt-5EN" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="LAK-MK-DZZ"/>
+                    <constraint firstItem="xPy-kt-5EN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="jsc-NT-ngE"/>
+                </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="img_resLogo" destination="fZa-Ks-456" id="Q9o-WQ-mik"/>
+                <outlet property="lbl_classify" destination="1DW-bE-6eX" id="Uzg-nS-Evc"/>
+                <outlet property="lbl_juli" destination="xPy-kt-5EN" id="ScZ-BK-GsG"/>
+                <outlet property="lbl_pingjia" destination="JXx-Ak-SA5" id="OWz-eB-3DM"/>
+                <outlet property="lbl_resTitle" destination="FpW-F3-1y6" id="KfC-PJ-EV2"/>
+                <outlet property="lbl_resaddress" destination="k1O-hS-EPP" id="SKb-YH-KkS"/>
+                <outlet property="starView" destination="F8l-XR-DDK" id="Ugl-Un-fxq"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

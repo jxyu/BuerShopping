@@ -9,5 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface ResTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *img_resLogo;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_resTitle;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_juli;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_pingjia;
+@property (weak, nonatomic) IBOutlet UIView *starView;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_classify;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_resaddress;
 
 @end

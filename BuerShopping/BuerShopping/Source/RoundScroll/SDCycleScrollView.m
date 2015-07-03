@@ -153,6 +153,7 @@ NSString * const ID = @"cycleCell";
 }
 
 
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -167,7 +168,7 @@ NSString * const ID = @"cycleCell";
     UIImageView* i=(UIImageView*)    self.imagesGroup[itemIndex];
     cell.imageView.image = i.image;
     if (_titlesGroup.count) {
-        cell.title = _titlesGroup[itemIndex];
+//        cell.title = _titlesGroup[itemIndex];
     }
     return cell;
 }

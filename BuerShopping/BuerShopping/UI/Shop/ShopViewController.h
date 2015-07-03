@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseNavigationController.h"
+#import "DOPDropDownMenu.h"
 
-@interface ShopViewController : BaseNavigationController
+@interface ShopViewController : BaseNavigationController<DOPDropDownMenuDataSource,DOPDropDownMenuDelegate,UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
+@property(nonatomic,strong)NSString * keyWord;
+@property(nonatomic,strong)NSString * sc_id;
+@property (weak, nonatomic) IBOutlet UITableView *myTableview;
 
 @end

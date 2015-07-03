@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShopViewController">
             <connections>
+                <outlet property="myTableview" destination="kWr-Zj-Ln5" id="hBc-Ng-Ttl"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -13,7 +14,41 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kWr-Zj-Ln5">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="kWr-Zj-Ln5" secondAttribute="bottom" constant="5" id="9F5-XC-eD9"/>
+                <constraint firstItem="kWr-Zj-Ln5" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="NLI-Wr-eNy"/>
+                <constraint firstItem="kWr-Zj-Ln5" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="105" id="bzj-d4-Xck"/>
+                <constraint firstAttribute="trailing" secondItem="kWr-Zj-Ln5" secondAttribute="trailing" constant="5" id="jDz-UV-Dsv"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="kWr-Zj-Ln5"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="9F5-XC-eD9"/>
+                    <exclude reference="NLI-Wr-eNy"/>
+                    <exclude reference="bzj-d4-Xck"/>
+                    <exclude reference="jDz-UV-Dsv"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="kWr-Zj-Ln5"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="9F5-XC-eD9"/>
+                    <include reference="NLI-Wr-eNy"/>
+                    <include reference="bzj-d4-Xck"/>
+                    <include reference="jDz-UV-Dsv"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>

@@ -161,6 +161,7 @@
 -(void)setDefaultBackCall:(id)dict
 {
     NSLog(@"%@",dict);
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)cancelSelect:(UIButton * )sender
@@ -172,6 +173,9 @@
 {
     [btn_selectArray setTitle:[NSString stringWithFormat:@"%@%@%@",provient,city,xianqu] forState:UIControlStateNormal];
     [btn_selectArray setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    btn_selectArray.layer.masksToBounds=YES;
+//    btn_selectArray.titleLabel.frame=CGRectMake(0, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
+    btn_selectArray.contentHorizontalAlignment=UIControlContentHorizontalAlignmentLeft ;
     [BackView removeFromSuperview];
     [_mypicker removeFromSuperview];
 }
@@ -187,7 +191,15 @@
     if (indexPath.row==3) {
         btn_selectArray=[[UIButton alloc] initWithFrame:CGRectMake(lbl_title.frame.size.width+lbl_title.frame.origin.x, 10, cell.frame.size.width-lbl_title.frame.size.width-lbl_title.frame.origin.x, 30)];
         btn_selectArray.tag=indexPath.row;
-        [btn_selectArray setTitle:@"省 市 区" forState:UIControlStateNormal];
+        if (_isChange) {
+            btn_selectArray.contentHorizontalAlignment=UIControlContentHorizontalAlignmentLeft ;
+            [btn_selectArray setTitle:_data[@"area_info"] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [btn_selectArray setTitle:@"省 市 区" forState:UIControlStateNormal];
+        }
+        
         [btn_selectArray setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [btn_selectArray addTarget:self action:@selector(showpicker) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -198,6 +210,9 @@
             txt_name=[[UITextField alloc] initWithFrame:CGRectMake(lbl_title.frame.size.width+lbl_title.frame.origin.x, 10, cell.frame.size.width-lbl_title.frame.size.width-lbl_title.frame.origin.x, 30)];
             [txt_name setKeyboardType:UIKeyboardTypeDefault];
             txt_name.tag=indexPath.row;
+            if (_isChange) {
+                txt_name.text=_data[@"true_name"];
+            }
             lbl_title.text=@"收货人";
             [cell addSubview:lbl_title];
             [cell addSubview:txt_name];
@@ -206,8 +221,11 @@
         case 1:
         {
             txt_phone=[[UITextField alloc] initWithFrame:CGRectMake(lbl_title.frame.size.width+lbl_title.frame.origin.x, 10, cell.frame.size.width-lbl_title.frame.size.width-lbl_title.frame.origin.x, 30)];
-            [txt_phone setKeyboardType:UIKeyboardTypeDefault];
+            [txt_phone setKeyboardType:UIKeyboardTypeNumberPad];
             txt_phone.tag=indexPath.row;
+            if (_isChange) {
+                txt_phone.text=_data[@"mob_phone"];
+            }
             lbl_title.text=@"手机号码";
             [cell addSubview:lbl_title];
             [cell addSubview:txt_phone];
@@ -216,8 +234,11 @@
         case 2:
         {
             txt_zip=[[UITextField alloc] initWithFrame:CGRectMake(lbl_title.frame.size.width+lbl_title.frame.origin.x, 10, cell.frame.size.width-lbl_title.frame.size.width-lbl_title.frame.origin.x, 30)];
-            [txt_zip setKeyboardType:UIKeyboardTypeDefault];
+            [txt_zip setKeyboardType:UIKeyboardTypeNumberPad];
             txt_zip.tag=indexPath.row;
+            if (_isChange) {
+                txt_zip.text=_data[@"zip"];
+            }
             lbl_title.text=@"邮政编码";
             [cell addSubview:lbl_title];
             [cell addSubview:txt_zip];
@@ -234,6 +255,9 @@
             txt_Detialaddress=[[UITextField alloc] initWithFrame:CGRectMake(lbl_title.frame.size.width+lbl_title.frame.origin.x, 10, cell.frame.size.width-lbl_title.frame.size.width-lbl_title.frame.origin.x, 30)];
             [txt_Detialaddress setKeyboardType:UIKeyboardTypeDefault];
             txt_Detialaddress.tag=indexPath.row;
+            if (_isChange) {
+                txt_Detialaddress.text=_data[@"address"];
+            }
             lbl_title.text=@"详细地址";
             [cell addSubview:lbl_title];
             [cell addSubview:txt_Detialaddress];
@@ -355,7 +379,7 @@
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"saveBackCall:"];
     if (_isChange) {
-        
+        [dataprovider EditAddressWithPrm:prm];
     }
     else
     {

@@ -20,7 +20,7 @@
 
 @implementation AddressManageViewController
 {
-    NSArray * addressArray;
+    NSMutableArray * addressArray;
 }
 
 - (void)viewDidLoad {
@@ -28,7 +28,7 @@
     _lblTitle.text=@"收货地址";
     _lblTitle.textColor=[UIColor whiteColor];
     [self addLeftButton:@"Icon_Back@2x.png"];
-    addressArray=[[NSArray alloc] init];
+    addressArray=[[NSMutableArray alloc] init];
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadAddresData) name:@"Save_address_success" object:nil];
     [self loadAddresData];
     [self InitAllView];
@@ -43,7 +43,7 @@
 {
     NSLog(@"%@",dict);
     if (!dict[@"datas"][@"error"]) {
-        addressArray=dict[@"datas"][@"address_list"];
+        addressArray=[[NSMutableArray alloc] initWithArray:dict[@"datas"][@"address_list"]];
         [_mytbView reloadData];
     }
 }
@@ -75,9 +75,52 @@
     [self.navigationController pushViewController:_myaddaddress animated:YES];
 }
 
+-(void)DelAddressBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    if ([[NSString stringWithFormat:@"%@",dict[@"datas"]] isEqualToString:@"1"]) {
+        [SVProgressHUD showSuccessWithStatus:@"删除成功" maskType:SVProgressHUDMaskTypeBlack];
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"DelAddressBackCall:"];
+        [dataprovider DelAddressWithAddressid:addressArray[indexPath.row][@"address_id"] andkey:_userkey];
+        [addressArray removeObjectAtIndex:indexPath.row];
+        // Delete the row from the data source.
+        [_mytbView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+    }
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+    }
+}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 105;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    if (_isfromDuihuan) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"select_address_for_duihuan" object:addressArray[indexPath.row]];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        _myaddaddress=[[AddaddressViewController alloc] init];
+        _myaddaddress.isChange=YES;
+        _myaddaddress.data=addressArray[indexPath.row];
+        [self.navigationController pushViewController:_myaddaddress animated:YES];
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

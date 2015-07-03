@@ -12,6 +12,10 @@
 #import "GoodsTableViewCell.h"
 #import "ResTableViewCell.h"
 #import "CCLocationManager.h"
+#import "DataProvider.h"
+#import "CWStarRateView.h"
+#import "GoodListViewController.h"
+#import "ShopInsideViewController.h"
 
 
 @interface IndexViewController ()
@@ -28,48 +32,52 @@
     NSArray* selectArray;
     UIView * select_Backview;
     BOOL isSelectViewShow;
+    NSString * lng;
+    NSString * lat;
+    NSString * areaid;
+    NSArray * circle;
+    NSArray * class;
+    NSArray * day_special;
+    NSArray * slide;
+    NSArray * good_store;
+    NSArray * goods_like;
+    UIView * day_sprcial_more;
+    NSString * searchType;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _lblTitle.text=@"首页";
     isSelectViewShow=NO;
-    [self initView];
+    searchType=@"宝贝";
+    [self LoadData];
+    
 }
 
 -(void)initView
 {
     /**********************************head搜索栏开始***********************************/
     selectArray=@[@"宝贝",@"店铺"];
-    [[CCLocationManager shareLocation] getCity:^(NSString *addressString) {
-        NSArray *array = [addressString componentsSeparatedByString:@"省"]; //从字符A中分隔成2个元素的数组
-    [self addLeftbuttontitle:[array[1] substringWithRange:NSMakeRange(0, 3)]];
-        _lblLeft.font=[UIFont systemFontOfSize:13];
-        UIImageView * img_icon_down=[[UIImageView alloc] initWithFrame:CGRectMake(_btnLeft.frame.size.width-8, 18, 8, 5)];
-        img_icon_down.image=[UIImage imageNamed:@"menu_down"];
-        [_btnLeft addSubview:img_icon_down];
-    }];
-    
     //增加监听，当键盘出现或改变时收出消息
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
     
-    UIView * BackView_Serch=[[UIView alloc] initWithFrame:CGRectMake(_btnLeft.frame.size.width+_btnLeft.frame.origin.x+10, 18, SCREEN_WIDTH-_btnLeft.frame.size.width-_btnLeft.frame.origin.x-22, 40)];
+    UIView * BackView_Serch=[[UIView alloc] initWithFrame:CGRectMake(_btnLeft.frame.size.width+_btnLeft.frame.origin.x+10, 20.5, SCREEN_WIDTH-_btnLeft.frame.size.width-_btnLeft.frame.origin.x-22, 35)];
     BackView_Serch.layer.masksToBounds=YES;
     BackView_Serch.layer.cornerRadius=3;
     BackView_Serch.backgroundColor=[UIColor whiteColor];
-    btn_select=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
+    btn_select=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 35)];
     [btn_select setTitle:selectArray[0] forState:UIControlStateNormal];
     btn_select.titleLabel.font=[UIFont systemFontOfSize:15];
     [btn_select setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [btn_select addTarget:self action:@selector(changeSelectToSearch:) forControlEvents:UIControlEventTouchUpInside];
     [BackView_Serch addSubview:btn_select];
-    UIImageView * img_down=[[UIImageView alloc] initWithFrame:CGRectMake(btn_select.frame.size.width-10, 16, 10, 8)];
+    UIImageView * img_down=[[UIImageView alloc] initWithFrame:CGRectMake(btn_select.frame.size.width-10, 13, 10, 8)];
     img_down.image=[UIImage imageNamed:@"select_down"];
     [btn_select addSubview:img_down];
-    txt_searchtext=[[UITextField alloc] initWithFrame:CGRectMake(btn_select.frame.origin.x+btn_select.frame.size.width+5, 8, BackView_Serch.frame.size.width-btn_select.frame.origin.x-btn_select.frame.size.width, 30)];
+    txt_searchtext=[[UITextField alloc] initWithFrame:CGRectMake(btn_select.frame.origin.x+btn_select.frame.size.width+5, 4.5, BackView_Serch.frame.size.width-btn_select.frame.origin.x-btn_select.frame.size.width, 30)];
     txt_searchtext.placeholder=@"搜索附近商品、商铺";
     [txt_searchtext setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
     [BackView_Serch addSubview:txt_searchtext];
@@ -82,6 +90,7 @@
     _TableView_BackView.delegate=self;
     _TableView_BackView.dataSource=self;
     _TableView_BackView.tag=1;
+    _TableView_BackView.showsVerticalScrollIndicator=NO;
     /***************************headerView 开始 **************************/
     UIView * myheaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 5, SCREEN_WIDTH- 20, 285)];
     myheaderView.backgroundColor=[UIColor colorWithRed:246/255.0 green:246/255.0 blue:246/255.0 alpha:1.0];
@@ -89,22 +98,15 @@
     jianju.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
     [myheaderView addSubview:jianju];
     NSMutableArray *images = [[NSMutableArray alloc] init];
-    for (int i=0; i<4; i++) {
+    for (int i=0; i<slide.count; i++) {
         UIImageView * img=[[UIImageView alloc] init];
-        [img sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"placeholder@2x.png"] ];
-        
+        [img sd_setImageWithURL:[NSURL URLWithString:slide[i][@"pic_img"]] placeholderImage:[UIImage imageNamed:@"placeholder@2x.png"] ];
         [images addObject:img];
     }
-    NSArray *titles = @[@"",
-                        @"",
-                        @"",
-                        @""
-                        ];
     // 创建带标题的图片轮播器
     _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 5, SCREEN_WIDTH- 20, 135) imagesGroup:images ];
     _cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
     _cycleScrollView.delegate = self;
-    _cycleScrollView.titlesGroup = titles;
     [myheaderView addSubview:_cycleScrollView];
     UIView * BackView_buttionlist=[[UIView alloc] initWithFrame:CGRectMake(0, _cycleScrollView.frame.origin.y+_cycleScrollView.frame.size.height+5, myheaderView.frame.size.width, 135)];
     
@@ -149,7 +151,58 @@
 }
 -(void)LoadData
 {
+    circle=[[NSArray alloc] init];
+    class=[[NSArray alloc] init];
+    day_special=[[NSArray alloc] init];
+    slide=[[NSArray alloc] init];
+    good_store=[[NSArray alloc] init];
+    goods_like=[[NSArray alloc] init];
     
+    [[CCLocationManager shareLocation] getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"GetCityBackCall:"];
+        lng=[NSString stringWithFormat:@"%f",locationCorrrdinate.longitude];
+        lat=[NSString stringWithFormat:@"%f",locationCorrrdinate.latitude];
+        [dataprovider GetcityInfoWithlng:[NSString stringWithFormat:@"%f",locationCorrrdinate.longitude] andlat:[NSString stringWithFormat:@"%f",locationCorrrdinate.latitude]];
+    }];
+}
+
+-(void)GetCityBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    if (!dict[@"datas"][@"error"]) {
+        areaid=dict[@"datas"][@"area_id"];
+        [self addLeftbuttontitle:dict[@"datas"][@"area_name"]];
+        _lblLeft.font=[UIFont systemFontOfSize:13];
+        UIImageView * img_icon_down=[[UIImageView alloc] initWithFrame:CGRectMake(_btnLeft.frame.size.width-8, 18, 8, 5)];
+        img_icon_down.image=[UIImage imageNamed:@"menu_down"];
+        [_btnLeft addSubview:img_icon_down];
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"GetIndexData:"];
+        [dataprovider GetIndexDataWithAreaid:@"88" andlng:lng andlat:lat];//areaid
+        NSDictionary * areaData=@{@"area_id":areaid,@"area_name":dict[@"datas"][@"area_name"]};
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"CityInfo.plist"];
+        BOOL result= [areaData writeToFile:plistPath atomically:YES];
+        if (result) {
+            
+        }
+    }
+    
+}
+-(void)GetIndexData:(id)dict
+{
+    NSLog(@"首页数据");
+    if (!dict[@"datas"][@"error"]) {
+        slide=dict[@"datas"][@"slide"];
+        good_store=dict[@"datas"][@"good_store"];
+        circle=dict[@"datas"][@"circle"];
+        goods_like=dict[@"datas"][@"goods_like"];
+        day_special=dict[@"datas"][@"day_special"];
+        class=dict[@"datas"][@"class"];
+        [self initView];
+    }
 }
 
 -(void)changeSelectToSearch:(UIButton *)sender
@@ -191,6 +244,7 @@
 -(void)selectChangeToSearch:(UIButton *)sender
 {
     [btn_select setTitle:selectArray[sender.tag] forState:UIControlStateNormal];
+    searchType= sender.currentTitle;
     [select_Backview removeFromSuperview];
 }
 
@@ -222,7 +276,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -364,7 +418,7 @@
             cellheight=95;
             break;
         case 1:
-            cellheight=150;
+            cellheight=170;
             break;
         case 2:
             cellheight=500;
@@ -375,13 +429,13 @@
         default:
             break;
     }
-    UITableViewCell * cell=[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-20, cellheight)];
+    UITableViewCell * cell=[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, cellheight)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (tableView.tag==1) {
         if (indexPath.section==0) {
             UIView * BackView_Specialprice=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-20, 95)];
             UIImageView * img_Specialprice=[[UIImageView alloc] initWithFrame:CGRectMake(10, 30, 75, 75)];
-            [img_Specialprice sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"muying"]];
+            [img_Specialprice sd_setImageWithURL:[NSURL URLWithString:day_special[0][@"goods_image"]] placeholderImage:[UIImage imageNamed:@"muying"]];
             [BackView_Specialprice addSubview:img_Specialprice];
             UIImageView * icon_special=[[UIImageView alloc] initWithFrame:CGRectMake(8, 28, 40, 15)];
             icon_special.image=[UIImage imageNamed:@"Specialprice"];
@@ -392,22 +446,22 @@
             lbl_icon_special.text=@"9.2折";
             [BackView_Specialprice addSubview:lbl_icon_special];
             UILabel * lbl_goodName=[[UILabel alloc] initWithFrame:CGRectMake(img_Specialprice.frame.origin.x+img_Specialprice.frame.size.width+10, 30, 150, 20)];
-            lbl_goodName.text=@"产品名称";
+            lbl_goodName.text=day_special[0][@"goods_name"];
             [BackView_Specialprice addSubview:lbl_goodName];
             
             UILabel * lbl_GoodDetial=[[UILabel alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, lbl_goodName.frame.origin.y+lbl_goodName.frame.size.height+4, SCREEN_WIDTH-img_Specialprice.frame.origin.x-img_Specialprice.frame.size.width-40, 40)];
-            lbl_GoodDetial.text=@"产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介产品简介";
+            lbl_GoodDetial.text=day_special[0][@"goods_jingle"];
             lbl_GoodDetial.textColor=[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0];
             lbl_GoodDetial.numberOfLines=2;
             lbl_GoodDetial.font=[UIFont systemFontOfSize:14];
             [BackView_Specialprice addSubview:lbl_GoodDetial];
             UILabel * lbl_priceNow=[[UILabel alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, lbl_GoodDetial.frame.origin.y+lbl_GoodDetial.frame.size.height+4, 60, 20)];
-            lbl_priceNow.text=@"¥88";
+            lbl_priceNow.text=day_special[0][@"goods_promotion_price"];
             lbl_priceNow.textColor=[UIColor redColor];
             [BackView_Specialprice addSubview:lbl_priceNow];
             UILabel * lbl_priceOld=[[UILabel alloc] initWithFrame:CGRectMake(lbl_priceNow.frame.origin.x+lbl_priceNow.frame.size.width+10, lbl_priceNow.frame.origin.y+5, 40, 15)];
             lbl_priceOld.textColor=[UIColor colorWithRed:183/255.0 green:183/255.0 blue:183/255.0 alpha:1.0];
-            lbl_priceOld.text=@"¥98";
+            lbl_priceOld.text=day_special[0][@"goods_price"];
             lbl_priceOld.font=[UIFont systemFontOfSize:13];
             [BackView_Specialprice addSubview:lbl_priceOld];
             UIView * del_view=[[UIView alloc] initWithFrame:CGRectMake(lbl_priceOld.frame.origin.x, lbl_priceOld.frame.origin.y+7.5, 40, 1)];
@@ -416,46 +470,57 @@
             UIButton *btn_morebtn=[[UIButton alloc] initWithFrame:CGRectMake(BackView_Specialprice.frame.size.width-50, lbl_priceNow.frame.origin.y, 40, 20)];
             [btn_morebtn setImage:[UIImage imageNamed:@"more_icon"] forState:UIControlStateNormal];
             [BackView_Specialprice addSubview:btn_morebtn];
+            day_sprcial_more=[[UIView alloc] initWithFrame:CGRectMake(BackView_Specialprice.frame.size.width-150, 0, 150, BackView_Specialprice.frame.size.height)];
+            day_sprcial_more.backgroundColor=[UIColor colorWithRed:244/255.0 green:240/255.0 blue:241/255.0 alpha:1.0];
+            day_sprcial_more.hidden=YES;
+//            UILabel * lbl_juliTitle=[[UILabel alloc] initWithFrame:CGRectMake(0, 0, day_sprcial_more.frame.size.width/2, 15)];
+            
+            [BackView_Specialprice addSubview:day_sprcial_more];
             [cell addSubview:BackView_Specialprice];
             
         }
         if (indexPath.section==1) {
             NSMutableArray *viewsArray = [@[] mutableCopy];
-            for (int i = 0; i < 5; ++i) {
+            for (int i = 0; i < circle.count; ++i) {
                 UIView *item=[[UIView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH-20, 140)];
                 item.backgroundColor=[UIColor whiteColor];
-                UIImageView * img_head=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20,20)];
-                [img_head sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"myying"]];
+                UIImageView * img_head=[[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 20,20)];
+                [img_head sd_setImageWithURL:[NSURL URLWithString:circle[i][@"avatar"]] placeholderImage:[UIImage imageNamed:@"myying"]];
                 [item addSubview:img_head];
                 UILabel * lbl_niceName=[[UILabel alloc] initWithFrame:CGRectMake(img_head.frame.origin.x+img_head.frame.size.width+10, 10, 100, 20)];
-                lbl_niceName.text=@"晒单人昵称";
+                lbl_niceName.text=circle[i][@"member_name"];
                 [item addSubview:lbl_niceName];
-                UIView * BackView_OrderDetial=[[UIView alloc] initWithFrame:CGRectMake(0, img_head.frame.origin.y+img_head.frame.size.height+10, item.frame.size.width, 90)];
+                UIView * BackView_OrderDetial=[[UIView alloc] initWithFrame:CGRectMake(0, img_head.frame.origin.y+img_head.frame.size.height+10, item.frame.size.width, 120)];
                 BackView_OrderDetial.backgroundColor=[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0];
                 UIImageView * img_orderImg=[[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 60, 60)];
-                [img_orderImg sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"muying"]];
+                [img_orderImg sd_setImageWithURL:[NSURL URLWithString:circle[i][@"image"][@"0"]] placeholderImage:[UIImage imageNamed:@"muying"]];
                 [BackView_OrderDetial addSubview:img_orderImg];
-                UILabel * lbl_orderTitle=[[UILabel alloc] initWithFrame:CGRectMake(img_orderImg.frame.size.width+10, 10, BackView_OrderDetial.frame.size.width-100, 18)];
+                UILabel * lbl_orderTitle=[[UILabel alloc] initWithFrame:CGRectMake(img_orderImg.frame.size.width+10, 5, BackView_OrderDetial.frame.size.width-100, 18)];
                 lbl_orderTitle.font=[UIFont systemFontOfSize:15];
                 lbl_orderTitle.text=@"觉得撒附近的索科洛夫绝世独立开发建设独立开发建设的旅客福建省大力开发建设的快乐见风";
                 [BackView_OrderDetial addSubview:lbl_orderTitle];
-                UILabel * lbl_OrderDetial=[[UILabel alloc] initWithFrame:CGRectMake(lbl_orderTitle.frame.origin.x, lbl_orderTitle.frame.origin.y+lbl_orderTitle.frame.size.height+3, lbl_orderTitle.frame.size.width, 40)];
+                UILabel * lbl_OrderDetial=[[UILabel alloc] initWithFrame:CGRectMake(lbl_orderTitle.frame.origin.x, lbl_orderTitle.frame.origin.y+lbl_orderTitle.frame.size.height, lbl_orderTitle.frame.size.width, 40)];
                 lbl_OrderDetial.numberOfLines=2;
-                lbl_OrderDetial.text=@"到了旷古绝今反对设立科技发动机范德雷克撒娇说的对是非得失了空间的索科洛夫就阿萨德飞";
+                lbl_OrderDetial.text=circle[i][@"description"];
                 [lbl_OrderDetial setLineBreakMode:NSLineBreakByWordWrapping];
                 lbl_OrderDetial.font=[UIFont systemFontOfSize:14];
                 lbl_OrderDetial.textColor=[UIColor colorWithRed:164/255.0 green:164/255.0 blue:164/255.0 alpha:1.0];
                 [BackView_OrderDetial addSubview:lbl_OrderDetial];
-                UIButton * btn_dianzan=[[UIButton alloc] initWithFrame:CGRectMake(lbl_OrderDetial.frame.origin.x, lbl_OrderDetial.frame.origin.y+lbl_OrderDetial.frame.size.height+3, 40, 15)];
+                UIButton * btn_dianzan=[[UIButton alloc] initWithFrame:CGRectMake(lbl_OrderDetial.frame.origin.x, lbl_OrderDetial.frame.origin.y+lbl_OrderDetial.frame.size.height, 80, 15)];
+                btn_dianzan.imageView.layer.masksToBounds=YES;
+                btn_dianzan.titleLabel.layer.masksToBounds=YES;
+                
                 [btn_dianzan setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
-                btn_dianzan.imageView.bounds=CGRectMake(0, 0, 15, 15);
-                [btn_dianzan setTitle:@"2" forState:UIControlStateNormal];
+                btn_dianzan.imageView.bounds=CGRectMake(0, 0, 12, 15);
+                btn_dianzan.titleLabel.font=[UIFont systemFontOfSize:15];
+                [btn_dianzan setTitle:[NSString stringWithFormat:@"  %@",circle[i][@"praise"]] forState:UIControlStateNormal];
                 [btn_dianzan setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
                 [BackView_OrderDetial addSubview:btn_dianzan];
-                UIButton * btn_pinglun=[[UIButton alloc] initWithFrame:CGRectMake(btn_dianzan.frame.origin.x+btn_dianzan.frame.size.width+5, btn_dianzan.frame.origin.y, 40, 15)];
+                UIButton * btn_pinglun=[[UIButton alloc] initWithFrame:CGRectMake(btn_dianzan.frame.origin.x+btn_dianzan.frame.size.width+5, btn_dianzan.frame.origin.y, 80, 15)];
                 [btn_pinglun setImage:[UIImage imageNamed:@"pinglun"] forState:UIControlStateNormal];
                 btn_pinglun.imageView.bounds=CGRectMake(0, 0, 15, 15);
-                [btn_pinglun setTitle:@"6" forState:UIControlStateNormal];
+                btn_pinglun.titleLabel.font=[UIFont systemFontOfSize:15];
+                [btn_pinglun setTitle:[ NSString stringWithFormat:@"  %@",circle[i][@"replys"]] forState:UIControlStateNormal];
                 [btn_pinglun setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
                 [BackView_OrderDetial addSubview:btn_pinglun];
                 [item addSubview:BackView_OrderDetial];
@@ -464,19 +529,20 @@
             
             self.mainScorllView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0,10, SCREEN_WIDTH-20, 120) animationDuration:2];
             self.mainScorllView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:0.1];
+            self.mainScorllView.totalPagesCount = ^NSInteger(void){
+                return viewsArray.count;
+            };
             self.mainScorllView.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
                 return viewsArray[pageIndex];
             };
-            self.mainScorllView.totalPagesCount = ^NSInteger(void){
-                return 5;
-            };
+            
             self.mainScorllView.TapActionBlock = ^(NSInteger pageIndex){
                 NSLog(@"点击了第%ld个",(long)pageIndex);
             };
             [cell addSubview:_mainScorllView];
         }
         if (indexPath.section==2) {
-            tableView_GessYouLike=[[UITableView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH-20, cellheight)];
+            tableView_GessYouLike=[[UITableView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH-20 ,cellheight)];
             tableView_GessYouLike.delegate=self;
             tableView_GessYouLike.dataSource=self;
             tableView_GessYouLike.tag=2;
@@ -496,14 +562,34 @@
         static NSString *CellIdentifier = @"GoodsTableViewCellIdentifier";
         GoodsTableViewCell *cell = (GoodsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         cell  = [[[NSBundle mainBundle] loadNibNamed:@"GoodsTableViewCell" owner:self options:nil] lastObject];
-        
+        cell.layer.masksToBounds=YES;
+        cell.frame=CGRectMake(cell.frame.origin.x, cell.frame.origin.y, tableView.frame.size.width, cell.frame.size.height);
+        cell.lbl_goodsName.text=goods_like[indexPath.row][@"goods_name"];
+        cell.lbl_goodsDetial.text=goods_like[indexPath.row][@"goods_jingle"];
+        cell.lbl_long.text=goods_like[indexPath.row][@"juli"];
+        cell.lbl_price.text=goods_like[indexPath.row][@"goods_price"];
+        [cell.img_goodsicon sd_setImageWithURL:[NSURL URLWithString:goods_like[indexPath.row][@"goods_image"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+//        cell.lbl_rescuncun.text=goods_like[indexPath.row][@""];
         return cell;
     }
     if (tableView.tag==3) {
         static NSString *CellIdentifier = @"ResTableViewCellIdentifier";
         ResTableViewCell *cell = (ResTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         cell  = [[[NSBundle mainBundle] loadNibNamed:@"ResTableViewCell" owner:self options:nil] lastObject];
+        cell.layer.masksToBounds=YES;
+        cell.frame=CGRectMake(cell.frame.origin.x, cell.frame.origin.y, tableView.frame.size.width, cell.frame.size.height);
+        [cell.img_resLogo sd_setImageWithURL:[NSURL URLWithString:good_store[indexPath.row][@"store_label"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+        cell.lbl_resTitle.text=good_store[indexPath.row][@"store_name"];
+        cell.lbl_resaddress.text=good_store[indexPath.row][@"store_address"];
+        cell.lbl_pingjia.text=[NSString stringWithFormat:@"%@评价",good_store[indexPath.row][@"store_evaluate_count"]];
+        cell.lbl_juli.text=good_store[indexPath.row][@"juli"];
+        cell.lbl_classify.text=good_store[indexPath.row][@"sc_name"];
         
+        CWStarRateView * weisheng=[[CWStarRateView alloc] initWithFrame:CGRectMake(0,4,cell.starView.frame.size.width,15) numberOfStars:5];
+        weisheng.scorePercent = [good_store[indexPath.row][@"store_desccredit"] floatValue]/5;
+        weisheng.allowIncompleteStar = NO;
+        weisheng.hasAnimation = YES;
+        [cell.starView addSubview:weisheng];
         return cell;
     }
     return cell;
@@ -533,6 +619,34 @@
 }
 
 
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([@"\n" isEqualToString:string] == YES)
+    {
+        [textField resignFirstResponder];
+        NSRange range= [searchType rangeOfString:@"宝贝"];
+        if (range.length>0) {
+            GoodListViewController * goodlist=[[GoodListViewController alloc] initWithNibName:@"GoodListViewController" bundle:[NSBundle mainBundle]];
+            goodlist.KeyWord=textField.text;
+            [self.navigationController pushViewController:goodlist animated:YES];
+        }
+        else
+        {
+            ShopInsideViewController * shoplist=[[ShopInsideViewController alloc] initWithNibName:@"ShopInsideViewController" bundle:[NSBundle mainBundle]];
+            shoplist.keyWord=textField.text;
+            [self.navigationController pushViewController:shoplist animated:YES];
+        }
+        return NO;
+    }
+    
+    return YES;
+}
+/**
+ *  点击第一个轮播图
+ *
+ *  @param cycleScrollView <#cycleScrollView description#>
+ *  @param index           <#index description#>
+ */
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
 {
     NSLog(@"%ld",(long)index);
@@ -565,4 +679,9 @@
 {
     NSLog(@"每日好店");
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] showTabBar];
+}
+
 @end

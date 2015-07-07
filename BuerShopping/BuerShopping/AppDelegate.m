@@ -37,14 +37,13 @@
     firstCol=[[FirstScrollController alloc]init];
     _tabBarViewCol = [[CustomTabBarViewController alloc] init];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds] ];
-//    if ([get_sp(@"FIRST_ENTER")isEqualToString:@"1"]) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]) {
         self.window.rootViewController =_tabBarViewCol;
-//    }
-//    else
-//    {
-//        self.window.rootViewController =firstCol;
-//    }
-    
+    }
+    else
+    {
+        self.window.rootViewController =firstCol;
+    }
     [self.window makeKeyAndVisible];
     //[self getAliPay];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeRootView) name:@"changeRootView" object:nil];

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PinglunViewController">
+            <connections>
+                <outlet property="_myTableview" destination="GPY-YC-Zk5" id="H6h-L7-Apv"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="GPY-YC-Zk5">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="GPY-YC-Zk5" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="1Sl-9q-lHu"/>
+                <constraint firstItem="GPY-YC-Zk5" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="691-Tk-r0r"/>
+                <constraint firstAttribute="trailing" secondItem="GPY-YC-Zk5" secondAttribute="trailing" id="ZLB-ef-Xgj"/>
+                <constraint firstAttribute="bottom" secondItem="GPY-YC-Zk5" secondAttribute="bottom" id="qoq-pj-wsJ"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="GPY-YC-Zk5"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="1Sl-9q-lHu"/>
+                    <exclude reference="691-Tk-r0r"/>
+                    <exclude reference="ZLB-ef-Xgj"/>
+                    <exclude reference="qoq-pj-wsJ"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="GPY-YC-Zk5"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="1Sl-9q-lHu"/>
+                    <include reference="691-Tk-r0r"/>
+                    <include reference="ZLB-ef-Xgj"/>
+                    <include reference="qoq-pj-wsJ"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

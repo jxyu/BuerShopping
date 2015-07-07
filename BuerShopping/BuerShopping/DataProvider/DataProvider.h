@@ -170,6 +170,22 @@
  *  @param prm <#prm description#>
  */
 -(void)GetStoreGoodList:(id)prm;
+/**
+ *  获取商品详情
+ *
+ *  @param goodid 商品id
+ */
+-(void)GetGoodDetialInfoWithid:(NSString *)goodid;
+/**
+ *  获取更多评论
+ *
+ *  @param goodid <#goodid description#>
+ */
+-(void)GetMorePinglun:(NSString *)goodid;
+/**
+ *  获取城市列表
+ */
+-(void)GetCityList;
 
 
 

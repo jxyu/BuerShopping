@@ -6,6 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GoodDetialViewController">
             <connections>
+                <outlet property="backviw_bottom" destination="grh-JM-j8k" id="86x-8j-nLR"/>
+                <outlet property="mytableview" destination="UpC-E6-QD5" id="VWC-Mn-QyB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -13,7 +15,69 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="UpC-E6-QD5">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="grh-JM-j8k">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="6Ak-ZP-kv8"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="6Ak-ZP-kv8"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="6Ak-ZP-kv8"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="grh-JM-j8k" secondAttribute="bottom" id="3qB-0p-xrg"/>
+                <constraint firstItem="UpC-E6-QD5" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="7AN-Gw-k7a"/>
+                <constraint firstItem="UpC-E6-QD5" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="AKg-al-4EI"/>
+                <constraint firstAttribute="bottom" secondItem="UpC-E6-QD5" secondAttribute="bottom" constant="50" id="Zhr-GT-Ajs"/>
+                <constraint firstItem="grh-JM-j8k" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="cT9-s4-pty"/>
+                <constraint firstAttribute="trailing" secondItem="grh-JM-j8k" secondAttribute="trailing" id="rFh-t0-PxE"/>
+                <constraint firstAttribute="trailing" secondItem="UpC-E6-QD5" secondAttribute="trailing" id="yG6-Xq-0uj"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="UpC-E6-QD5"/>
+                    <exclude reference="grh-JM-j8k"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="7AN-Gw-k7a"/>
+                    <exclude reference="AKg-al-4EI"/>
+                    <exclude reference="Zhr-GT-Ajs"/>
+                    <exclude reference="yG6-Xq-0uj"/>
+                    <exclude reference="3qB-0p-xrg"/>
+                    <exclude reference="cT9-s4-pty"/>
+                    <exclude reference="rFh-t0-PxE"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="UpC-E6-QD5"/>
+                    <include reference="grh-JM-j8k"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="7AN-Gw-k7a"/>
+                    <include reference="AKg-al-4EI"/>
+                    <include reference="Zhr-GT-Ajs"/>
+                    <include reference="yG6-Xq-0uj"/>
+                    <include reference="3qB-0p-xrg"/>
+                    <include reference="cT9-s4-pty"/>
+                    <include reference="rFh-t0-PxE"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>

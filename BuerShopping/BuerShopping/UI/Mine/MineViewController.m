@@ -332,7 +332,7 @@
             img_go.image=[UIImage imageNamed:@"index_go"];
             [BackView_SpecialPrice addSubview:img_go];
             UIButton * btn_morespecialprice=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_SpecialPrice.frame.size.width, 30)];
-            [btn_morespecialprice addTarget:self action:@selector(Btn_MoreshowOrderClick) forControlEvents:UIControlEventTouchUpInside];
+//            [btn_morespecialprice addTarget:self action:@selector(Btn_MoreshowOrderClick) forControlEvents:UIControlEventTouchUpInside];
             [BackView_SpecialPrice addSubview:btn_morespecialprice];
             UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, btn_morespecialprice.frame.size.height, BackView_SpecialPrice.frame.size.width-20, 1)];
             fenge.backgroundColor=[UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];

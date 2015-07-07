@@ -38,7 +38,7 @@
     isfooterrefresh=NO;
     arrayslider=[[NSArray alloc] init];
     goods_list=[[NSArray alloc] init];
-    curpage=1;
+    curpage=0;
     [self LoadAllData];
     [self InitAllView];
 }
@@ -75,7 +75,7 @@
     NSMutableArray *images = [[NSMutableArray alloc] init];
     for (int i=0; i<arrayslider.count; i++) {
         UIImageView * img=[[UIImageView alloc] init];
-        [img sd_setImageWithURL:[NSURL URLWithString:arrayslider[i]] placeholderImage:[UIImage imageNamed:@"placeholder@2x.png"] ];
+        [img sd_setImageWithURL:[NSURL URLWithString:arrayslider[i]] placeholderImage:[UIImage imageNamed:@"placeholder.png"] ];
         [images addObject:img];
     }
     // 创建带标题的图片轮播器
@@ -139,8 +139,10 @@
         if (!isfooterrefresh) {
             isfooterrefresh=YES;
             [self FootRefresh];
+            [_myTableVeiw reloadData];
         }
-        
+        // 结束刷新
+        [_myTableVeiw.footer endRefreshing];
     }];
     // 默认先隐藏footer
     _myTableVeiw.footer.hidden = NO;
@@ -152,9 +154,16 @@
 
 -(void)TopRefresh
 {
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"GetStoreDetialBackCall:"];
-    [dataprovider GetStoreDetialInfoWithKey:userinfoWithFile[@"key"] andstoreid:@"2"];
+    if (userinfoWithFile[@"key"]) {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"GetStoreDetialBackCall:"];
+        [dataprovider GetStoreDetialInfoWithKey:userinfoWithFile[@"key"] andstoreid:@"2"];
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"通知" message:@"请先登录" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles: nil];
+        [alert show];
+    }
 }
 
 -(void)FootRefresh
@@ -172,9 +181,7 @@
 {
     
     NSLog(@"上拉刷新");
-    [_myTableVeiw reloadData];
-    // 结束刷新
-    [_myTableVeiw.footer endRefreshing];
+    
     NSMutableArray *itemarray=[[NSMutableArray alloc] initWithArray:goods_list];
     if (!dict[@"datas"][@"error"]) {
         NSArray * arrayitem=dict[@"datas"][@"goods_list"];
@@ -183,7 +190,6 @@
         }
         goods_list=[[NSArray alloc] initWithArray:itemarray];
     }
-    [_myTableVeiw reloadData];
 }
 
 

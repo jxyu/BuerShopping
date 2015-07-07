@@ -47,7 +47,8 @@
     if (sender.contentOffset.x>(SCREEN_WIDTH*2+60)) {
         
 
-        set_sp(@"1", @"FIRST_ENTER");
+//        set_sp(@"1", @"FIRST_ENTER");
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView" object:nil ];
     }
     

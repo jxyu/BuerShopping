@@ -229,6 +229,29 @@
         [self GetRequest:url andpram:prm];
     }
 }
+-(void)GetGoodDetialInfoWithid:(NSString *)goodid
+{
+    if (goodid) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=goods&op=goods_detail",Url];
+        NSDictionary * prm=@{@"goods_id":goodid};
+        [self GetRequest:url andpram:prm];
+    }
+}
+
+-(void)GetMorePinglun:(NSString *)goodid
+{
+    if (goodid) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=goods&op=more_evaluate",Url];
+        NSDictionary * prm=@{@"goods_id":goodid};
+        [self GetRequest:url andpram:prm];
+    }
+}
+
+-(void)GetCityList
+{
+    NSString * url=[NSString stringWithFormat:@"%@index.php?act=area&op=city_list",Url];
+    [self GetRequest:url andpram:nil];
+}
 
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram
 {

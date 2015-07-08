@@ -15,6 +15,7 @@
 #import "GoodsTableViewCell.h"
 #import "MJRefresh.h"
 #import "GoodDetialViewController.h"
+#import "RoutePlanViewController.h"
 
 @interface ShopDetialViewController ()
 
@@ -67,7 +68,7 @@
 -(void)BuildHeaderView
 {
     /***************************headerView 开始 **************************/
-    UIView * myheaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 5, SCREEN_WIDTH, 155)];
+    UIView * myheaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 5, SCREEN_WIDTH, 225)];
     myheaderView.backgroundColor=[UIColor colorWithRed:246/255.0 green:246/255.0 blue:246/255.0 alpha:1.0];
     UIView * jianju=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH- 20, 5)];
     jianju.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
@@ -113,6 +114,7 @@
     [BackView_StoreInfo addSubview:fenge];
     [myheaderView addSubview:BackView_StoreInfo];
     UIButton * btn_location=[[UIButton alloc] initWithFrame:CGRectMake(0, BackView_StoreInfo.frame.origin.y, fenge.frame.origin.x, BackView_StoreInfo.frame.size.height)];
+    [btn_location addTarget:self action:@selector(JumptoNavi:) forControlEvents:UIControlEventTouchUpInside];
     [myheaderView addSubview:btn_location];
     UIButton * btn_Tel=[[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-47, BackView_StoreInfo.frame.origin.y+10, 30, 30)];
     [btn_Tel setImage:[UIImage imageNamed:@"Tel_icon"] forState:UIControlStateNormal];
@@ -150,6 +152,12 @@
 -(void)MakeCallForStore
 {
     NSLog(@"打电话");
+}
+
+-(void)JumptoNavi:(UIButton * )sender
+{
+    RoutePlanViewController * routeplanVC=[[RoutePlanViewController alloc] init];
+    [self.navigationController pushViewController:routeplanVC animated:YES];
 }
 
 -(void)TopRefresh

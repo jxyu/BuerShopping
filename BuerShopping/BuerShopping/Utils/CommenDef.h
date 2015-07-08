@@ -15,6 +15,7 @@
 
 #define KURL @"http://115.28.21.137/mobile/"
 
+
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 #define SAFE_RELEASE(x) [x release];x=nil

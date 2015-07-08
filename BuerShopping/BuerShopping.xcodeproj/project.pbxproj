@@ -88,13 +88,25 @@
 		808293B81B2FCF860050F268 /* addres_isdefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 808293B61B2FCF860050F268 /* addres_isdefault.png */; };
 		808293B91B2FCF860050F268 /* address_isnotdefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 808293B71B2FCF860050F268 /* address_isnotdefault.png */; };
 		808293BC1B2FFB080050F268 /* AddaddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808293BB1B2FFB080050F268 /* AddaddressViewController.m */; };
-		8083CE611B2E56DA0055E11F /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8083CE601B2E56DA0055E11F /* HttpRequest.m */; };
 		8083CE641B2E69BA0055E11F /* JiFenShangChengViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8083CE631B2E69BA0055E11F /* JiFenShangChengViewController.m */; };
 		8083CE681B2E6EBC0055E11F /* JiFenCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8083CE661B2E6EBC0055E11F /* JiFenCellTableViewCell.m */; };
 		8083CE691B2E6EBC0055E11F /* JiFenCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8083CE671B2E6EBC0055E11F /* JiFenCellTableViewCell.xib */; };
 		8087B6301B33AAF100FC83EB /* JiFenDetialTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8087B62E1B33AAF100FC83EB /* JiFenDetialTableViewCell.m */; };
 		8087B6311B33AAF100FC83EB /* JiFenDetialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8087B62F1B33AAF100FC83EB /* JiFenDetialTableViewCell.xib */; };
 		8088121F1B3254C900F66F71 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8088121E1B3254C900F66F71 /* Reveal.framework */; };
+		808F43851B4CAC4600E17D54 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 808F43841B4CAC4600E17D54 /* AudioToolbox.framework */; };
+		808F43871B4CAC5200E17D54 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 808F43861B4CAC5200E17D54 /* AVFoundation.framework */; };
+		808F43891B4CAC6600E17D54 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 808F43881B4CAC6600E17D54 /* AddressBook.framework */; };
+		808F438B1B4CAC8E00E17D54 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 808F438A1B4CAC8E00E17D54 /* libstdc++.6.0.9.dylib */; };
+		808F43921B4CB5BD00E17D54 /* RoutePlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808F43911B4CB5BD00E17D54 /* RoutePlanViewController.m */; };
+		808F43951B4CB74800E17D54 /* BaseNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808F43941B4CB74800E17D54 /* BaseNaviViewController.m */; };
+		808F439E1B4CB88B00E17D54 /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 808F439D1B4CB88B00E17D54 /* Toast+UIView.m */; };
+		808F43A21B4CB8BC00E17D54 /* UIView+Geometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 808F43A11B4CB8BC00E17D54 /* UIView+Geometry.m */; };
+		808F43A61B4CB99200E17D54 /* NavPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 808F43A51B4CB99200E17D54 /* NavPointAnnotation.m */; };
+		808F43E51B4CD16F00E17D54 /* AMapNaviKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 808F43E31B4CD16F00E17D54 /* AMapNaviKit.framework */; };
+		808F43E61B4CD16F00E17D54 /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 808F43E41B4CD16F00E17D54 /* iflyMSC.framework */; };
+		808F43E91B4CD19F00E17D54 /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 808F43E71B4CD19F00E17D54 /* AMap.bundle */; };
+		808F43EA1B4CD19F00E17D54 /* AMapNavi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 808F43E81B4CD19F00E17D54 /* AMapNavi.bundle */; };
 		808F58E61B4A2775001700E5 /* PinglunViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808F58E41B4A2775001700E5 /* PinglunViewController.m */; };
 		808F58E71B4A2775001700E5 /* PinglunViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 808F58E51B4A2775001700E5 /* PinglunViewController.xib */; };
 		8090A2621B44BE8C004F8785 /* Tel_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8090A2611B44BE8C004F8785 /* Tel_icon@2x.png */; };
@@ -336,8 +348,6 @@
 		808293B71B2FCF860050F268 /* address_isnotdefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address_isnotdefault.png; sourceTree = "<group>"; };
 		808293BA1B2FFB080050F268 /* AddaddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddaddressViewController.h; sourceTree = "<group>"; };
 		808293BB1B2FFB080050F268 /* AddaddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddaddressViewController.m; sourceTree = "<group>"; };
-		8083CE5F1B2E56DA0055E11F /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
-		8083CE601B2E56DA0055E11F /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
 		8083CE621B2E69BA0055E11F /* JiFenShangChengViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JiFenShangChengViewController.h; sourceTree = "<group>"; };
 		8083CE631B2E69BA0055E11F /* JiFenShangChengViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JiFenShangChengViewController.m; sourceTree = "<group>"; };
 		8083CE651B2E6EBC0055E11F /* JiFenCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JiFenCellTableViewCell.h; sourceTree = "<group>"; };
@@ -347,6 +357,24 @@
 		8087B62E1B33AAF100FC83EB /* JiFenDetialTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JiFenDetialTableViewCell.m; sourceTree = "<group>"; };
 		8087B62F1B33AAF100FC83EB /* JiFenDetialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JiFenDetialTableViewCell.xib; sourceTree = "<group>"; };
 		8088121E1B3254C900F66F71 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
+		808F43841B4CAC4600E17D54 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		808F43861B4CAC5200E17D54 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		808F43881B4CAC6600E17D54 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		808F438A1B4CAC8E00E17D54 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
+		808F43901B4CB5BD00E17D54 /* RoutePlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoutePlanViewController.h; sourceTree = "<group>"; };
+		808F43911B4CB5BD00E17D54 /* RoutePlanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutePlanViewController.m; sourceTree = "<group>"; };
+		808F43931B4CB74800E17D54 /* BaseNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNaviViewController.h; sourceTree = "<group>"; };
+		808F43941B4CB74800E17D54 /* BaseNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNaviViewController.m; sourceTree = "<group>"; };
+		808F439C1B4CB88B00E17D54 /* Toast+UIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Toast+UIView.h"; sourceTree = "<group>"; };
+		808F439D1B4CB88B00E17D54 /* Toast+UIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Toast+UIView.m"; sourceTree = "<group>"; };
+		808F43A01B4CB8BC00E17D54 /* UIView+Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Geometry.h"; sourceTree = "<group>"; };
+		808F43A11B4CB8BC00E17D54 /* UIView+Geometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Geometry.m"; sourceTree = "<group>"; };
+		808F43A41B4CB99200E17D54 /* NavPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavPointAnnotation.h; sourceTree = "<group>"; };
+		808F43A51B4CB99200E17D54 /* NavPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavPointAnnotation.m; sourceTree = "<group>"; };
+		808F43E31B4CD16F00E17D54 /* AMapNaviKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapNaviKit.framework; sourceTree = "<group>"; };
+		808F43E41B4CD16F00E17D54 /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
+		808F43E71B4CD19F00E17D54 /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AMap.bundle; path = BuerShopping/FrameWork/AMapNaviKit.framework/Versions/1.2.1.dcd39fa/Resources/AMap.bundle; sourceTree = "<group>"; };
+		808F43E81B4CD19F00E17D54 /* AMapNavi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AMapNavi.bundle; path = BuerShopping/FrameWork/AMapNaviKit.framework/Versions/1.2.1.dcd39fa/Resources/AMapNavi.bundle; sourceTree = "<group>"; };
 		808F58E31B4A2775001700E5 /* PinglunViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinglunViewController.h; sourceTree = "<group>"; };
 		808F58E41B4A2775001700E5 /* PinglunViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinglunViewController.m; sourceTree = "<group>"; };
 		808F58E51B4A2775001700E5 /* PinglunViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinglunViewController.xib; sourceTree = "<group>"; };
@@ -497,6 +525,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				808F438B1B4CAC8E00E17D54 /* libstdc++.6.0.9.dylib in Frameworks */,
+				808F43891B4CAC6600E17D54 /* AddressBook.framework in Frameworks */,
+				808F43E51B4CD16F00E17D54 /* AMapNaviKit.framework in Frameworks */,
+				808F43871B4CAC5200E17D54 /* AVFoundation.framework in Frameworks */,
+				808F43851B4CAC4600E17D54 /* AudioToolbox.framework in Frameworks */,
 				8088121F1B3254C900F66F71 /* Reveal.framework in Frameworks */,
 				809425FE1B2C17C600DFEDF7 /* MobileCoreServices.framework in Frameworks */,
 				806FDD711B1D4695006F4763 /* SystemConfiguration.framework in Frameworks */,
@@ -504,6 +537,7 @@
 				806FDD6D1B1D4677006F4763 /* libz.dylib in Frameworks */,
 				806FDD6B1B1D4640006F4763 /* libicucore.dylib in Frameworks */,
 				806FDD681B1D44AD006F4763 /* SMS_SDK.framework in Frameworks */,
+				808F43E61B4CD16F00E17D54 /* iflyMSC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,6 +607,8 @@
 		806FDD691B1D461B006F4763 /* FrameWork */ = {
 			isa = PBXGroup;
 			children = (
+				808F43E31B4CD16F00E17D54 /* AMapNaviKit.framework */,
+				808F43E41B4CD16F00E17D54 /* iflyMSC.framework */,
 				806FDD6A1B1D4640006F4763 /* libicucore.dylib */,
 				8088121E1B3254C900F66F71 /* Reveal.framework */,
 			);
@@ -582,6 +618,12 @@
 		807D3C0B1B194AFC00FBB530 = {
 			isa = PBXGroup;
 			children = (
+				808F43E71B4CD19F00E17D54 /* AMap.bundle */,
+				808F43E81B4CD19F00E17D54 /* AMapNavi.bundle */,
+				808F438A1B4CAC8E00E17D54 /* libstdc++.6.0.9.dylib */,
+				808F43881B4CAC6600E17D54 /* AddressBook.framework */,
+				808F43861B4CAC5200E17D54 /* AVFoundation.framework */,
+				808F43841B4CAC4600E17D54 /* AudioToolbox.framework */,
 				807D3C161B194AFC00FBB530 /* BuerShopping */,
 				807D3C301B194AFD00FBB530 /* BuerShoppingTests */,
 				807D3C151B194AFC00FBB530 /* Products */,
@@ -667,6 +709,7 @@
 		807D3C3E1B194B8200FBB530 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				808F43961B4CB7EB00E17D54 /* NaviSource */,
 				809504D21B427D5500B7F282 /* DOPDropDownMenu - Enhanced */,
 				809504AD1B42333C00B7F282 /* MJRefresh */,
 				80CB67B31B415C52000F8248 /* ThreeStarRate */,
@@ -744,6 +787,10 @@
 		807D3C441B194C4B00FBB530 /* Shop */ = {
 			isa = PBXGroup;
 			children = (
+				808F43931B4CB74800E17D54 /* BaseNaviViewController.h */,
+				808F43941B4CB74800E17D54 /* BaseNaviViewController.m */,
+				808F43901B4CB5BD00E17D54 /* RoutePlanViewController.h */,
+				808F43911B4CB5BD00E17D54 /* RoutePlanViewController.m */,
 				807D3C521B19547900FBB530 /* ShopViewController.h */,
 				807D3C531B19547900FBB530 /* ShopViewController.m */,
 				807D3C541B19547900FBB530 /* ShopViewController.xib */,
@@ -959,13 +1006,48 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		808F43961B4CB7EB00E17D54 /* NaviSource */ = {
+			isa = PBXGroup;
+			children = (
+				808F43A31B4CB99200E17D54 /* Annotation */,
+				808F439F1B4CB8BC00E17D54 /* Category */,
+				808F439B1B4CB88B00E17D54 /* Toast */,
+			);
+			path = NaviSource;
+			sourceTree = "<group>";
+		};
+		808F439B1B4CB88B00E17D54 /* Toast */ = {
+			isa = PBXGroup;
+			children = (
+				808F439C1B4CB88B00E17D54 /* Toast+UIView.h */,
+				808F439D1B4CB88B00E17D54 /* Toast+UIView.m */,
+			);
+			path = Toast;
+			sourceTree = "<group>";
+		};
+		808F439F1B4CB8BC00E17D54 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				808F43A01B4CB8BC00E17D54 /* UIView+Geometry.h */,
+				808F43A11B4CB8BC00E17D54 /* UIView+Geometry.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		808F43A31B4CB99200E17D54 /* Annotation */ = {
+			isa = PBXGroup;
+			children = (
+				808F43A41B4CB99200E17D54 /* NavPointAnnotation.h */,
+				808F43A51B4CB99200E17D54 /* NavPointAnnotation.m */,
+			);
+			path = Annotation;
+			sourceTree = "<group>";
+		};
 		809425F91B2C16ED00DFEDF7 /* UpLoadImage */ = {
 			isa = PBXGroup;
 			children = (
 				809425FA1B2C16ED00DFEDF7 /* VPImageCropperViewController.h */,
 				809425FB1B2C16ED00DFEDF7 /* VPImageCropperViewController.m */,
-				8083CE5F1B2E56DA0055E11F /* HttpRequest.h */,
-				8083CE601B2E56DA0055E11F /* HttpRequest.m */,
 			);
 			name = UpLoadImage;
 			path = ../../../../jxyu/barGuoTakeOutForIOS/BGTakeOut/BGTakeOut/Source/UpLoadImage;
@@ -1162,6 +1244,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				808F43E91B4CD19F00E17D54 /* AMap.bundle in Resources */,
+				808F43EA1B4CD19F00E17D54 /* AMapNavi.bundle in Resources */,
 				807D3C8C1B1961B300FBB530 /* FirstScrollController.xib in Resources */,
 				809211371B27D03900A37949 /* my_title_bg@2x.png in Resources */,
 				8092113B1B27D44500A37949 /* showorder_icon@2x.png in Resources */,
@@ -1318,6 +1402,7 @@
 				80CBCB3B1B32B1BE0022FB69 /* DuiHuanJiluViewController.m in Sources */,
 				807D3CC11B19A7C200FBB530 /* AFSecurityPolicy.m in Sources */,
 				80F113AC1B1D938000DFBB11 /* UIImage+GIF.m in Sources */,
+				808F439E1B4CB88B00E17D54 /* Toast+UIView.m in Sources */,
 				809504C81B42333C00B7F282 /* MJRefreshConst.m in Sources */,
 				80F113B01B1D938000DFBB11 /* UIImageView+WebCache.m in Sources */,
 				809504C91B42333C00B7F282 /* MJRefreshFooter.m in Sources */,
@@ -1330,7 +1415,6 @@
 				800B28AD1B269A6600D8433C /* CCLocationManager.m in Sources */,
 				8083CE641B2E69BA0055E11F /* JiFenShangChengViewController.m in Sources */,
 				803FCC4E1B1C44AF003A0D4C /* TAPageControl.m in Sources */,
-				8083CE611B2E56DA0055E11F /* HttpRequest.m in Sources */,
 				80F113A81B1D938000DFBB11 /* SDWebImageDownloaderOperation.m in Sources */,
 				807D3CC51B19A7C200FBB530 /* AFURLSessionManager.m in Sources */,
 				807D3C6A1B19559900FBB530 /* Toolkit.m in Sources */,
@@ -1339,17 +1423,21 @@
 				80F113A31B1D938000DFBB11 /* NSData+ImageContentType.m in Sources */,
 				807D3C1A1B194AFC00FBB530 /* main.m in Sources */,
 				807D3CC81B19A80800FBB530 /* DataProvider.m in Sources */,
+				808F43921B4CB5BD00E17D54 /* RoutePlanViewController.m in Sources */,
 				809504D01B42333C00B7F282 /* UIScrollView+MJRefresh.m in Sources */,
+				808F43A21B4CB8BC00E17D54 /* UIView+Geometry.m in Sources */,
 				807D3C551B19547900FBB530 /* ShopViewController.m in Sources */,
 				80F113AB1B1D938000DFBB11 /* UIButton+WebCache.m in Sources */,
 				803FFF901B4BD33F00DF7F2A /* AutoLocationViewController.m in Sources */,
 				808293AA1B2FA59B0050F268 /* DuihuanDetialViewController.m in Sources */,
 				809504CF1B42333C00B7F282 /* UIScrollView+MJExtension.m in Sources */,
 				805A527C1B1D4E3700C93A97 /* SVIndefiniteAnimatedView.m in Sources */,
+				808F43951B4CB74800E17D54 /* BaseNaviViewController.m in Sources */,
 				807D3C641B1954EB00FBB530 /* IndexViewController.m in Sources */,
 				807D3CC41B19A7C200FBB530 /* AFURLResponseSerialization.m in Sources */,
 				809504D11B42333C00B7F282 /* UIView+MJExtension.m in Sources */,
 				80F113B11B1D938000DFBB11 /* UIView+WebCacheOperation.m in Sources */,
+				808F43A61B4CB99200E17D54 /* NavPointAnnotation.m in Sources */,
 				80F113A21B1D938000DFBB11 /* MKAnnotationView+WebCache.m in Sources */,
 				808293B41B2FCCBF0050F268 /* AddressCellTableViewCell.m in Sources */,
 				809504CC1B42333C00B7F282 /* MJRefreshHeader.m in Sources */,
@@ -1483,12 +1571,18 @@
 		807D3C381B194AFD00FBB530 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					armv7s,
+				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BuerShopping/ThreeFrame/SMS_SDK",
 					"$(PROJECT_DIR)/BuerShopping/FrameWork",
+					/Users/Snow/Desktop/TiYanGuanControl,
+					/Users/Snow/Downloads/officialDemoNavi/officialDemoNavi/Extern,
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BuerShopping/buer.pch";
 				INFOPLIST_FILE = BuerShopping/Info.plist;
@@ -1501,12 +1595,18 @@
 		807D3C391B194AFD00FBB530 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					armv7s,
+				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BuerShopping/ThreeFrame/SMS_SDK",
 					"$(PROJECT_DIR)/BuerShopping/FrameWork",
+					/Users/Snow/Desktop/TiYanGuanControl,
+					/Users/Snow/Downloads/officialDemoNavi/officialDemoNavi/Extern,
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BuerShopping/buer.pch";
 				INFOPLIST_FILE = BuerShopping/Info.plist;

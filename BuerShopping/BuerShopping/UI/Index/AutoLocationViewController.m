@@ -16,7 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [self addLeftButton:@"Icon_Back@2x.png"];
+    _lblTitle.text=@"";
+    _lblTitle.textColor=[UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning {

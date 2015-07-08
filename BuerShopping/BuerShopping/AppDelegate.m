@@ -9,9 +9,16 @@
 #import "AppDelegate.h"
 #import "CommenDef.h"
 #import "DataProvider.h"
+#import "iflyMSC/IFlySpeechSynthesizer.h"
+#import "iflyMSC/IFlySpeechSynthesizerDelegate.h"
+#import "iflyMSC/IFlySpeechConstant.h"
+#import "iflyMSC/IFlySpeechUtility.h"
+#import "iflyMSC/IFlySetting.h"
+#import <AMapNaviKit/AMapNaviKit.h>
 
 #define appKey @"7bf8c19274e0"
 #define appSecret @"a9544d5cdd5854a62ba4f5978be3ef6f"
+#define APIKey @"d57667019f79800b1cac4d682465f035";
 
 @interface AppDelegate ()
 
@@ -20,10 +27,42 @@
 @implementation AppDelegate
 
 
+- (void)configureAPIKey
+{
+    [AMapNaviServices sharedServices].apiKey = (NSString *)APIKey;
+    [MAMapServices sharedServices].apiKey = (NSString *)APIKey;
+}
+
+
+- (void)configIFlySpeech
+{
+    NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@,timeout=%@",@"53c35b10",@"20000"];
+    
+    [IFlySpeechUtility createUtility:initString];
+    
+    [IFlySetting setLogFile:LVL_NONE];
+    [IFlySetting showLogcat:NO];
+    
+    // 设置语音合成的参数
+    [[IFlySpeechSynthesizer sharedInstance] setParameter:@"50" forKey:[IFlySpeechConstant SPEED]];//合成的语速,取值范围 0~100
+    [[IFlySpeechSynthesizer sharedInstance] setParameter:@"50" forKey:[IFlySpeechConstant VOLUME]];//合成的音量;取值范围 0~100
+    
+    // 发音人,默认为”xiaoyan”;可以设置的参数列表可参考个 性化发音人列表;
+    [[IFlySpeechSynthesizer sharedInstance] setParameter:@"xiaoyan" forKey:[IFlySpeechConstant VOICE_NAME]];
+    
+    // 音频采样率,目前支持的采样率有 16000 和 8000;
+    [[IFlySpeechSynthesizer sharedInstance] setParameter:@"8000" forKey:[IFlySpeechConstant SAMPLE_RATE]];
+    
+    // 当你再不需要保存音频时，请在必要的地方加上这行。
+    [[IFlySpeechSynthesizer sharedInstance] setParameter:nil forKey:[IFlySpeechConstant TTS_AUDIO_PATH]];
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self configureAPIKey];
     
-    
+    [self configIFlySpeech];
     /**
      *  短信验证添加
      */

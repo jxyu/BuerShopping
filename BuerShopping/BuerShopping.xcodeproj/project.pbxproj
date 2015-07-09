@@ -107,6 +107,9 @@
 		808F43E61B4CD16F00E17D54 /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 808F43E41B4CD16F00E17D54 /* iflyMSC.framework */; };
 		808F43E91B4CD19F00E17D54 /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 808F43E71B4CD19F00E17D54 /* AMap.bundle */; };
 		808F43EA1B4CD19F00E17D54 /* AMapNavi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 808F43E81B4CD19F00E17D54 /* AMapNavi.bundle */; };
+		808F43F31B4D0EA800E17D54 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 808F43F21B4D0EA800E17D54 /* UIKit.framework */; };
+		808F44001B4D1A4800E17D54 /* ChineseString.m in Sources */ = {isa = PBXBuildFile; fileRef = 808F43FD1B4D1A4800E17D54 /* ChineseString.m */; };
+		808F44011B4D1A4800E17D54 /* pinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 808F43FE1B4D1A4800E17D54 /* pinyin.m */; };
 		808F58E61B4A2775001700E5 /* PinglunViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808F58E41B4A2775001700E5 /* PinglunViewController.m */; };
 		808F58E71B4A2775001700E5 /* PinglunViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 808F58E51B4A2775001700E5 /* PinglunViewController.xib */; };
 		8090A2621B44BE8C004F8785 /* Tel_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8090A2611B44BE8C004F8785 /* Tel_icon@2x.png */; };
@@ -375,6 +378,11 @@
 		808F43E41B4CD16F00E17D54 /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
 		808F43E71B4CD19F00E17D54 /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AMap.bundle; path = BuerShopping/FrameWork/AMapNaviKit.framework/Versions/1.2.1.dcd39fa/Resources/AMap.bundle; sourceTree = "<group>"; };
 		808F43E81B4CD19F00E17D54 /* AMapNavi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AMapNavi.bundle; path = BuerShopping/FrameWork/AMapNaviKit.framework/Versions/1.2.1.dcd39fa/Resources/AMapNavi.bundle; sourceTree = "<group>"; };
+		808F43F21B4D0EA800E17D54 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		808F43FC1B4D1A4800E17D54 /* ChineseString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseString.h; sourceTree = "<group>"; };
+		808F43FD1B4D1A4800E17D54 /* ChineseString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseString.m; sourceTree = "<group>"; };
+		808F43FE1B4D1A4800E17D54 /* pinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = pinyin.m; sourceTree = "<group>"; };
+		808F43FF1B4D1A4800E17D54 /* pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinyin.h; sourceTree = "<group>"; };
 		808F58E31B4A2775001700E5 /* PinglunViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinglunViewController.h; sourceTree = "<group>"; };
 		808F58E41B4A2775001700E5 /* PinglunViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinglunViewController.m; sourceTree = "<group>"; };
 		808F58E51B4A2775001700E5 /* PinglunViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinglunViewController.xib; sourceTree = "<group>"; };
@@ -525,6 +533,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				808F43F31B4D0EA800E17D54 /* UIKit.framework in Frameworks */,
 				808F438B1B4CAC8E00E17D54 /* libstdc++.6.0.9.dylib in Frameworks */,
 				808F43891B4CAC6600E17D54 /* AddressBook.framework in Frameworks */,
 				808F43E51B4CD16F00E17D54 /* AMapNaviKit.framework in Frameworks */,
@@ -618,6 +627,7 @@
 		807D3C0B1B194AFC00FBB530 = {
 			isa = PBXGroup;
 			children = (
+				808F43F21B4D0EA800E17D54 /* UIKit.framework */,
 				808F43E71B4CD19F00E17D54 /* AMap.bundle */,
 				808F43E81B4CD19F00E17D54 /* AMapNavi.bundle */,
 				808F438A1B4CAC8E00E17D54 /* libstdc++.6.0.9.dylib */,
@@ -709,6 +719,7 @@
 		807D3C3E1B194B8200FBB530 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				808F43FB1B4D1A4800E17D54 /* ChineseSorting */,
 				808F43961B4CB7EB00E17D54 /* NaviSource */,
 				809504D21B427D5500B7F282 /* DOPDropDownMenu - Enhanced */,
 				809504AD1B42333C00B7F282 /* MJRefresh */,
@@ -1041,6 +1052,18 @@
 				808F43A51B4CB99200E17D54 /* NavPointAnnotation.m */,
 			);
 			path = Annotation;
+			sourceTree = "<group>";
+		};
+		808F43FB1B4D1A4800E17D54 /* ChineseSorting */ = {
+			isa = PBXGroup;
+			children = (
+				808F43FC1B4D1A4800E17D54 /* ChineseString.h */,
+				808F43FD1B4D1A4800E17D54 /* ChineseString.m */,
+				808F43FE1B4D1A4800E17D54 /* pinyin.m */,
+				808F43FF1B4D1A4800E17D54 /* pinyin.h */,
+			);
+			name = ChineseSorting;
+			path = "../../../../../Downloads/YUChineseSorting-master/YUChineseSorting/ChineseSorting";
 			sourceTree = "<group>";
 		};
 		809425F91B2C16ED00DFEDF7 /* UpLoadImage */ = {
@@ -1380,6 +1403,7 @@
 				807D3C6D1B1955EC00FBB530 /* UIImage+NSBundle.m in Sources */,
 				80F113AE1B1D938000DFBB11 /* UIImage+WebP.m in Sources */,
 				803FCC4B1B1C44AF003A0D4C /* TAAbstractDotView.m in Sources */,
+				808F44011B4D1A4800E17D54 /* pinyin.m in Sources */,
 				809425FC1B2C16ED00DFEDF7 /* VPImageCropperViewController.m in Sources */,
 				80EB67631B2AB7B5000B4BC8 /* SetViewController.m in Sources */,
 				807D3CC31B19A7C200FBB530 /* AFURLRequestSerialization.m in Sources */,
@@ -1390,6 +1414,7 @@
 				80F113A61B1D938000DFBB11 /* SDWebImageDecoder.m in Sources */,
 				80F113AA1B1D938000DFBB11 /* SDWebImagePrefetcher.m in Sources */,
 				8097EC2D1B43CA4D009FB18D /* ShopDetialViewController.m in Sources */,
+				808F44001B4D1A4800E17D54 /* ChineseString.m in Sources */,
 				807D3CBF1B19A7C200FBB530 /* AFHTTPSessionManager.m in Sources */,
 				803FCC531B1C4F29003A0D4C /* RegisterViewController.m in Sources */,
 				809504CA1B42333C00B7F282 /* MJRefreshGifFooter.m in Sources */,

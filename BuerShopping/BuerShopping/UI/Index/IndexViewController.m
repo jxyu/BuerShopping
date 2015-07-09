@@ -16,6 +16,7 @@
 #import "CWStarRateView.h"
 #import "GoodListViewController.h"
 #import "ShopInsideViewController.h"
+#import "AutoLocationViewController.h"
 
 
 @interface IndexViewController ()
@@ -63,6 +64,7 @@
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeCityInfo) name:@"ChangeCity" object:nil];
     
     UIView * BackView_Serch=[[UIView alloc] initWithFrame:CGRectMake(_btnLeft.frame.size.width+_btnLeft.frame.origin.x+10, 20.5, SCREEN_WIDTH-_btnLeft.frame.size.width-_btnLeft.frame.origin.x-22, 35)];
     BackView_Serch.layer.masksToBounds=YES;
@@ -180,14 +182,14 @@
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"GetIndexData:"];
         [dataprovider GetIndexDataWithAreaid:@"88" andlng:lng andlat:lat];//areaid
-        NSDictionary * areaData=@{@"area_id":areaid,@"area_name":dict[@"datas"][@"area_name"]};
-        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                                  NSUserDomainMask, YES) objectAtIndex:0];
-        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"CityInfo.plist"];
-        BOOL result= [areaData writeToFile:plistPath atomically:YES];
-        if (result) {
-            
-        }
+//        NSDictionary * areaData=@{@"area_id":areaid,@"area_name":dict[@"datas"][@"area_name"]};
+//        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+//                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+//        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"CityInfo.plist"];
+//        BOOL result= [areaData writeToFile:plistPath atomically:YES];
+//        if (result) {
+//            
+//        }
     }
     
 }
@@ -641,6 +643,12 @@
     
     return YES;
 }
+
+-(void)clickLeftButton:(UIButton *)sender
+{
+    AutoLocationViewController * location=[[AutoLocationViewController alloc] init];
+    [self.navigationController pushViewController:location animated:YES];
+}
 /**
  *  点击第一个轮播图
  *
@@ -678,6 +686,21 @@
 -(void)btn_GoodResEveryDay
 {
     NSLog(@"每日好店");
+}
+
+-(void)changeCityInfo
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"CityInfo.plist"];
+    NSDictionary * cityinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    if (cityinfoWithFile) {
+        areaid=cityinfoWithFile[@"area_id"];
+        _lblLeft.text=cityinfoWithFile[@"area_name"];
+    }
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"GetIndexData:"];
+    [dataprovider GetIndexDataWithAreaid:@"88" andlng:lng andlat:lat];//areaid
 }
 -(void)viewWillAppear:(BOOL)animated
 {

@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BaseNavigationController.h"
 
-@interface AutoLocationViewController : BaseNavigationController
+@interface AutoLocationViewController : BaseNavigationController<UITableViewDataSource,UITableViewDelegate>
 
 @end

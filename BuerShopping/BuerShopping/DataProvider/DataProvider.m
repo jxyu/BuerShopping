@@ -253,6 +253,23 @@
     [self GetRequest:url andpram:nil];
 }
 
+-(void)GetPurseInfo:(NSString *)key
+{
+    if (key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_predeposit&op=view",Url];
+        NSDictionary * prm=@{@"key":key};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)GetChargeObject:(id)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_predeposit&op=recharge_add",Url];
+        [self PostRequest:url andpram:prm];
+    }
+}
+
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram
 {
     AFHTTPRequestOperationManager * manage=[[AFHTTPRequestOperationManager alloc] init];

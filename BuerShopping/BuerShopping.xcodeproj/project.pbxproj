@@ -169,6 +169,19 @@
 		8097EC2D1B43CA4D009FB18D /* ShopDetialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8097EC2B1B43CA4D009FB18D /* ShopDetialViewController.m */; };
 		8097EC2E1B43CA4D009FB18D /* ShopDetialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8097EC2C1B43CA4D009FB18D /* ShopDetialViewController.xib */; };
 		8097EC301B43EFCF009FB18D /* location_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8097EC2F1B43EFCF009FB18D /* location_icon@2x.png */; };
+		809F461F1B4E67AC000D6EFC /* PurseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 809F461D1B4E67AC000D6EFC /* PurseViewController.m */; };
+		809F46201B4E67AC000D6EFC /* PurseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 809F461E1B4E67AC000D6EFC /* PurseViewController.xib */; };
+		809F462D1B4E8678000D6EFC /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 809F46241B4E8678000D6EFC /* AlipaySDK.bundle */; };
+		809F462E1B4E8678000D6EFC /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 809F46251B4E8678000D6EFC /* AlipaySDK.framework */; };
+		809F462F1B4E8678000D6EFC /* libpingpp+alipay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 809F46261B4E8678000D6EFC /* libpingpp+alipay.a */; };
+		809F46301B4E8678000D6EFC /* libpingpp+wx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 809F46281B4E8678000D6EFC /* libpingpp+wx.a */; };
+		809F46311B4E8678000D6EFC /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 809F46291B4E8678000D6EFC /* libWeChatSDK.a */; };
+		809F46321B4E8678000D6EFC /* libpingpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 809F462A1B4E8678000D6EFC /* libpingpp.a */; };
+		809F46331B4E8678000D6EFC /* Pingpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 809F462B1B4E8678000D6EFC /* Pingpp.bundle */; };
+		809F46351B4E8752000D6EFC /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 809F46341B4E8752000D6EFC /* CFNetwork.framework */; };
+		809F46371B4E8766000D6EFC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 809F46361B4E8766000D6EFC /* Security.framework */; };
+		809F46391B4E8786000D6EFC /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 809F46381B4E8786000D6EFC /* libc++.dylib */; };
+		809F463B1B4E87A3000D6EFC /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 809F463A1B4E87A3000D6EFC /* libsqlite3.0.dylib */; };
 		80B942B51B4760ED005BA325 /* 58.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B942B21B4760ED005BA325 /* 58.png */; };
 		80B942B61B4760ED005BA325 /* 80.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B942B31B4760ED005BA325 /* 80.png */; };
 		80B942B71B4760ED005BA325 /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B942B41B4760ED005BA325 /* 120.png */; };
@@ -465,6 +478,21 @@
 		8097EC2B1B43CA4D009FB18D /* ShopDetialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopDetialViewController.m; sourceTree = "<group>"; };
 		8097EC2C1B43CA4D009FB18D /* ShopDetialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShopDetialViewController.xib; sourceTree = "<group>"; };
 		8097EC2F1B43EFCF009FB18D /* location_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location_icon@2x.png"; sourceTree = "<group>"; };
+		809F461C1B4E67AC000D6EFC /* PurseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurseViewController.h; sourceTree = "<group>"; };
+		809F461D1B4E67AC000D6EFC /* PurseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurseViewController.m; sourceTree = "<group>"; };
+		809F461E1B4E67AC000D6EFC /* PurseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurseViewController.xib; sourceTree = "<group>"; };
+		809F46241B4E8678000D6EFC /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		809F46251B4E8678000D6EFC /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		809F46261B4E8678000D6EFC /* libpingpp+alipay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+alipay.a"; sourceTree = "<group>"; };
+		809F46281B4E8678000D6EFC /* libpingpp+wx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+wx.a"; sourceTree = "<group>"; };
+		809F46291B4E8678000D6EFC /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		809F462A1B4E8678000D6EFC /* libpingpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpingpp.a; sourceTree = "<group>"; };
+		809F462B1B4E8678000D6EFC /* Pingpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Pingpp.bundle; sourceTree = "<group>"; };
+		809F462C1B4E8678000D6EFC /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
+		809F46341B4E8752000D6EFC /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		809F46361B4E8766000D6EFC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		809F46381B4E8786000D6EFC /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		809F463A1B4E87A3000D6EFC /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		80B942B21B4760ED005BA325 /* 58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 58.png; sourceTree = "<group>"; };
 		80B942B31B4760ED005BA325 /* 80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80.png; sourceTree = "<group>"; };
 		80B942B41B4760ED005BA325 /* 120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 120.png; sourceTree = "<group>"; };
@@ -533,7 +561,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				809F463B1B4E87A3000D6EFC /* libsqlite3.0.dylib in Frameworks */,
+				809F46391B4E8786000D6EFC /* libc++.dylib in Frameworks */,
+				809F46371B4E8766000D6EFC /* Security.framework in Frameworks */,
+				809F46351B4E8752000D6EFC /* CFNetwork.framework in Frameworks */,
 				808F43F31B4D0EA800E17D54 /* UIKit.framework in Frameworks */,
+				809F462F1B4E8678000D6EFC /* libpingpp+alipay.a in Frameworks */,
+				809F46311B4E8678000D6EFC /* libWeChatSDK.a in Frameworks */,
+				809F46301B4E8678000D6EFC /* libpingpp+wx.a in Frameworks */,
 				808F438B1B4CAC8E00E17D54 /* libstdc++.6.0.9.dylib in Frameworks */,
 				808F43891B4CAC6600E17D54 /* AddressBook.framework in Frameworks */,
 				808F43E51B4CD16F00E17D54 /* AMapNaviKit.framework in Frameworks */,
@@ -544,7 +579,9 @@
 				806FDD711B1D4695006F4763 /* SystemConfiguration.framework in Frameworks */,
 				806FDD6F1B1D4689006F4763 /* MessageUI.framework in Frameworks */,
 				806FDD6D1B1D4677006F4763 /* libz.dylib in Frameworks */,
+				809F462E1B4E8678000D6EFC /* AlipaySDK.framework in Frameworks */,
 				806FDD6B1B1D4640006F4763 /* libicucore.dylib in Frameworks */,
+				809F46321B4E8678000D6EFC /* libpingpp.a in Frameworks */,
 				806FDD681B1D44AD006F4763 /* SMS_SDK.framework in Frameworks */,
 				808F43E61B4CD16F00E17D54 /* iflyMSC.framework in Frameworks */,
 			);
@@ -627,6 +664,10 @@
 		807D3C0B1B194AFC00FBB530 = {
 			isa = PBXGroup;
 			children = (
+				809F463A1B4E87A3000D6EFC /* libsqlite3.0.dylib */,
+				809F46381B4E8786000D6EFC /* libc++.dylib */,
+				809F46361B4E8766000D6EFC /* Security.framework */,
+				809F46341B4E8752000D6EFC /* CFNetwork.framework */,
 				808F43F21B4D0EA800E17D54 /* UIKit.framework */,
 				808F43E71B4CD19F00E17D54 /* AMap.bundle */,
 				808F43E81B4CD19F00E17D54 /* AMapNavi.bundle */,
@@ -741,6 +782,7 @@
 		807D3C3F1B194B9800FBB530 /* ThreeFrame */ = {
 			isa = PBXGroup;
 			children = (
+				809F46211B4E8624000D6EFC /* Ping++ */,
 				806FDD621B1D44AD006F4763 /* SMS_SDK */,
 				807D3CA91B19A7C200FBB530 /* AFNetworking */,
 			);
@@ -852,6 +894,9 @@
 				8087B62D1B33AAF100FC83EB /* JiFenDetialTableViewCell.h */,
 				8087B62E1B33AAF100FC83EB /* JiFenDetialTableViewCell.m */,
 				8087B62F1B33AAF100FC83EB /* JiFenDetialTableViewCell.xib */,
+				809F461C1B4E67AC000D6EFC /* PurseViewController.h */,
+				809F461D1B4E67AC000D6EFC /* PurseViewController.m */,
+				809F461E1B4E67AC000D6EFC /* PurseViewController.xib */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -1135,6 +1180,45 @@
 			path = "DOPDropDownMenu - Enhanced";
 			sourceTree = "<group>";
 		};
+		809F46211B4E8624000D6EFC /* Ping++ */ = {
+			isa = PBXGroup;
+			children = (
+				809F46221B4E8678000D6EFC /* Channels */,
+				809F462A1B4E8678000D6EFC /* libpingpp.a */,
+				809F462B1B4E8678000D6EFC /* Pingpp.bundle */,
+				809F462C1B4E8678000D6EFC /* Pingpp.h */,
+			);
+			path = "Ping++";
+			sourceTree = "<group>";
+		};
+		809F46221B4E8678000D6EFC /* Channels */ = {
+			isa = PBXGroup;
+			children = (
+				809F46231B4E8678000D6EFC /* Alipay */,
+				809F46271B4E8678000D6EFC /* Wx */,
+			);
+			path = Channels;
+			sourceTree = "<group>";
+		};
+		809F46231B4E8678000D6EFC /* Alipay */ = {
+			isa = PBXGroup;
+			children = (
+				809F46241B4E8678000D6EFC /* AlipaySDK.bundle */,
+				809F46251B4E8678000D6EFC /* AlipaySDK.framework */,
+				809F46261B4E8678000D6EFC /* libpingpp+alipay.a */,
+			);
+			path = Alipay;
+			sourceTree = "<group>";
+		};
+		809F46271B4E8678000D6EFC /* Wx */ = {
+			isa = PBXGroup;
+			children = (
+				809F46281B4E8678000D6EFC /* libpingpp+wx.a */,
+				809F46291B4E8678000D6EFC /* libWeChatSDK.a */,
+			);
+			path = Wx;
+			sourceTree = "<group>";
+		};
 		80CB67B31B415C52000F8248 /* ThreeStarRate */ = {
 			isa = PBXGroup;
 			children = (
@@ -1350,15 +1434,18 @@
 				80941DAE1B1E9233007CA325 /* more_icon@2x.png in Resources */,
 				8092EEC21B292AA800247599 /* fourth_icon@2x.png in Resources */,
 				807D3C651B1954EB00FBB530 /* IndexViewController.xib in Resources */,
+				809F46331B4E8678000D6EFC /* Pingpp.bundle in Resources */,
 				807D3C861B1959FC00FBB530 /* ShoppingCar_icon_selected@2x.png in Resources */,
 				80B942C11B47D854005BA325 /* 1.jpg in Resources */,
 				803FCC541B1C4F29003A0D4C /* RegisterViewController.xib in Resources */,
+				809F46201B4E67AC000D6EFC /* PurseViewController.xib in Resources */,
 				807D3C961B19921400FBB530 /* Classify_icon@2x.png in Resources */,
 				807D3C9B1B19921400FBB530 /* shop_icon_gray@2x.png in Resources */,
 				800B28AF1B269BB900D8433C /* menu_down@2x.png in Resources */,
 				808293AD1B2FA8C20050F268 /* add_Address_icon@2x.png in Resources */,
 				808293B51B2FCCBF0050F268 /* AddressCellTableViewCell.xib in Resources */,
 				80B942B71B4760ED005BA325 /* 120.png in Resources */,
+				809F462D1B4E8678000D6EFC /* AlipaySDK.bundle in Resources */,
 				8092EEC81B292AA800247599 /* third_icon@2x.png in Resources */,
 				8090A26A1B44EC51004F8785 /* dianpu_gray_icon@2x.png in Resources */,
 				80B942BB1B47B077005BA325 /* placeholder.png in Resources */,
@@ -1458,6 +1545,7 @@
 				809504CF1B42333C00B7F282 /* UIScrollView+MJExtension.m in Sources */,
 				805A527C1B1D4E3700C93A97 /* SVIndefiniteAnimatedView.m in Sources */,
 				808F43951B4CB74800E17D54 /* BaseNaviViewController.m in Sources */,
+				809F461F1B4E67AC000D6EFC /* PurseViewController.m in Sources */,
 				807D3C641B1954EB00FBB530 /* IndexViewController.m in Sources */,
 				807D3CC41B19A7C200FBB530 /* AFURLResponseSerialization.m in Sources */,
 				809504D11B42333C00B7F282 /* UIView+MJExtension.m in Sources */,
@@ -1608,10 +1696,17 @@
 					"$(PROJECT_DIR)/BuerShopping/FrameWork",
 					/Users/Snow/Desktop/TiYanGuanControl,
 					/Users/Snow/Downloads/officialDemoNavi/officialDemoNavi/Extern,
+					"$(PROJECT_DIR)/BuerShopping/ThreeFrame/Ping++/Channels/Alipay",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BuerShopping/buer.pch";
 				INFOPLIST_FILE = BuerShopping/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BuerShopping/ThreeFrame/Ping++/Channels/Alipay",
+					"$(PROJECT_DIR)/BuerShopping/ThreeFrame/Ping++/Channels/Wx",
+					"$(PROJECT_DIR)/BuerShopping/ThreeFrame/Ping++",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1632,10 +1727,17 @@
 					"$(PROJECT_DIR)/BuerShopping/FrameWork",
 					/Users/Snow/Desktop/TiYanGuanControl,
 					/Users/Snow/Downloads/officialDemoNavi/officialDemoNavi/Extern,
+					"$(PROJECT_DIR)/BuerShopping/ThreeFrame/Ping++/Channels/Alipay",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BuerShopping/buer.pch";
 				INFOPLIST_FILE = BuerShopping/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BuerShopping/ThreeFrame/Ping++/Channels/Alipay",
+					"$(PROJECT_DIR)/BuerShopping/ThreeFrame/Ping++/Channels/Wx",
+					"$(PROJECT_DIR)/BuerShopping/ThreeFrame/Ping++",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -15,6 +15,7 @@
 #import "AddressManageViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "JifenDetialViewController.h"
+#import "PurseViewController.h"
 
 #define ORIGINAL_MAX_WIDTH 640.0f
 
@@ -525,6 +526,9 @@
     lbl_backViewTitle.font=[UIFont systemFontOfSize:15];
     [BackView_qianbao addSubview:lbl_backViewTitle];
     [BackHeaderViewbottom addSubview:BackView_qianbao];
+    UIButton * btn_purse=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_qianbao.frame.size.width, BackView_qianbao.frame.size.height)];
+    [btn_purse addTarget:self action:@selector(Btn_PurseClick) forControlEvents:UIControlEventTouchUpInside];
+    [BackView_qianbao addSubview:btn_purse];
     UIView * fengeView=[[UIView alloc] initWithFrame:CGRectMake(BackView_qianbao.frame.size.width, 10, 1, 40)];
     fengeView.backgroundColor=[UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1.0];
     [BackHeaderViewbottom addSubview:fengeView];
@@ -934,5 +938,12 @@
 }
 
 /*************************************上传图片结束******************************************/
+
+-(void)Btn_PurseClick
+{
+    PurseViewController * purse=[[PurseViewController alloc] initWithNibName:@"PurseViewController" bundle:[NSBundle mainBundle]];
+    purse.key=userinfoWithFile[@"key"];
+    [self.navigationController pushViewController:purse animated:YES];
+}
 
 @end

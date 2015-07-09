@@ -186,7 +186,18 @@
  *  获取城市列表
  */
 -(void)GetCityList;
-
+/**
+ *  获取钱包余额
+ *
+ *  @param key key
+ */
+-(void)GetPurseInfo:(NSString *)key;
+/**
+ *  获取支付charge对象
+ *
+ *  @param prm <#prm description#>
+ */
+-(void)GetChargeObject:(id)prm;
 
 
 

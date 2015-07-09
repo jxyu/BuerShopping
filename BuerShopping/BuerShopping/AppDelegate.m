@@ -15,6 +15,7 @@
 #import "iflyMSC/IFlySpeechUtility.h"
 #import "iflyMSC/IFlySetting.h"
 #import <AMapNaviKit/AMapNaviKit.h>
+#import "Pingpp.h"
 
 #define appKey @"7bf8c19274e0"
 #define appSecret @"a9544d5cdd5854a62ba4f5978be3ef6f"
@@ -240,6 +241,25 @@
     DataProvider * dataprovider=[DataProvider alloc];
     [dataprovider GetClassifyNext:gc_id];
 }
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    [Pingpp handleOpenURL:url
+           withCompletion:^(NSString *result, PingppError *error) {
+               if ([result isEqualToString:@"success"]) {
+                   // 支付成功
+                   NSLog(@"支付成功，准备跳转");
+                   [[NSNotificationCenter defaultCenter] postNotificationName:@"OrderPay_success" object:nil];
+               } else {
+                   // 支付失败或取消
+                   NSLog(@"Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
+               }
+           }];
+    return  YES;
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

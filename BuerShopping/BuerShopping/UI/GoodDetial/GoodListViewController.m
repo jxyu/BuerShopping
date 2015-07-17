@@ -15,6 +15,7 @@
 #import "UIImageView+WebCache.h"
 #import "CommenDef.h"
 #import "ShopViewController.h"
+#import "GoodDetialViewController.h"
 
 
 @interface GoodListViewController ()
@@ -38,7 +39,9 @@
     NSString *order;
     NSArray * arrayGoodList;
     BOOL isfooterrefresh;
-    
+    BOOL isxiaoliangup;
+    BOOL isjiageup;
+    UIView * backView_order;
 }
 
 - (void)viewDidLoad {
@@ -53,6 +56,8 @@
     }];
     isfooterrefresh=NO;
     isSelectViewShow=NO;
+    isxiaoliangup=NO;
+    isjiageup=NO;
     [self loadAllData];
     [self InitAllVeiw];
 }
@@ -90,33 +95,49 @@
     [self.view addSubview:BackView_Serch];
     /**********************************head搜索栏结束***********************************/
     
-    UIView * backView_order=[[UIView alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, 40)];
+    backView_order=[[UIView alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, 40)];
     backView_order.backgroundColor=[UIColor whiteColor];
     float itemwidth=(backView_order.frame.size.width-3)/4;
     UIButton * btn_default=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, itemwidth, 40)];
     [btn_default setTitle:@"默认" forState:UIControlStateNormal];
-    [btn_default setTitleColor:[UIColor colorWithRed:230/255.0 green:192/255.0 blue:253/255.0 alpha:1.0] forState:UIControlStateNormal];
+    btn_default.tag=1000;
+    [btn_default setTitleColor:[UIColor colorWithRed:115/255.0 green:73/255.0 blue:139/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [btn_default addTarget:self action:@selector(ChangeOrder:) forControlEvents:UIControlEventTouchUpInside];
     [backView_order addSubview:btn_default];
     UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(btn_default.frame.size.width, 10, 1, 20)];
-    fenge.backgroundColor=[UIColor grayColor];
+    fenge.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
     [backView_order addSubview:fenge];
     UIButton * btn_xiaoliang=[[UIButton alloc] initWithFrame:CGRectMake(fenge.frame.size.width+fenge.frame.origin.x, 0, itemwidth, 40)];
     [btn_xiaoliang setTitleColor:[UIColor colorWithRed:127/255.0 green:127/255.0 blue:127/255.0 alpha:1.0] forState:UIControlStateNormal];
     [btn_xiaoliang setTitle:@"销量" forState:UIControlStateNormal];
+    btn_xiaoliang.tag=1001;
+    [btn_xiaoliang addTarget:self action:@selector(ChangeOrder:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView * img_icon1=[[UIImageView alloc] initWithFrame:CGRectMake(btn_xiaoliang.frame.size.width-20, 12.5, 8, 15)];
+    img_icon1.image=[UIImage imageNamed:@"order_normal_icon"];
+    img_icon1.tag=5;
+    [btn_xiaoliang addSubview:img_icon1];
     [backView_order addSubview:btn_xiaoliang];
     UIView * fenge1=[[UIView alloc] initWithFrame:CGRectMake(btn_xiaoliang.frame.size.width+btn_xiaoliang.frame.origin.x, 10, 1, 20)];
-    fenge1.backgroundColor=[UIColor colorWithRed:127/255.0 green:127/255.0 blue:127/255.0 alpha:1.0];
+    fenge1.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
     [backView_order addSubview:fenge1];
     UIButton * btn_jiage=[[UIButton alloc] initWithFrame:CGRectMake(fenge1.frame.size.width+fenge1.frame.origin.x, 0, itemwidth, 40)];
     [btn_jiage setTitleColor:[UIColor colorWithRed:127/255.0 green:127/255.0 blue:127/255.0 alpha:1.0] forState:UIControlStateNormal];
     [btn_jiage setTitle:@"价格" forState:UIControlStateNormal];
+    btn_jiage.tag=1002;
+    [btn_jiage addTarget:self action:@selector(ChangeOrder:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView * img_icon2=[[UIImageView alloc] initWithFrame:CGRectMake(btn_xiaoliang.frame.size.width-20, 12.5, 8, 15)];
+    img_icon2.image=[UIImage imageNamed:@"order_normal_icon"];
+    img_icon2.tag=5;
+    [btn_jiage addSubview:img_icon2];
     [backView_order addSubview:btn_jiage];
     UIView * fenge2=[[UIView alloc] initWithFrame:CGRectMake(btn_jiage.frame.size.width+btn_jiage.frame.origin.x, 10, 1, 20)];
-    fenge2.backgroundColor=[UIColor grayColor];
+    fenge2.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
     [backView_order addSubview:fenge2];
     UIButton * btn_haoping=[[UIButton alloc] initWithFrame:CGRectMake(fenge2.frame.size.width+fenge2.frame.origin.x, 0, itemwidth, 40)];
     [btn_haoping setTitleColor:[UIColor colorWithRed:127/255.0 green:127/255.0 blue:127/255.0 alpha:1.0] forState:UIControlStateNormal];
     [btn_haoping setTitle:@"好评" forState:UIControlStateNormal];
+    btn_haoping.tag=1003;
+    [btn_haoping addTarget:self action:@selector(ChangeOrder:) forControlEvents:UIControlEventTouchUpInside];
     [backView_order addSubview:btn_haoping];
     [self.view addSubview:backView_order];
     _myTableView.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
@@ -135,7 +156,8 @@
             isfooterrefresh=YES;
             [self FootRefresh];
         }
-        
+        // 结束刷新
+        [_myTableView.footer endRefreshing];
     }];
     // 默认先隐藏footer
     _myTableView.footer.hidden = NO;
@@ -288,6 +310,9 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    GoodDetialViewController * gooddetial=[[GoodDetialViewController alloc] initWithNibName:@"GoodDetialViewController" bundle:[NSBundle mainBundle]];
+    gooddetial.gc_id=arrayGoodList[indexPath.section][@"goods_id"];
+    [self.navigationController pushViewController:gooddetial animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
@@ -342,11 +367,8 @@
 
 -(void)FootRefireshBackCall:(id)dict
 {
-    
+    isfooterrefresh=NO;
     NSLog(@"上拉刷新");
-    [_myTableView reloadData];
-    // 结束刷新
-    [_myTableView.footer endRefreshing];
     NSMutableArray *itemarray=[[NSMutableArray alloc] initWithArray:arrayGoodList];
     if (!dict[@"datas"][@"error"]) {
         NSArray * arrayitem=dict[@"datas"][@"goods_list"];
@@ -358,6 +380,66 @@
     [_myTableView reloadData];
 }
 
+-(void)ChangeOrder:(UIButton *)sender
+{
+    for (UIView *items in backView_order.subviews) {
+        NSLog(@"%ld",(long)items.tag);
+        if (items.tag>=1000) {
+            UIButton *item=(UIButton *)items;
+            [item setTitleColor:[UIColor colorWithRed:127/255.0 green:127/255.0 blue:127/255.0 alpha:1.0] forState:UIControlStateNormal];
+            for (UIView * img_item in item.subviews) {
+                if (img_item.tag==5) {
+                    UIImageView *img_icon=(UIImageView *)img_item;
+                    [img_icon setImage:[UIImage imageNamed:@"order_normal_icon"]];
+                }
+            }
+        }
+    }
+    
+    [sender setTitleColor:[UIColor colorWithRed:115/255.0 green:73/255.0 blue:139/255.0 alpha:1.0] forState:UIControlStateNormal];
+    switch (sender.tag) {
+        case 1000:
+            
+            break;
+        case 1001:
+            for (UIView * img_item in sender.subviews) {
+                if (img_item.tag==5) {
+                    UIImageView *img_icon=(UIImageView *)img_item;
+                    if (!isxiaoliangup) {
+                        [img_icon setImage:[UIImage imageNamed:@"order_up_icon"]];
+                        isxiaoliangup=YES;
+                    }else
+                    {
+                        [img_icon setImage:[UIImage imageNamed:@"order_down_icon"]];
+                        isxiaoliangup=NO;
+                    }
+                    
+                }
+            }
+            break;
+        case 1002:
+            for (UIView * img_item in sender.subviews) {
+                if (img_item.tag==5) {
+                    UIImageView *img_icon=(UIImageView *)img_item;
+                    if (!isjiageup) {
+                        [img_icon setImage:[UIImage imageNamed:@"order_up_icon"]];
+                        isjiageup=YES;
+                    }else
+                    {
+                        [img_icon setImage:[UIImage imageNamed:@"order_down_icon"]];
+                        isjiageup=NO;
+                    }
+                    
+                }
+            }
+            break;
+        case 1003:
+            
+            break;
+        default:
+            break;
+    }
+}
 
 
 

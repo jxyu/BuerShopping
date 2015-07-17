@@ -42,6 +42,9 @@
     if (indexPath.section==3) {
         cellheight=40;
     }
+    if (indexPath.section==4) {
+        cellheight=60;
+    }
     return cellheight;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
@@ -155,6 +158,25 @@
             [cell addSubview:BackView_exit];
         }
             break;
+        case 4:
+        {
+            UIView * BackView_exit=[[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 60)];
+            BackView_exit.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
+            UILabel * lbl_banquan=[[UILabel alloc] initWithFrame:CGRectMake(0, 20, tableView.frame.size.width, 20)];
+            lbl_banquan.text=@"Coryright©2015-2018";
+            [lbl_banquan setTextAlignment:NSTextAlignmentCenter];
+            lbl_banquan.font=[UIFont fontWithName:@"Helvetica" size:12];
+            lbl_banquan.textColor=[UIColor grayColor];
+            [BackView_exit addSubview:lbl_banquan];
+            UILabel * lbl_banquan1=[[UILabel alloc] initWithFrame:CGRectMake(0, 40, tableView.frame.size.width, 20)];
+            lbl_banquan1.text=@"佛山市不二海淘电子商务有限公司";
+            [lbl_banquan1 setTextAlignment:NSTextAlignmentCenter];
+            lbl_banquan1.font=[UIFont fontWithName:@"Helvetica" size:12];
+            lbl_banquan1.textColor=[UIColor grayColor];
+            [BackView_exit addSubview:lbl_banquan1];
+            [cell addSubview:BackView_exit];
+        }
+            break;
         default:
             cell.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
             break;
@@ -169,7 +191,7 @@
     }
     else
     {
-        return 3;
+        return 4;
     }
     
 }

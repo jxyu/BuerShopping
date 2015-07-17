@@ -96,7 +96,7 @@
     [BackVeiw_StoreTitle addSubview:weisheng];
     [myheaderView addSubview:BackVeiw_StoreTitle];
     UIImageView * img_StoreLogo=[[UIImageView alloc] initWithFrame:CGRectMake(10, _cycleScrollView.frame.size.height-75, 80, 80)];
-    [img_StoreLogo sd_setImageWithURL:[NSURL URLWithString:storeInfo[@"store_avatar"]] placeholderImage:[UIImage imageNamed:@"placeholder@2x.png"]];
+    [img_StoreLogo sd_setImageWithURL:[NSURL URLWithString:storeInfo[@"store_avatar"]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
     [myheaderView addSubview:img_StoreLogo];
     UIView * BackView_StoreInfo=[[UIView alloc] initWithFrame:CGRectMake(0, _cycleScrollView.frame.size.height+5, SCREEN_WIDTH, 50)];
     BackView_StoreInfo.backgroundColor=[UIColor whiteColor];

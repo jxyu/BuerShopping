@@ -12,6 +12,8 @@
 #import "UIImageView+WebCache.h"
 #import "CWStarRateView.h"
 #import "PinglunViewController.h"
+#import "OrderForSureViewController.h"
+#import "AppDelegate.h"
 
 @interface GoodDetialViewController ()
 
@@ -25,9 +27,12 @@
     NSDictionary * imgdict;
     NSDictionary * dictspectitle;
     NSDictionary * dictspecValue;
+    NSDictionary * goodsID;
+    NSDictionary * userinfoWithFile;
     UIView * page;
     int select1;
     int select2;
+    
 }
 
 - (void)viewDidLoad {
@@ -42,6 +47,8 @@
     imgdict=[[NSDictionary alloc] init];
     dictspectitle=[[NSDictionary alloc] init];
     dictspecValue=[[NSDictionary alloc] init];
+    goodsID=[[NSDictionary alloc] init];
+    userinfoWithFile=[[NSDictionary alloc] init];
     select1=0;
     select2=0;
     [self InitAllView];
@@ -80,7 +87,9 @@
     lbl_title.text=@"加入购物车";
     lbl_title.textAlignment=NSTextAlignmentCenter;
     lbl_title.textColor=[UIColor whiteColor];
+    
     [btn_AddToShoppingCar addSubview:lbl_title];
+    [btn_AddToShoppingCar addTarget:self action:@selector(AddToShoppingCar:) forControlEvents:UIControlEventTouchUpInside];
     [_backviw_bottom addSubview:btn_AddToShoppingCar];
     UIButton * btn_pryforShoppingCar=[[UIButton alloc] initWithFrame:CGRectMake(btn_AddToShoppingCar.frame.size.width+btn_AddToShoppingCar.frame.origin.x, 0, _backviw_bottom.frame.size.width/3, _backviw_bottom.frame.size.height)];
     btn_pryforShoppingCar.backgroundColor=[UIColor colorWithRed:255/255.0 green:152/255.0 blue:1/255.0 alpha:1.0];
@@ -89,6 +98,7 @@
     lbl_title1.textAlignment=NSTextAlignmentCenter;
     lbl_title1.textColor=[UIColor whiteColor];
     [btn_pryforShoppingCar addSubview:lbl_title1];
+    [btn_pryforShoppingCar addTarget:self action:@selector(PayRithtNow:) forControlEvents:UIControlEventTouchUpInside];
     [_backviw_bottom addSubview:btn_pryforShoppingCar];
 }
 
@@ -96,7 +106,7 @@
 {
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetGoodInfoBackCall:"];
-    [dataprovider GetGoodDetialInfoWithid:@"100024"];
+    [dataprovider GetGoodDetialInfoWithid:_gc_id];
 }
 -(void)GetGoodInfoBackCall:(id)dict
 {
@@ -108,6 +118,7 @@
         imgdict=dict[@"datas"][@"evaluate"][@"image"];
         dictspectitle=dict[@"datas"][@"goods_info"][@"spec_name"];
         dictspecValue=dict[@"datas"][@"goods_info"][@"spec_value"];
+        goodsID=dict[@"datas"][@"spec_list"];
         [self BuildHeaderView];
         [self BuildBodyTableView];
     }
@@ -120,8 +131,8 @@
     NSMutableArray *images = [[NSMutableArray alloc] init];
     for (int i=0; i<arrayslider.count; i++) {
         UIImageView * img=[[UIImageView alloc] init];
-//        [img sd_setImageWithURL:[NSURL URLWithString:arrayslider[[NSString stringWithFormat:@"%d",i]]] placeholderImage:[UIImage imageNamed:@"placeholder@2x.png"] ];
-        [img sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"placeholder.png"] ];
+        [img sd_setImageWithURL:[NSURL URLWithString:arrayslider[[NSString stringWithFormat:@"%d",i]]] placeholderImage:[UIImage imageNamed:@"placeholder.png"] ];
+//        [img sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"placeholder.png"] ];
         [images addObject:img];
     }
     // 创建带标题的图片轮播器
@@ -157,14 +168,22 @@
     backview_goodinfo2.backgroundColor=[UIColor whiteColor];
     UILabel * lbl_price=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 30)];
     lbl_price.font=[UIFont systemFontOfSize:18];
-    lbl_price.text=@"¥460-560";
+    if ([goodInfo[@"is_special"] intValue]==1)
+    {
+        lbl_price.text=goodInfo[@"goods_promotion_price"];
+    }
+    else
+    {
+        lbl_price.text=goodInfo[@"goods_price"];
+    }
+    
     lbl_price.textColor=[UIColor redColor];
     [backview_goodinfo2 addSubview:lbl_price];
     CGFloat x=lbl_price.frame.size.height+lbl_price.frame.origin.y+5;
     if ([goodInfo[@"is_special"] intValue]==1) {
         UILabel * lbl_proformprice=[[UILabel alloc] initWithFrame:CGRectMake(10, lbl_price.frame.size.height+lbl_price.frame.origin.y, 100, 20)];
         lbl_proformprice.textColor=[UIColor grayColor];
-        lbl_proformprice.text=[NSString stringWithFormat:@"价格:%@",goodInfo[@"goods_promotion_price"]];
+        lbl_proformprice.text=[NSString stringWithFormat:@"价格:%@",goodInfo[@"goods_price"]];
         lbl_proformprice.font=[UIFont systemFontOfSize:14];
         lbl_proformprice.textAlignment=NSTextAlignmentCenter;
         [backview_goodinfo2 addSubview:lbl_proformprice];
@@ -343,11 +362,13 @@
     btn_addtoshoppingcar.backgroundColor=[UIColor colorWithRed:254/255.0 green:205/255.0 blue:1/255.0 alpha:1.0];
     [btn_addtoshoppingcar setTitle:@"加入购物车" forState:UIControlStateNormal];
     [btn_addtoshoppingcar setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btn_addtoshoppingcar addTarget:self action:@selector(AddToShoppingCar:) forControlEvents:UIControlEventTouchUpInside];
     [backview_form addSubview:btn_addtoshoppingcar];
     UIButton * btn_payrightnow=[[UIButton alloc] initWithFrame:CGRectMake(btn_addtoshoppingcar.frame.size.width, backview_form.frame.size.height-50, backview_form.frame.size.width/2, 50)];
     btn_payrightnow.backgroundColor=[UIColor colorWithRed:255/255.0 green:154/255.0 blue:1/255.0 alpha:1.0];
     [btn_payrightnow setTitle:@"立即购买" forState:UIControlStateNormal];
     [btn_payrightnow setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btn_payrightnow addTarget:self action:@selector(PayRithtNow:) forControlEvents:UIControlEventTouchUpInside];
     [backview_form addSubview:btn_payrightnow];
     UIView * BackVew_selectTitle=[[UIView alloc] initWithFrame:CGRectMake(0, 0, backview_form.frame.size.width, 110)];
     UIButton * btn_cancel=[[UIButton alloc] initWithFrame:CGRectMake(BackVew_selectTitle.frame.size.width-35, 10, 25, 25)];
@@ -356,11 +377,11 @@
     [BackVew_selectTitle addSubview:btn_cancel];
     UILabel * lbl_price=[[UILabel alloc] initWithFrame:CGRectMake(140, btn_cancel.frame.size.height+btn_cancel.frame.origin.y+5, BackVew_selectTitle.frame.size.width-150, 20)];
     lbl_price.textColor=[UIColor colorWithRed:255/255.0 green:154/255.0 blue:1/255.0 alpha:1.0];
-    lbl_price.text=@"¥226.00-283.00";
+    lbl_price.text=goodInfo[@"goods_price"];
     [BackVew_selectTitle addSubview:lbl_price];
     UILabel * lbl_kucun=[[UILabel alloc] initWithFrame:CGRectMake(lbl_price.frame.origin.x, lbl_price.frame.origin.y+lbl_price.frame.size.height+5, lbl_price.frame.size.width, 20)];
     lbl_kucun.font=[UIFont systemFontOfSize:13];
-    lbl_kucun.text=@"库存23351件";
+    lbl_kucun.text=[NSString stringWithFormat:@"库存%@件",goodInfo[@"goods_storage"]];
     [BackVew_selectTitle addSubview:lbl_kucun];
     UILabel * lbl_tishi=[[UILabel alloc] initWithFrame:CGRectMake(lbl_kucun.frame.origin.x, lbl_kucun.frame.size.height+lbl_kucun.frame.origin.y+5, lbl_kucun.frame.size.width, 20)];
     lbl_tishi.text=@"请选择 机身颜色 套餐类型";
@@ -372,7 +393,7 @@
     [backview_form addSubview:BackVew_selectTitle];
     UIScrollView * scrollviw=[[UIScrollView alloc] initWithFrame:CGRectMake(0, BackVew_selectTitle.frame.size.height, backview_form.frame.size.width, backview_form.frame.size.height-BackVew_selectTitle.frame.size.height-50)];
     scrollviw.scrollEnabled=YES;
-    if (dictspectitle.count>0) {
+    if (![dictspectitle isKindOfClass:[NSNull class]]) {
         for (int i=1; i<=dictspectitle.count; i++) {
             UIView * lastview=[scrollviw.subviews lastObject];
             UIView * firstselect=[[UIView alloc] initWithFrame:CGRectMake(0, lastview.frame.size.height+lastview.frame.origin.y, scrollviw.frame.size.width, 100)];
@@ -411,7 +432,7 @@
     [backview_form addSubview:scrollviw];
     [page addSubview:backview_form];
     UIImageView * img_good=[[UIImageView alloc] initWithFrame:CGRectMake(10, backview_form.frame.origin.y-30, 120, 120)];
-    [img_good sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    [img_good sd_setImageWithURL:[NSURL URLWithString:arrayslider[@"0"]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
     img_good.layer.masksToBounds=YES;
     img_good.layer.cornerRadius=5;
     img_good.layer.borderWidth=2;
@@ -446,10 +467,91 @@
     page.frame=CGRectMake(page.frame.origin.x, SCREEN_HEIGHT, page.frame.size.width, page.frame.size.height);
 }
 
+-(void)AddToShoppingCar:(UIButton *)sender
+{
+    
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    if (userinfoWithFile[@"key"]) {
+        if (select1&&select2) {
+            if (goodsID[[NSString stringWithFormat:@"%d|%d",select1,select2]]) {
+                DataProvider * dataprovider=[[DataProvider alloc] init];
+                [dataprovider setDelegateObject:self setBackFunctionName:@"AddToshoppingCarBackCall:"];
+                [dataprovider AddToShoppingCar:userinfoWithFile[@"key"] andgoods_id:goodsID[[NSString stringWithFormat:@"%d|%d",select1,select2]] andquantity:@"1"];
+            }
+        }
+        else
+        {
+            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择商品的规格" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+            [alert show];
+        }
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请先登录" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+    }
+    NSLog(@"加入购物车");
+    
+    
+}
+-(void)AddToshoppingCarBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    if ([dict[@"datas"] intValue]==1) {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"已加入到购物车" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles: nil];
+        [alert show];
+    }
+    
+}
 
+-(void)PayRithtNow:(UIButton *)sender
+{
+    NSLog(@"立即购买");
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    if (userinfoWithFile[@"key"]) {
+        if (select1&&select2) {
+            if (goodsID[[NSString stringWithFormat:@"%d|%d",select1,select2]]) {
+                DataProvider * dataprovider=[[DataProvider alloc] init];
+                [dataprovider setDelegateObject:self setBackFunctionName:@"buyrightBackCall:"];
+                [dataprovider Buy_Stepone:userinfoWithFile[@"key"] andcart_id:[NSString stringWithFormat:@"%@|%d",goodsID[[NSString stringWithFormat:@"%d|%d",select1,select2]],1] andifcart:@"0"];
+            }
+        }
+        else
+        {
+            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择商品的规格" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+            [alert show];
+        }
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请先登录" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+    }
+}
+-(void)buyrightBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    if (!dict[@"datas"][@"error"]) {
+        OrderForSureViewController * orderforsure=[[OrderForSureViewController alloc] initWithNibName:@"OrderForSureViewController" bundle:[NSBundle mainBundle]];
+        orderforsure.OrderData=dict[@"datas"];
+        orderforsure.key=userinfoWithFile[@"key"];
+        [self.navigationController pushViewController:orderforsure animated:YES];
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] hiddenTabBar];
+}
+
 
 @end

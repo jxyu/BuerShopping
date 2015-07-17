@@ -98,7 +98,7 @@
     cell.bounds=CGRectMake(0, 0, SCREEN_WIDTH, cell.frame.size.height);
     cell.Btn_duihuan.layer.masksToBounds=YES;
     cell.Btn_duihuan.layer.cornerRadius=3;
-    [cell.lipin_logo sd_setImageWithURL:[NSURL URLWithString:prolist[indexPath.row][@"pgoods_image"]] placeholderImage:[UIImage imageNamed:@"muying"]];
+    [cell.lipin_logo sd_setImageWithURL:[NSURL URLWithString:prolist[indexPath.row][@"pgoods_image"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     cell.lipin_title.text=prolist[indexPath.row][@"pgoods_name"];
     cell.lipin_lipindetial.text=prolist[indexPath.row][@"pgoods_body"];
     cell.lipin_jifen.text=prolist[indexPath.row][@"pgoods_points"];

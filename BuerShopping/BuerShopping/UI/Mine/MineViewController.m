@@ -16,6 +16,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "JifenDetialViewController.h"
 #import "PurseViewController.h"
+#import "OrderListViewController.h"
 
 #define ORIGINAL_MAX_WIDTH 640.0f
 
@@ -249,6 +250,10 @@
             lbl_FirstTitle.textAlignment=NSTextAlignmentCenter;
             lbl_FirstTitle.font=[UIFont systemFontOfSize:15];
             [FirstBackView addSubview:lbl_FirstTitle];
+            UIButton * btn_wait=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, FirstBackView.frame.size.width, FirstBackView.frame.size.height)];
+            btn_wait.tag=1;
+            [btn_wait addTarget:self action:@selector(JumpToOrderListVC:) forControlEvents:UIControlEventTouchUpInside];
+            [FirstBackView addSubview:btn_wait];
             [BackView_SpecialPrice addSubview:FirstBackView];
             UIView * secondBackView=[[UIView alloc] initWithFrame:CGRectMake(FirstBackView.frame.size.width+FirstBackView.frame.origin.x, 0,BackView_SpecialPrice.frame.size.width/4 , BackView_SpecialPrice.frame.size.height)];
             secondBackView.backgroundColor=[UIColor whiteColor];
@@ -260,6 +265,10 @@
             lbl_SecondTitle.textAlignment=NSTextAlignmentCenter;
             lbl_SecondTitle.font=[UIFont systemFontOfSize:15];
             [secondBackView addSubview:lbl_SecondTitle];
+            UIButton * btn_waitforseal=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, secondBackView.frame.size.width, secondBackView.frame.size.height)];
+            btn_waitforseal.tag=2;
+            [btn_waitforseal addTarget:self action:@selector(JumpToOrderListVC:) forControlEvents:UIControlEventTouchUpInside];
+            [secondBackView addSubview:btn_waitforseal];
             [BackView_SpecialPrice addSubview:secondBackView];
             
             UIView * thirdBackView=[[UIView alloc] initWithFrame:CGRectMake(secondBackView.frame.size.width+secondBackView.frame.origin.x, 0,BackView_SpecialPrice.frame.size.width/4 , BackView_SpecialPrice.frame.size.height)];
@@ -272,6 +281,10 @@
             lbl_ThirdTitle.textAlignment=NSTextAlignmentCenter;
             lbl_ThirdTitle.font=[UIFont systemFontOfSize:15];
             [thirdBackView addSubview:lbl_ThirdTitle];
+            UIButton * btn_waitforreseive=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, thirdBackView.frame.size.width, thirdBackView.frame.size.height)];
+            btn_waitforreseive.tag=3;
+            [btn_waitforreseive addTarget:self action:@selector(JumpToOrderListVC:) forControlEvents:UIControlEventTouchUpInside];
+            [thirdBackView addSubview:btn_waitforreseive];
             [BackView_SpecialPrice addSubview:thirdBackView];
             
             UIView * fourthBackView=[[UIView alloc] initWithFrame:CGRectMake(thirdBackView.frame.size.width+thirdBackView.frame.origin.x, 0,BackView_SpecialPrice.frame.size.width/4 , BackView_SpecialPrice.frame.size.height)];
@@ -284,6 +297,10 @@
             lbl_fourthTitle.textAlignment=NSTextAlignmentCenter;
             lbl_fourthTitle.font=[UIFont systemFontOfSize:15];
             [fourthBackView addSubview:lbl_fourthTitle];
+            UIButton * btn_isreseaive=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, fourthBackView.frame.size.width, fourthBackView.frame.size.height)];
+            btn_isreseaive.tag=4;
+            [btn_isreseaive addTarget:self action:@selector(JumpToOrderListVC:) forControlEvents:UIControlEventTouchUpInside];
+            [fourthBackView addSubview:btn_isreseaive];
             [BackView_SpecialPrice addSubview:fourthBackView];
             [cell addSubview:BackView_SpecialPrice];
         }
@@ -944,6 +961,14 @@
     PurseViewController * purse=[[PurseViewController alloc] initWithNibName:@"PurseViewController" bundle:[NSBundle mainBundle]];
     purse.key=userinfoWithFile[@"key"];
     [self.navigationController pushViewController:purse animated:YES];
+}
+
+-(void)JumpToOrderListVC:(UIButton *)sender
+{
+    OrderListViewController *orderlist=[[OrderListViewController alloc] initWithNibName:@"OrderListViewController" bundle:[NSBundle mainBundle]];
+    orderlist.key=userinfoWithFile[@"key"];
+    orderlist.OrderStatus=[NSString stringWithFormat:@"%ld",sender.tag*10];
+    [self.navigationController pushViewController:orderlist animated:YES];
 }
 
 @end

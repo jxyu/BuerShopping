@@ -270,6 +270,111 @@
     }
 }
 
+-(void)GetShopCarList:(NSString *)key
+{
+    if (key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_cart&op=cart_list",Url];
+        NSDictionary * prm=@{@"key":key};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)EditGoodsNumWithKey:(NSString *)key andCartid:(NSString *)cartid andnum:(NSString *)num
+{
+    if (key&&cartid&&num) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_cart&op=cart_edit_quantity",Url];
+        NSDictionary * prm=@{@"key":key,@"cart_id":cartid,@"quantity":num};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)DelGoodsWithKey:(NSString *)key andcartid:(NSString *)cartid
+{
+    if (key&&cartid) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_cart&op=cart_del",Url];
+        NSDictionary * prm=@{@"key":key,@"cart_id":cartid};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)GetOrderListWithKey:(NSString *)key andcurpage:(NSString *)curpage andorder_state:(NSString *)order_state
+{
+    if (key&&curpage&&order_state) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_order&op=order_list",Url];
+        NSDictionary * prm=@{@"key":key,@"curpage":curpage,@"order_state":order_state};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)CancalOrderWithOutPay:(NSString *)order_id andkey:(NSString *)key
+{
+    if (key&&order_id) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_order&op=order_cancel",Url];
+        NSDictionary * prm=@{@"key":key,@"order_id":order_id};
+        [self PostRequest:url andpram:prm];
+    }
+}
+-(void)CancalOrderPayAlready:(NSString *)order_id andkey:(NSString *)key
+{
+    if (key&&order_id) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_order&op=order_cancel_refund",Url];
+        NSDictionary * prm=@{@"key":key,@"order_id":order_id};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)OrderForSure:(NSString *)order_id andkey:(NSString *)key
+{
+    if (key&&order_id) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_order&op=order_receive",Url];
+        NSDictionary * prm=@{@"key":key,@"order_id":order_id};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)DelOrder:(NSString *)order_id andkey:(NSString *)key
+{
+    if (key&&order_id) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_order&op=order_delete",Url];
+        NSDictionary * prm=@{@"key":key,@"order_id":order_id};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)AddToShoppingCar:(NSString *)key andgoods_id:(NSString *)goods_id andquantity:(NSString *)quantity
+{
+    if (key&&goods_id&&quantity) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_cart&op=cart_add",Url];
+        NSDictionary * prm=@{@"key":key,@"goods_id":goods_id,@"quantity":quantity};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)Buy_Stepone:(NSString *)key andcart_id:(NSString *)cart_id andifcart:(NSString *)ifcart
+{
+    if (key&&cart_id&&ifcart) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_buy&op=buy_step1",Url];
+        NSDictionary * prm=@{@"key":key,@"cart_id":cart_id,@"ifcart":ifcart};
+        [self PostRequest:url andpram:prm];
+    }
+}
+-(void)Buy_StepTwo:(id)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_buy&op=buy_step2",Url];
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)OrderPayWithKey:(NSString *)key andpay_sn:(NSString *)pay_sn andchannel:(NSString *)channel
+{
+    if (key&&pay_sn&&channel) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_payment&op=pay",Url];
+        NSDictionary * prm=@{@"key":key,@"pay_sn":pay_sn,@"channel":channel};
+        [self GetRequest:url andpram:prm];
+    }
+}
+
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram
 {
     AFHTTPRequestOperationManager * manage=[[AFHTTPRequestOperationManager alloc] init];

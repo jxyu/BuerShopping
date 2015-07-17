@@ -33,7 +33,7 @@
     _good_title.text=_goods_dict[@"pgoods_name"];
     _goodsDetial.text=_goods_dict[@"pgoods_body"];
     _goodsjifen.text=_goods_dict[@"pgoods_points"];
-    [_Image_logo sd_setImageWithURL:[NSURL URLWithString:_goods_dict[@"pgoods_image"]] placeholderImage:[UIImage imageNamed:@"muying"]];
+    [_Image_logo sd_setImageWithURL:[NSURL URLWithString:_goods_dict[@"pgoods_image"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(FinishSelectAddress:) name:@"select_address_for_duihuan" object:nil];
 }
 

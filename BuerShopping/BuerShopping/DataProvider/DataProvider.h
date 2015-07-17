@@ -198,6 +198,98 @@
  *  @param prm <#prm description#>
  */
 -(void)GetChargeObject:(id)prm;
+/**
+ *  获取购物车列表
+ *
+ *  @param key key
+ */
+-(void)GetShopCarList:(NSString *)key;
+/**
+ *  修改购物车货物数量
+ *
+ *  @param key    key
+ *  @param cartid 购物车id
+ *  @param num    修改后的货物数量
+ */
+-(void)EditGoodsNumWithKey:(NSString *)key andCartid:(NSString *)cartid andnum:(NSString *)num;
+/**
+ *  删除购物车货物
+ *
+ *  @param key  <#key description#>
+ *  @param gcid <#gcid description#>
+ */
+-(void)DelGoodsWithKey:(NSString *)key andcartid:(NSString *)cartid;
+/**
+ *  获取订单列表
+ *
+ *  @param key         key
+ *  @param curpage     页码
+ *  @param order_state 订单状态
+ */
+-(void)GetOrderListWithKey:(NSString *)key andcurpage:(NSString *)curpage andorder_state:(NSString *)order_state;
+/**
+ *  取消订单（未付款）
+ *
+ *  @param order_id <#order_id description#>
+ *  @param key      <#key description#>
+ */
+-(void)CancalOrderWithOutPay:(NSString *)order_id andkey:(NSString *)key;
+/**
+ *  取消订单（已付款）
+ *
+ *  @param order_id <#order_id description#>
+ *  @param key      <#key description#>
+ */
+-(void)CancalOrderPayAlready:(NSString *)order_id andkey:(NSString *)key;
+/**
+ *  确认收货
+ *
+ *  @param order_id <#order_id description#>
+ *  @param key      <#key description#>
+ */
+-(void)OrderForSure:(NSString *)order_id andkey:(NSString *)key;
+/**
+ *  删除订单
+ *
+ *  @param order_id <#order_id description#>
+ *  @param key      <#key description#>
+ */
+-(void)DelOrder:(NSString *)order_id andkey:(NSString *)key;
+/**
+ *  加入购物车
+ *
+ *  @param key      <#key description#>
+ *  @param goods_id 商品ID
+ *  @param quantity 商品数量
+ */
+-(void)AddToShoppingCar:(NSString *)key andgoods_id:(NSString *)goods_id andquantity:(NSString *)quantity;
+/**
+ *  购买第一步
+ *
+ *  @param key      <#key description#>
+ *  @param goods_id <#goods_id description#>
+ *  @param ifcart   是否在购物车中购买的
+ */
+-(void)Buy_Stepone:(NSString *)key andcart_id:(NSString *)cart_id andifcart:(NSString *)ifcart;
+/**
+ *  购买第二步
+ *
+ *  @param prm <#prm description#>
+ */
+-(void)Buy_StepTwo:(id)prm;
+/**
+ *  订单支付
+ *
+ *  @param key     <#key description#>
+ *  @param pay_sn  支付订单号
+ *  @param channel 支付宝:alipay 微信:wx
+ */
+-(void)OrderPayWithKey:(NSString *)key andpay_sn:(NSString *)pay_sn andchannel:(NSString *)channel;
+
+
+
+
+
 
 
 

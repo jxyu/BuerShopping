@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "BaseNavigationController.h"
 
-@interface ShoppingCarViewController : BaseNavigationController
+@interface ShoppingCarViewController : BaseNavigationController<UITableViewDataSource,UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UIImageView *img_selectAll;
+- (IBAction)btn_SelectAllClick:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_price;
+@property (weak, nonatomic) IBOutlet UITableView *myTableview;
+@property (weak, nonatomic) IBOutlet UIButton *btn_payfororder;
 
 @end

@@ -210,7 +210,7 @@
     for (int i=0; i<secondMenu.count; i++) {
         UIView * backView_item=[[UIView alloc] initWithFrame:CGRectMake((i%3)*itemWidth, 100*(i/3), itemWidth, 100)];
         UIImageView * img_iconClassify=[[UIImageView alloc] initWithFrame:CGRectMake(0, 10, itemWidth, itemWidth)];
-        [img_iconClassify sd_setImageWithURL:[NSURL URLWithString:secondMenu[i][@"image"]] placeholderImage:[UIImage imageNamed:@"muying"]];
+        [img_iconClassify sd_setImageWithURL:[NSURL URLWithString:secondMenu[i][@"image"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
         [backView_item addSubview:img_iconClassify];
         UILabel * lbl_classifytitle=[[UILabel alloc] initWithFrame:CGRectMake(0, backView_item.frame.size.height-20, backView_item.frame.size.width, 20)];
         lbl_classifytitle.textAlignment=NSTextAlignmentCenter;

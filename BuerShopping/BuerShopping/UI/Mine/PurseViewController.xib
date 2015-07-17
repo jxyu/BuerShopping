@@ -293,24 +293,24 @@
                     <exclude reference="xIm-qC-ft2"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="GR3-2w-go4"/>
-                    <exclude reference="Oyw-nO-5tN"/>
-                    <exclude reference="fKY-MS-4z4"/>
-                    <exclude reference="OTq-ze-7al"/>
-                    <exclude reference="qAE-4c-phv"/>
-                    <exclude reference="ugH-aJ-S1Z"/>
-                    <exclude reference="Igx-46-9F2"/>
-                    <exclude reference="o1U-mW-aEC"/>
-                    <exclude reference="tAI-Q3-TEB"/>
                     <exclude reference="F5a-42-eRw"/>
                     <exclude reference="FEv-XT-pif"/>
                     <exclude reference="uRC-Ym-vXc"/>
                     <exclude reference="cEc-rV-HV3"/>
                     <exclude reference="d2F-gY-QZs"/>
                     <exclude reference="oTa-Sh-k9c"/>
+                    <exclude reference="Igx-46-9F2"/>
+                    <exclude reference="o1U-mW-aEC"/>
+                    <exclude reference="tAI-Q3-TEB"/>
                     <exclude reference="89n-LP-SbT"/>
                     <exclude reference="oeC-SY-X4v"/>
                     <exclude reference="xhn-dr-r1U"/>
+                    <exclude reference="OTq-ze-7al"/>
+                    <exclude reference="qAE-4c-phv"/>
+                    <exclude reference="ugH-aJ-S1Z"/>
+                    <exclude reference="GR3-2w-go4"/>
+                    <exclude reference="Oyw-nO-5tN"/>
+                    <exclude reference="fKY-MS-4z4"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -323,24 +323,24 @@
                     <include reference="xIm-qC-ft2"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="GR3-2w-go4"/>
-                    <include reference="Oyw-nO-5tN"/>
-                    <include reference="fKY-MS-4z4"/>
-                    <include reference="OTq-ze-7al"/>
-                    <include reference="qAE-4c-phv"/>
-                    <include reference="ugH-aJ-S1Z"/>
-                    <include reference="Igx-46-9F2"/>
-                    <include reference="o1U-mW-aEC"/>
-                    <include reference="tAI-Q3-TEB"/>
                     <include reference="F5a-42-eRw"/>
                     <include reference="FEv-XT-pif"/>
                     <include reference="uRC-Ym-vXc"/>
                     <include reference="cEc-rV-HV3"/>
                     <include reference="d2F-gY-QZs"/>
                     <include reference="oTa-Sh-k9c"/>
+                    <include reference="Igx-46-9F2"/>
+                    <include reference="o1U-mW-aEC"/>
+                    <include reference="tAI-Q3-TEB"/>
                     <include reference="89n-LP-SbT"/>
                     <include reference="oeC-SY-X4v"/>
                     <include reference="xhn-dr-r1U"/>
+                    <include reference="OTq-ze-7al"/>
+                    <include reference="qAE-4c-phv"/>
+                    <include reference="ugH-aJ-S1Z"/>
+                    <include reference="GR3-2w-go4"/>
+                    <include reference="Oyw-nO-5tN"/>
+                    <include reference="fKY-MS-4z4"/>
                 </mask>
             </variation>
         </view>

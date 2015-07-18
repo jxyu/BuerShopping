@@ -374,6 +374,38 @@
         [self GetRequest:url andpram:prm];
     }
 }
+-(void)GetShowOrderForMySendWithKey:(NSString *)key
+{
+    if (key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_circle&op=my_publish",Url];
+        NSDictionary * prm=@{@"key":key};
+        [self GetRequest:url andpram:prm];
+    }
+}
+-(void)GetShowOrderForMyJuageWithKey:(NSString *)key
+{
+    if (key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_circle&op=my_quote",Url];
+        NSDictionary * prm=@{@"key":key};
+        [self GetRequest:url andpram:prm];
+    }
+}
+-(void)zanClickWithKey:(NSString* )key andcircle_id:(NSString *)circle_id
+{
+    if (key&&circle_id) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_circle&op=praise",Url];
+        NSDictionary * prm=@{@"key":key,@"circle_id":circle_id};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)ShowOrderPinglun:(id)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_circle&op=quote",Url];
+        [self PostRequest:url andpram:prm];
+    }
+}
 
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram
 {

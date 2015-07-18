@@ -17,6 +17,7 @@
 #import "JifenDetialViewController.h"
 #import "PurseViewController.h"
 #import "OrderListViewController.h"
+#import "WXViewController.h"
 
 #define ORIGINAL_MAX_WIDTH 640.0f
 
@@ -52,7 +53,7 @@
                                                               NSUserDomainMask, YES) objectAtIndex:0];
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
     userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
-    
+    NSLog(@"%@",userinfoWithFile);
 }
 -(void)initAllTheView
 {
@@ -94,6 +95,7 @@
         [btn_showOrder setImage:[UIImage imageNamed:@"showorder_icon"] forState:UIControlStateNormal];
         [btn_showOrder setTitle:@"  晒单圈" forState:UIControlStateNormal];
         btn_showOrder.titleLabel.font=[UIFont systemFontOfSize:13];
+        [btn_showOrder addTarget:self action:@selector(Btn_ShowOrderClick) forControlEvents:UIControlEventTouchUpInside];
         [btn_showOrder setTitleColor:[UIColor colorWithRed:115/255.0 green:73/255.0 blue:139/255.0 alpha:1.0] forState:UIControlStateNormal];
         [myHeaderView addSubview:btn_showOrder];
         
@@ -456,7 +458,11 @@
  */
 -(void)Btn_ShowOrderClick
 {
-    
+    WXViewController *wxVc = [WXViewController new];
+    wxVc.key=userinfoWithFile[@"key"];
+    wxVc.nickName=userinfoWithFile[@"username"];
+    wxVc.avatarImageHeader=userinfoWithFile[@"avatar"];
+    [self.navigationController pushViewController:wxVc animated:YES];
 }
 
 -(void)loginSuccess
@@ -499,6 +505,7 @@
     [btn_showOrder setImage:[UIImage imageNamed:@"showorder_icon"] forState:UIControlStateNormal];
     [btn_showOrder setTitle:@"  晒单圈" forState:UIControlStateNormal];
     btn_showOrder.titleLabel.font=[UIFont systemFontOfSize:13];
+    [btn_showOrder addTarget:self action:@selector(Btn_ShowOrderClick) forControlEvents:UIControlEventTouchUpInside];
     [btn_showOrder setTitleColor:[UIColor colorWithRed:115/255.0 green:73/255.0 blue:139/255.0 alpha:1.0] forState:UIControlStateNormal];
     [myHeaderView addSubview:btn_showOrder];
     
@@ -970,5 +977,6 @@
     orderlist.OrderStatus=[NSString stringWithFormat:@"%ld",sender.tag*10];
     [self.navigationController pushViewController:orderlist animated:YES];
 }
+
 
 @end

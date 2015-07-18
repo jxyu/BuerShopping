@@ -28,10 +28,10 @@
     NSMutableArray * editArray;
     BOOL isEdit;
     NSMutableArray * Orderdata;
-    NSMutableArray * CellSelectData;
     NSDictionary *userinfoWithFile;
     NSMutableArray * sectionArray;
     NSMutableArray * cellArray;
+    NSIndexPath * goodDelindexPath;
 }
 
 - (void)viewDidLoad {
@@ -41,10 +41,9 @@
     isSelectAll=NO;
     isSectionSelect=NO;
     isEdit=NO;
-    CarListArray=[[NSMutableArray alloc] init];
+    CarListArray=[[NSMutableArray alloc] init];//请求的原始数据
     editArray=[[NSMutableArray alloc] init];
-    Orderdata=[[NSMutableArray alloc] init];
-    CellSelectData=[[NSMutableArray alloc]init];
+    Orderdata=[[NSMutableArray alloc] init];//存储已选中的数据
     sectionArray =[[NSMutableArray alloc] init];
     cellArray=[[NSMutableArray alloc] init];
     _myTableview.delegate=self;
@@ -63,6 +62,12 @@
         isSelectAll=NO;
         isSectionSelect=NO;
         isEdit=NO;
+        [editArray removeAllObjects];
+        [Orderdata removeAllObjects];
+        [sectionArray removeAllObjects];
+        [cellArray removeAllObjects];
+        _lbl_price.text=@"¥0.00";
+        [_btn_payfororder setTitle:@"结算(0)" forState:UIControlStateNormal];
         _img_selectAll.image=[UIImage imageNamed:@"shoppingcar_unselect_icon"];
         [self TopRefresh];
     }];
@@ -123,7 +128,7 @@
 {
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetOrderListBackCall:"];
-    [dataprovider GetShopCarList:userinfoWithFile[@"key"]];
+    [dataprovider GetShopCarList:@"3ae653eb52824dbc4ba977de343e2e12"];
 }
 -(void)GetOrderListBackCall:(id)dict
 {
@@ -325,6 +330,7 @@
         [sectionArray addObject:[NSString stringWithFormat:@"%d",section]];
         isSectionSelect=YES;
 //        isSelectAll=YES;
+        [cellArray removeAllObjects];
         [_myTableview reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationFade];
         sender.tag=section;
         if (Orderdata.count>0) {
@@ -464,6 +470,23 @@
         [itemdict setObject:goodsArray forKey:@"store_list"];
         [CarListArray replaceObjectAtIndex:indexPath.section withObject:itemdict];
         
+        for (int i=0; i<Orderdata.count; i++) {
+            NSMutableDictionary * orderitemdict=[NSMutableDictionary dictionaryWithDictionary:Orderdata[i]];
+            if ([orderitemdict[@"store_id"] isEqualToString:itemdict[@"store_id"]]) {
+                NSMutableArray * orderitemgoodsArray=[[NSMutableArray alloc] initWithArray:orderitemdict[@"store_list"]];
+                for (int j=0; j<orderitemgoodsArray.count; j++) {
+                    if ([gooddict[@"cart_id"] isEqualToString:orderitemgoodsArray[j][@"cart_id"]]) {
+                        [orderitemgoodsArray setObject:gooddict atIndexedSubscript:j];
+                        [orderitemdict setObject:orderitemgoodsArray forKey:@"store_list"];
+                        [Orderdata setObject:orderitemdict atIndexedSubscript:i];
+                    }
+                }
+            }
+        }
+        
+        
+        
+        
         [self EditGoodNum:CarListArray[indexPath.section][@"store_list"][indexPath.row][@"goods_num"] andcartid:CarListArray[indexPath.section][@"store_list"][indexPath.row][@"cart_id"]];
         [_myTableview reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
         [self AddAllOrderForPrice];
@@ -494,6 +517,20 @@
         [goodsArray setObject:gooddict atIndexedSubscript:indexPath.row];
         [itemdict setObject:goodsArray forKey:@"store_list"];
         [CarListArray replaceObjectAtIndex:indexPath.section withObject:itemdict];
+        
+        for (int i=0; i<Orderdata.count; i++) {
+            NSMutableDictionary * orderitemdict=[NSMutableDictionary dictionaryWithDictionary:Orderdata[i]];
+            if ([orderitemdict[@"store_id"] isEqualToString:itemdict[@"store_id"]]) {
+                NSMutableArray * orderitemgoodsArray=[[NSMutableArray alloc] initWithArray:orderitemdict[@"store_list"]];
+                for (int j=0; j<orderitemgoodsArray.count; j++) {
+                    if ([gooddict[@"cart_id"] isEqualToString:orderitemgoodsArray[j][@"cart_id"]]) {
+                        [orderitemgoodsArray setObject:gooddict atIndexedSubscript:j];
+                        [orderitemdict setObject:orderitemgoodsArray forKey:@"store_list"];
+                        [Orderdata setObject:orderitemdict atIndexedSubscript:i];
+                    }
+                }
+            }
+        }
         [self EditGoodNum:CarListArray[indexPath.section][@"store_list"][indexPath.row][@"goods_num"] andcartid:CarListArray[indexPath.section][@"store_list"][indexPath.row][@"cart_id"]];
         [_myTableview reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
         
@@ -509,29 +546,61 @@
 
 -(void)DelGoods:(UIButton * )sender
 {
-    NSLog(@"货物删除");
     UITableViewCell *cell = (UITableViewCell *)[[sender superview] superview];
-    NSIndexPath *indexPath = [_myTableview indexPathForCell:cell];
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"delgoodsBackCall:"];
-    [dataprovider DelGoodsWithKey:@"3ae653eb52824dbc4ba977de343e2e12" andcartid:CarListArray[indexPath.section][@"store_list"][indexPath.row][@"cart_id"]];
-    NSMutableDictionary * itemdict=[NSMutableDictionary dictionaryWithDictionary:CarListArray[indexPath.section]];
-    NSMutableArray *goodsArray=[[NSMutableArray alloc] initWithArray:itemdict[@"store_list"]];
-    if (goodsArray.count>1) {
-        [goodsArray removeObjectAtIndex:indexPath.row];
-        [itemdict setObject:goodsArray forKey:@"store_list"];
-        [CarListArray replaceObjectAtIndex:indexPath.section withObject:itemdict];
-        [_myTableview reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
-    }else
-    {
-        [CarListArray removeObjectAtIndex:indexPath.section];
-        [_myTableview reloadData];
+    goodDelindexPath = [_myTableview indexPathForCell:cell];
+    UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"是否删除该商品？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"删除", nil];
+    [alert show];
+    NSLog(@"货物删除");
+    
+    
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"%ld",(long)buttonIndex);
+    if (buttonIndex==1) {
+        
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"delgoodsBackCall:"];
+        [dataprovider DelGoodsWithKey:@"3ae653eb52824dbc4ba977de343e2e12" andcartid:CarListArray[goodDelindexPath.section][@"store_list"][goodDelindexPath.row][@"cart_id"]];
+        NSMutableDictionary * itemdict=[NSMutableDictionary dictionaryWithDictionary:CarListArray[goodDelindexPath.section]];
+        NSMutableArray *goodsArray=[[NSMutableArray alloc] initWithArray:itemdict[@"store_list"]];
+        NSString *cartgood_id=goodsArray[goodDelindexPath.row][@"cart_id"];
+        if (goodsArray.count>1) {
+            [goodsArray removeObjectAtIndex:goodDelindexPath.row];
+            [itemdict setObject:goodsArray forKey:@"store_list"];
+            [CarListArray replaceObjectAtIndex:goodDelindexPath.section withObject:itemdict];
+            [_myTableview reloadSections:[NSIndexSet indexSetWithIndex:goodDelindexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+            
+            for (int i=0; i<Orderdata.count; i++) {
+                NSMutableDictionary * orderitemdict=[NSMutableDictionary dictionaryWithDictionary:Orderdata[i]];
+                if ([orderitemdict[@"store_id"] isEqualToString:itemdict[@"store_id"]]) {
+                    NSMutableArray * orderitemgoodsArray=[[NSMutableArray alloc] initWithArray:orderitemdict[@"store_list"]];
+                    for (int j=0; j<orderitemgoodsArray.count; j++) {
+                        if ([orderitemgoodsArray[j][@"cart_id"] isEqualToString:cartgood_id]) {
+                            [orderitemgoodsArray removeObject:orderitemgoodsArray[j]];
+                            [orderitemdict setObject:orderitemgoodsArray forKey:@"store_list"];
+                            [Orderdata setObject:orderitemdict atIndexedSubscript:i];
+                        }
+                    }
+                }
+            }
+            
+        }else
+        {
+            for (int i=0; i<Orderdata.count; i++) {
+                NSMutableDictionary * orderitemdict=[NSMutableDictionary dictionaryWithDictionary:Orderdata[i]];
+                if ([orderitemdict[@"store_id"] isEqualToString:itemdict[@"store_id"]]) {
+                    [Orderdata removeObject:Orderdata[i]];
+                }
+            }
+            [CarListArray removeObjectAtIndex:goodDelindexPath.section];
+            [_myTableview reloadData];
+        }
+        
+        
+        [self AddAllOrderForPrice];
+
     }
-    
-    
-    [self AddAllOrderForPrice];
-    
-    
 }
 -(void)delgoodsBackCall:(id)dict
 {

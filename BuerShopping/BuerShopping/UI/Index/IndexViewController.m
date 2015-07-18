@@ -18,6 +18,7 @@
 #import "ShopInsideViewController.h"
 #import "AutoLocationViewController.h"
 #import "GoodDetialViewController.h"
+#import "ShopDetialViewController.h"
 
 
 @interface IndexViewController ()
@@ -295,12 +296,24 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section==0) {
-        GoodDetialViewController * gooddetial=[[GoodDetialViewController alloc] initWithNibName:@"GoodDetialViewController" bundle:[NSBundle mainBundle]];
-        gooddetial.gc_id=day_special[0][@"goods_id"];
-        [self.navigationController pushViewController:gooddetial animated:YES];
-        
+    if (tableView.tag==1) {
+        if (indexPath.section==0) {
+            GoodDetialViewController * gooddetial=[[GoodDetialViewController alloc] initWithNibName:@"GoodDetialViewController" bundle:[NSBundle mainBundle]];
+            gooddetial.gc_id=day_special[0][@"goods_id"];
+            [self.navigationController pushViewController:gooddetial animated:YES];
+        }
     }
+    if (tableView.tag==2) {
+        GoodDetialViewController * gooddetial=[[GoodDetialViewController alloc] initWithNibName:@"GoodDetialViewController" bundle:[NSBundle mainBundle]];
+        gooddetial.gc_id=goods_like[indexPath.row][@"goods_id"];
+        [self.navigationController pushViewController:gooddetial animated:YES];
+    }
+    if (tableView.tag==3) {
+        ShopDetialViewController * shopdetial=[[ShopDetialViewController alloc] initWithNibName:@"ShopDetialViewController" bundle:[NSBundle mainBundle]];
+        shopdetial.sc_id=good_store[indexPath.row][@"store_id"];
+        [self.navigationController pushViewController:shopdetial animated:YES];
+    }
+    
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
@@ -697,6 +710,8 @@
 -(void)btn_MorespecialPriceClick
 {
     NSLog(@"天天特价");
+    GoodListViewController * goodlist=[[GoodListViewController alloc] initWithNibName:@"GoodListViewController" bundle:[NSBundle mainBundle]];
+    [self.navigationController pushViewController:goodlist animated:YES];
 }
 /**
  *  更多晒单圈
@@ -711,6 +726,8 @@
 -(void)Btn_GuessYoulike
 {
     NSLog(@"猜你喜欢");
+    GoodListViewController * goodlist=[[GoodListViewController alloc] initWithNibName:@"GoodListViewController" bundle:[NSBundle mainBundle]];
+    [self.navigationController pushViewController:goodlist animated:YES];
 }
 /**
  *  每日好店
@@ -718,6 +735,9 @@
 -(void)btn_GoodResEveryDay
 {
     NSLog(@"每日好店");
+    ShopInsideViewController * shoplist=[[ShopInsideViewController alloc] initWithNibName:@"ShopInsideViewController" bundle:[NSBundle mainBundle]];
+//    shoplist.keyWord=textField.text;
+    [self.navigationController pushViewController:shoplist animated:YES];
 }
 
 

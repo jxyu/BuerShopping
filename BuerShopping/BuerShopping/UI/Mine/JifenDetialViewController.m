@@ -40,7 +40,7 @@
 
 -(void)initAllView
 {
-    _tb_myTableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-65)];
+    _tb_myTableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
     _tb_myTableView.delegate=self;
     _tb_myTableView.dataSource=self;
     [self.view addSubview:_tb_myTableView];

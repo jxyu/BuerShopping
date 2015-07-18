@@ -199,7 +199,7 @@
     }
     else
     {
-        NSDictionary *dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":@"88",@"gc_id":_gc_id,@"lng":@"1",@"lat":@"1",@"key":key,@"order":order};
+        NSDictionary *dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":@"88",@"gc_id":@"1067",@"lng":@"1",@"lat":@"1",@"key":key,@"order":order};
         return dict;
     }
 }

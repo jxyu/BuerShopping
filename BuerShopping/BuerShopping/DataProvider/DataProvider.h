@@ -285,7 +285,31 @@
  *  @param channel 支付宝:alipay 微信:wx
  */
 -(void)OrderPayWithKey:(NSString *)key andpay_sn:(NSString *)pay_sn andchannel:(NSString *)channel;
-
+/**
+ *  晒单圈，我发布的
+ *
+ *  @param key <#key description#>
+ */
+-(void)GetShowOrderForMySendWithKey:(NSString *)key;
+/**
+ *  晒单圈，我评论的
+ *
+ *  @param key <#key description#>
+ */
+-(void)GetShowOrderForMyJuageWithKey:(NSString *)key;
+/**
+ *  晒单圈点赞
+ *
+ *  @param key       <#key description#>
+ *  @param circle_id <#circle_id description#>
+ */
+-(void)zanClickWithKey:(NSString* )key andcircle_id:(NSString *)circle_id;
+/**
+ *  晒单圈评论
+ *
+ *  @param prm <#prm description#>
+ */
+-(void)ShowOrderPinglun:(id)prm;
 
 
 

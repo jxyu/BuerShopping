@@ -13,6 +13,7 @@
 #import "ResTableViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "CWStarRateView.h"
+#import "ShopDetialViewController.h"
 
 @interface ShopInsideViewController ()
 @property (nonatomic, strong) NSMutableArray *classifys;
@@ -132,6 +133,9 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    ShopDetialViewController * shopdetial=[[ShopDetialViewController alloc] initWithNibName:@"ShopDetialViewController" bundle:[NSBundle mainBundle]];
+    shopdetial.sc_id=arrayStoreList[indexPath.section][@"store_id"];
+    [self.navigationController pushViewController:shopdetial animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 

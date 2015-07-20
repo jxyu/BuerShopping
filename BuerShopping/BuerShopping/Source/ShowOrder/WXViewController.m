@@ -20,6 +20,7 @@
 #import "UIImageView+WebCache.h"
 #import "HYSegmentedControl.h"
 #import "DataProvider.h"
+#import "SendShowOrderViewController.h"
 
 #define dataCount 10
 #define kLocationToBottom 20
@@ -121,8 +122,10 @@
         for (int j=0; j<pingjiaArray.count; j++) {
             WFReplyBody *body = [[WFReplyBody alloc] init];
             body.replyUser = [pingjiaArray[j][@"member_name"] isKindOfClass:[NSNull class]]?@"":pingjiaArray[j][@"member_name"];
-            body.repliedUser = [pingjiaArray[j][@"member_name"] isEqualToString:@""]?RequestArray[i][@"member_name"]:pingjiaArray[j][@"member_name"];
+            body.repliedUser = [pingjiaArray[j][@"reply_replyname"] isEqualToString:@""]?RequestArray[i][@"member_name"]:pingjiaArray[j][@"member_name"];
             body.replyInfo = [pingjiaArray[j][@"reply_content"] isKindOfClass:[NSNull class]]?@"":pingjiaArray[j][@"reply_content"];
+            body.repluUserID=RequestArray[i][@"member_id"];
+            body.repliedUserID=pingjiaArray[j][@"reply_replyid"];
             [posterReplies addObject:body];
         }
         messBody1.posterReplies = posterReplies;
@@ -144,6 +147,13 @@
     [self RequestData];
    
 
+}
+
+-(void)clickRightButton:(UIButton *)sender
+{
+    SendShowOrderViewController * sendshowOrder=[[SendShowOrderViewController alloc] initWithNibName:@"SendShowOrderViewController" bundle:[NSBundle mainBundle]];
+    sendshowOrder.key=_key;
+    [self.navigationController pushViewController:sendshowOrder animated:YES];
 }
 
 #pragma mark -加载数据
@@ -460,6 +470,8 @@
 #pragma mark - 评论说说回调
 - (void)YMReplyInputWithReply:(NSString *)replyText appendTag:(NSInteger)inputTag{
     
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"PinglunBackCall:"];
     YMTextData *ymData = nil;
     if (_replyIndex == -1) {
         
@@ -472,7 +484,8 @@
         WFMessageBody *m = ymData.messageBody;
         [m.posterReplies addObject:body];
         ymData.messageBody = m;
-        
+        NSDictionary * prm=@{@"key":_key,@"circle_id":m.circle_id,@"content":replyText};
+        [dataprovider ShowOrderPinglun:prm];
     }else{
         
         ymData = (YMTextData *)[_tableDataSource objectAtIndex:inputTag];
@@ -485,10 +498,9 @@
         
         [m.posterReplies addObject:body];
         ymData.messageBody = m;
-
+        NSDictionary * prm=@{@"key":_key,@"circle_id":m.circle_id,@"content":replyText,@"reply_replyid":[(WFReplyBody *)[m.posterReplies objectAtIndex:_replyIndex] repliedUserID],@"reply_replyname":[(WFReplyBody *)[m.posterReplies objectAtIndex:_replyIndex] replyUser]};
+        [dataprovider ShowOrderPinglun:prm];
     }
-   
-    
     
     //清空属性数组。否则会重复添加
     [ymData.completionReplySource removeAllObjects];
@@ -498,6 +510,13 @@
     [_tableDataSource replaceObjectAtIndex:inputTag withObject:ymData];
     
     [mainTable reloadData];
+}
+
+-(void)PinglunBackCall:(id)dict
+{
+    if (!dict[@"datas"][@"error"]) {
+        [SVProgressHUD showSuccessWithStatus:@"评论成功" maskType:SVProgressHUDMaskTypeBlack];
+    }
 }
 
 - (void)destorySelf{

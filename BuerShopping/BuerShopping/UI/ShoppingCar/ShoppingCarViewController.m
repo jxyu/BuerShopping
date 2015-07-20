@@ -128,7 +128,7 @@
 {
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetOrderListBackCall:"];
-    [dataprovider GetShopCarList:@"3ae653eb52824dbc4ba977de343e2e12"];
+    [dataprovider GetShopCarList:userinfoWithFile[@"key"]];
 }
 -(void)GetOrderListBackCall:(id)dict
 {
@@ -561,7 +561,7 @@
         
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"delgoodsBackCall:"];
-        [dataprovider DelGoodsWithKey:@"3ae653eb52824dbc4ba977de343e2e12" andcartid:CarListArray[goodDelindexPath.section][@"store_list"][goodDelindexPath.row][@"cart_id"]];
+        [dataprovider DelGoodsWithKey:userinfoWithFile[@"key"] andcartid:CarListArray[goodDelindexPath.section][@"store_list"][goodDelindexPath.row][@"cart_id"]];
         NSMutableDictionary * itemdict=[NSMutableDictionary dictionaryWithDictionary:CarListArray[goodDelindexPath.section]];
         NSMutableArray *goodsArray=[[NSMutableArray alloc] initWithArray:itemdict[@"store_list"]];
         NSString *cartgood_id=goodsArray[goodDelindexPath.row][@"cart_id"];
@@ -611,7 +611,7 @@
 {
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"EditGoodBackCall:"];
-    [dataprovider EditGoodsNumWithKey:@"3ae653eb52824dbc4ba977de343e2e12" andCartid:cartid andnum:num];
+    [dataprovider EditGoodsNumWithKey:userinfoWithFile[@"key"] andCartid:cartid andnum:num];
 }
 -(void)EditGoodBackCall:(id)dict
 {

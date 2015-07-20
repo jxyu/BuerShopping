@@ -310,6 +310,28 @@
  *  @param prm <#prm description#>
  */
 -(void)ShowOrderPinglun:(id)prm;
+/**
+ *  获取排序列表
+ *
+ *  @param key   key
+ *  @param order 排序(1默认,2本周,3评论数,4点赞)
+ */
+-(void)GetShowOrderOrderListWithKey:(NSString *)key andorder:(NSString *)order;
+/**
+ *  上传晒单圈照片
+ *
+ *  @param imagedata <#imagedata description#>
+ *  @param key       <#key description#>
+ */
+-(void)ShowOrderUpLoadImg:(NSData *)imagedata andkey:(NSString *)key;
+/**
+ *  晒单圈，发布
+ *
+ *  @param key         <#key description#>
+ *  @param description <#description description#>
+ *  @param image       (上传图片时返回图片名称 多个用逗号分隔)
+ */
+-(void)ShowOrderSendWithKey:(NSString *)key anddescription:(NSString *)description andimage:(NSString *)image;
 
 
 

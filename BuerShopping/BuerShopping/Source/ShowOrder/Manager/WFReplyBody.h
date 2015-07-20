@@ -14,12 +14,21 @@
  *  评论者
  */
 @property (nonatomic,copy) NSString *replyUser;
+/**
+ *  评论者ID
+ */
+@property (nonatomic,copy) NSString *repluUserID;
 
 
 /**
  *  回复该评论者的人
  */
 @property (nonatomic,copy) NSString *repliedUser;
+
+/**
+ *  回复评论者的ID
+ */
+@property (nonatomic,copy) NSString *repliedUserID;
 
 /**
  *  回复内容

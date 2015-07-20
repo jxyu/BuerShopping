@@ -730,8 +730,6 @@
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"UploadBackCall:"];
         [dataprovider UpLoadImage:fullPath andkey:userinfoWithFile[@"key"]];
-        
-        
     }];
 }
 

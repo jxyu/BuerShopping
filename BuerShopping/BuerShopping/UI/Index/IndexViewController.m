@@ -19,6 +19,7 @@
 #import "AutoLocationViewController.h"
 #import "GoodDetialViewController.h"
 #import "ShopDetialViewController.h"
+#import "ShowOrderViewController.h"
 
 
 @interface IndexViewController ()
@@ -46,12 +47,14 @@
     NSArray * goods_like;
     UIView * day_sprcial_more;
     NSString * searchType;
+    BOOL keyboardZhezhaoShow;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _lblTitle.text=@"首页";
     isSelectViewShow=NO;
+    keyboardZhezhaoShow=NO;
     searchType=@"宝贝";
     [self LoadData];
     
@@ -277,14 +280,17 @@
     NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [aValue CGRectValue];
     int height = keyboardRect.size.height;
-    UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64-height)];
-    [btn_zhezhao addTarget:self action:@selector(btn_zhezhaoClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:btn_zhezhao];
-}
+    if (!keyboardZhezhaoShow) {
+        UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-65-height)];
+        [btn_zhezhao addTarget:self action:@selector(tuichuKeyBoard:) forControlEvents:UIControlEventTouchUpInside];
+        btn_zhezhao.backgroundColor=[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.2];
+        [self.view addSubview:btn_zhezhao];
+        keyboardZhezhaoShow=YES;
+    }}
 
--(void)btn_zhezhaoClick:(UIButton *)sender
+-(void)tuichuKeyBoard:(UIButton *)sender
 {
+    keyboardZhezhaoShow=NO;
     [txt_searchtext resignFirstResponder];
     [sender removeFromSuperview];
 }
@@ -719,6 +725,23 @@
 -(void)Btn_MoreshowOrderClick
 {
     NSLog(@"晒单圈");
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary * userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    if (userinfoWithFile[@"key"]) {
+        ShowOrderViewController * showorder=[[ShowOrderViewController alloc] init];
+        showorder.key=userinfoWithFile[@"key"];
+        showorder.nickName=userinfoWithFile[@"username"];
+        showorder.avatarImageHeader=userinfoWithFile[@"avatar"];
+        [self.navigationController pushViewController:showorder animated:YES];
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请先登录" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+    }
+    
 }
 /**
  *  更多猜你喜欢

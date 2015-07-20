@@ -29,12 +29,14 @@
     NSArray * secondMenu;
     UIScrollView * scroll_Mnue;
     UIView * backview_SecondClassify;
+    BOOL keyboardZhezhaoShow;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     firstMenu=[[NSArray alloc] init];
     secondMenu=[[NSArray alloc] init];
+    keyboardZhezhaoShow=NO;
     self.view.backgroundColor=[UIColor whiteColor];
     int tabBarWitdh = SCREEN_WIDTH * 1.0f / 5;
     
@@ -311,14 +313,18 @@
     NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [aValue CGRectValue];
     int height = keyboardRect.size.height;
-    UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64-height)];
-    [btn_zhezhao addTarget:self action:@selector(btn_zhezhaoClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:btn_zhezhao];
+    if (!keyboardZhezhaoShow) {
+        UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-65-height)];
+        [btn_zhezhao addTarget:self action:@selector(btn_zhezhaoClick:) forControlEvents:UIControlEventTouchUpInside];
+        btn_zhezhao.backgroundColor=[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.2];
+        [self.view addSubview:btn_zhezhao];
+        keyboardZhezhaoShow=YES;
+    }
 }
 
 -(void)btn_zhezhaoClick:(UIButton *)sender
 {
+    keyboardZhezhaoShow=NO;
     [txt_searchtext resignFirstResponder];
     [sender removeFromSuperview];
 }

@@ -35,6 +35,7 @@
     NSString * xianqu;
     UIButton * doneButton;
     NSString * address_id;
+    BOOL keyboardZhezhaoShow;
 }
 
 - (void)viewDidLoad {
@@ -42,6 +43,7 @@
     _lblTitle.text=@"收货地址";
     _lblTitle.textColor=[UIColor whiteColor];
     [self addLeftButton:@"Icon_Back@2x.png"];
+    keyboardZhezhaoShow=NO;
     //增加监听，当键盘出现或改变时收出消息
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -84,13 +86,18 @@
     NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [aValue CGRectValue];
     int height = keyboardRect.size.height;
-    UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-65-height)];
-    [btn_zhezhao addTarget:self action:@selector(tuichuKeyBoard:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn_zhezhao];
+    if (!keyboardZhezhaoShow) {
+        UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-65-height)];
+        [btn_zhezhao addTarget:self action:@selector(tuichuKeyBoard:) forControlEvents:UIControlEventTouchUpInside];
+        btn_zhezhao.backgroundColor=[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.2];
+        [self.view addSubview:btn_zhezhao];
+        keyboardZhezhaoShow=YES;
+    }
 }
 
 -(void)tuichuKeyBoard:(UIButton *)sender
 {
+    keyboardZhezhaoShow=NO;
     [txt_name resignFirstResponder];
     [txt_phone resignFirstResponder];
     [txt_zip resignFirstResponder];

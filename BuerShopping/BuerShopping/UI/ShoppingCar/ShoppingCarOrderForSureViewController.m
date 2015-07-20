@@ -27,7 +27,7 @@
     NSString * payWay;
     NSString * payWayToPay;
     NSMutableDictionary * messageDict;
-    
+    BOOL keyboardZhezhaoShow;
 }
 
 - (void)viewDidLoad {
@@ -39,6 +39,7 @@
     storeArray=[[NSArray alloc] initWithArray:_OrderData[@"store_cart_list"]];
     sendWay=[[NSMutableDictionary alloc] init];
     messageDict=[[NSMutableDictionary alloc] init];
+    keyboardZhezhaoShow=NO;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
@@ -415,9 +416,14 @@
     NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [aValue CGRectValue];
     int height = keyboardRect.size.height;
-    UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-65-height)];
-    [btn_zhezhao addTarget:self action:@selector(tuichuKeyBoard1:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn_zhezhao];
+    if (!keyboardZhezhaoShow) {
+        UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-65-height)];
+        [btn_zhezhao addTarget:self action:@selector(tuichuKeyBoard1:) forControlEvents:UIControlEventTouchUpInside];
+        btn_zhezhao.backgroundColor=[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.2];
+        [self.view addSubview:btn_zhezhao];
+        keyboardZhezhaoShow=YES;
+    }
+
     _mytableview.frame=CGRectMake(_mytableview.frame.origin.x, _mytableview.frame.origin.y, _mytableview.frame.size.width, _mytableview.frame.size.height-height);
 }
 
@@ -429,6 +435,7 @@
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    keyboardZhezhaoShow=NO;
     _mytableview.frame=CGRectMake(_mytableview.frame.origin.x, _mytableview.frame.origin.y, _mytableview.frame.size.width, SCREEN_HEIGHT-115);
     [textField resignFirstResponder];//等于上面两行的代码
     NSString * store_id=storeArray[textField.tag][@"goods_list"][0][@"store_id"];

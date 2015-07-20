@@ -407,6 +407,35 @@
     }
 }
 
+
+-(void)GetShowOrderOrderListWithKey:(NSString *)key andorder:(NSString *)order
+{
+    if (key&&order) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_circle&op=list",Url];
+        NSDictionary * prm=@{@"key":key,@"order":order};
+        [self GetRequest:url andpram:prm];
+    }
+}
+
+-(void)ShowOrderUpLoadImg:(NSData *)imagedata andkey:(NSString *)key
+{
+    if (imagedata&&key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_circle&op=image_upload",Url];
+        NSDictionary * prm=@{@"key":key,@"name":@"showorder_img"};
+        [self ShowOrderuploadImageWithImage:imagedata andurl:url andprm:prm andkey:key];
+    }
+}
+
+-(void)ShowOrderSendWithKey:(NSString *)key anddescription:(NSString *)description andimage:(NSString *)image
+{
+    if (key&&description&&image) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_circle&op=publish",Url];
+        NSDictionary * prm=@{@"key":key,@"description":description,@"image":image};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram
 {
     AFHTTPRequestOperationManager * manage=[[AFHTTPRequestOperationManager alloc] init];
@@ -437,6 +466,7 @@
         [SVProgressHUD dismiss];
     }];
 }
+
 
 
 
@@ -503,6 +533,42 @@
 //                            key, @"key", nil];
 //    NSDictionary *result = [HttpRequest upload:[NSString stringWithFormat:@"%@index.php?act=member_index&op=avatar_upload",Url] widthParams:params];
 //    NSLog(@"%@",result);
+}
+
+- (void)ShowOrderuploadImageWithImage:(NSData *)imagedata andurl:(NSString *)url andprm:(NSDictionary *)prm andkey:(NSString *)key
+{
+    NSURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:url parameters:prm constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:imagedata name:@"showorder_img" fileName:@"showorder_img.jpg" mimeType:@"image/jpg"];
+    }];
+    
+    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *str=[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSData * data =[str dataUsingEncoding:NSUTF8StringEncoding];
+        id dict =[NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        SEL func_selector = NSSelectorFromString(callBackFunctionName);
+        if ([CallBackObject respondsToSelector:func_selector]) {
+            NSLog(@"回调成功...");
+            [CallBackObject performSelector:func_selector withObject:dict];
+        }else{
+            NSLog(@"回调失败...");
+        }
+        NSLog(@"上传完成");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"上传失败->%@", error);
+        [SVProgressHUD dismiss];
+    }];
+    
+    //执行
+    NSOperationQueue * queue =[[NSOperationQueue alloc] init];
+    [queue addOperation:op];
+    //    FileDetail *file = [FileDetail fileWithName:@"avatar.jpg" data:data];
+    //    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+    //                            file,@"FILES",
+    //                            @"avatar",@"name",
+    //                            key, @"key", nil];
+    //    NSDictionary *result = [HttpRequest upload:[NSString stringWithFormat:@"%@index.php?act=member_index&op=avatar_upload",Url] widthParams:params];
+    //    NSLog(@"%@",result);
 }
 
 

@@ -41,9 +41,6 @@
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.95530941609999998" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                        <rect key="frame" x="16" y="81" width="8" height="21"/>
-                    </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="推荐详情" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5d-Qx-8tz">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -82,13 +79,13 @@
                     <exclude reference="a5d-Qx-8tz"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="hsI-aO-UyV"/>
                     <exclude reference="36M-Eh-tfj"/>
                     <exclude reference="Bta-n5-kxE"/>
                     <exclude reference="IOQ-BK-kiU"/>
                     <exclude reference="Nif-H1-K8A"/>
                     <exclude reference="PzJ-hf-FlE"/>
                     <exclude reference="n5n-4b-yON"/>
-                    <exclude reference="hsI-aO-UyV"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -98,13 +95,13 @@
                     <include reference="a5d-Qx-8tz"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="hsI-aO-UyV"/>
                     <include reference="36M-Eh-tfj"/>
                     <include reference="Bta-n5-kxE"/>
                     <include reference="IOQ-BK-kiU"/>
                     <include reference="Nif-H1-K8A"/>
                     <include reference="PzJ-hf-FlE"/>
                     <include reference="n5n-4b-yON"/>
-                    <include reference="hsI-aO-UyV"/>
                 </mask>
             </variation>
         </view>

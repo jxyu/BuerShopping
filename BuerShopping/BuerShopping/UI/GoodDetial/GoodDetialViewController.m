@@ -70,6 +70,7 @@
     [btn_dianpu addSubview:lbl_dianpuTitle];
     [_backviw_bottom addSubview:btn_dianpu];
     UIButton * btn_shoucang=[[UIButton alloc] initWithFrame:CGRectMake(btn_dianpu.frame.size.width+1, 0, _backviw_bottom.frame.size.width/6, _backviw_bottom.frame.size.height)];
+    [btn_shoucang addTarget:self action:@selector(BtnCollectGood:) forControlEvents:UIControlEventTouchUpInside];
     btn_shoucang.backgroundColor=[UIColor whiteColor];
     UIImageView * img_shoucangicon=[[UIImageView alloc] initWithFrame:CGRectMake((btn_shoucang.frame.size.width-20)/2+1, 5, 20, 20)];
     img_shoucangicon.image=[UIImage imageNamed:@"star_gray_icon"];
@@ -104,6 +105,10 @@
 
 -(void)loadAllData
 {
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetGoodInfoBackCall:"];
     [dataprovider GetGoodDetialInfoWithid:_gc_id];
@@ -228,6 +233,25 @@
 -(void)btnShare:(UIButton *)sender
 {
     NSLog(@"分享");
+    
+}
+-(void)BtnCollectGood:(UIButton *)sender
+{
+    NSLog(@"收藏");
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"CollectGoodBackCall:"];
+    [dataprovider CollectGoodWithKey:userinfoWithFile[@"key"] andgoods_id:_gc_id];
+}
+-(void)CollectGoodBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    if (!dict[@"datas"][@"error"]) {
+        [SVProgressHUD showSuccessWithStatus:@"收藏成功" maskType:SVProgressHUDMaskTypeBlack];
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:dict[@"datas"][@"error"] maskType:SVProgressHUDMaskTypeBlack];
+    }
 }
 -(void)BuildBodyTableView
 {
@@ -470,10 +494,7 @@
 -(void)AddToShoppingCar:(UIButton *)sender
 {
     
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-    userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    
     if (userinfoWithFile[@"key"]) {
         if (select1&&select2) {
             if (goodsID[[NSString stringWithFormat:@"%d|%d",select1,select2]]) {

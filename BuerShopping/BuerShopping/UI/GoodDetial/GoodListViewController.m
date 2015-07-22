@@ -179,7 +179,6 @@
 -(void)GetGoodsListBackcall:(id)dict
 {
     [SVProgressHUD dismiss];
-    [_myTableView reloadData];
     [_myTableView.header endRefreshing];
     NSLog(@"%@",dict);
     if (!dict[@"datas"][@"error"]) {

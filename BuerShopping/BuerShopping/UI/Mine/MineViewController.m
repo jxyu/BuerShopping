@@ -18,6 +18,7 @@
 #import "PurseViewController.h"
 #import "OrderListViewController.h"
 #import "WXViewController.h"
+#import "CollectViewController.h"
 
 #define ORIGINAL_MAX_WIDTH 640.0f
 
@@ -68,7 +69,7 @@
     {
         isLogin=NO;
         nickName=@"";
-        [self addRightbuttontitle:@"注册"];
+//        [self addRightbuttontitle:@"注册"];
         UIView * myHeaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 205)];
         myHeaderView.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/25.0 alpha:1.0];
         UIImageView * img_Back=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, myHeaderView.frame.size.width, 110)];
@@ -352,7 +353,7 @@
             img_go.image=[UIImage imageNamed:@"index_go"];
             [BackView_SpecialPrice addSubview:img_go];
             UIButton * btn_morespecialprice=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_SpecialPrice.frame.size.width, 30)];
-//            [btn_morespecialprice addTarget:self action:@selector(Btn_MoreshowOrderClick) forControlEvents:UIControlEventTouchUpInside];
+            [btn_morespecialprice addTarget:self action:@selector(JumpToCollectVC) forControlEvents:UIControlEventTouchUpInside];
             [BackView_SpecialPrice addSubview:btn_morespecialprice];
             UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, btn_morespecialprice.frame.size.height, BackView_SpecialPrice.frame.size.width-20, 1)];
             fenge.backgroundColor=[UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
@@ -679,15 +680,15 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)clickRightButton:(UIButton *)sender
-{
-    if (!isLogin) {
-        _myRegister=[[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:[NSBundle mainBundle]];
-        _myRegister.viewTitle=@"注册";
-        _myRegister.resetPwd=NO;
-        [self.navigationController pushViewController:_myRegister animated:YES];
-    }
-}
+//-(void)clickRightButton:(UIButton *)sender
+//{
+//    if (!isLogin) {
+//        _myRegister=[[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:[NSBundle mainBundle]];
+//        _myRegister.viewTitle=@"注册";
+//        _myRegister.resetPwd=NO;
+//        [self.navigationController pushViewController:_myRegister animated:YES];
+//    }
+//}
 -(void)viewWillAppear:(BOOL)animated
 {
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] showTabBar];
@@ -963,17 +964,30 @@
 
 -(void)Btn_PurseClick
 {
-    PurseViewController * purse=[[PurseViewController alloc] initWithNibName:@"PurseViewController" bundle:[NSBundle mainBundle]];
-    purse.key=userinfoWithFile[@"key"];
-    [self.navigationController pushViewController:purse animated:YES];
+    if (userinfoWithFile[@"key"]) {
+        PurseViewController * purse=[[PurseViewController alloc] initWithNibName:@"PurseViewController" bundle:[NSBundle mainBundle]];
+        purse.key=userinfoWithFile[@"key"];
+        [self.navigationController pushViewController:purse animated:YES];
+    }
 }
 
 -(void)JumpToOrderListVC:(UIButton *)sender
 {
-    OrderListViewController *orderlist=[[OrderListViewController alloc] initWithNibName:@"OrderListViewController" bundle:[NSBundle mainBundle]];
-    orderlist.key=userinfoWithFile[@"key"];
-    orderlist.OrderStatus=[NSString stringWithFormat:@"%ld",sender.tag*10];
-    [self.navigationController pushViewController:orderlist animated:YES];
+    if (userinfoWithFile[@"key"]) {
+        OrderListViewController *orderlist=[[OrderListViewController alloc] initWithNibName:@"OrderListViewController" bundle:[NSBundle mainBundle]];
+        orderlist.key=userinfoWithFile[@"key"];
+        orderlist.OrderStatus=[NSString stringWithFormat:@"%ld",sender.tag*10];
+        [self.navigationController pushViewController:orderlist animated:YES];
+    }
+}
+
+-(void)JumpToCollectVC
+{
+    if (userinfoWithFile[@"key"]) {
+        CollectViewController * collect=[[CollectViewController alloc] initWithNibName:@"CollectViewController" bundle:[NSBundle mainBundle]];
+        collect.key=userinfoWithFile[@"key"];
+        [self.navigationController pushViewController:collect animated:YES];
+    }
 }
 
 

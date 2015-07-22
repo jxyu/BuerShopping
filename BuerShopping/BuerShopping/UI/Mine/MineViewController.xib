@@ -23,7 +23,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="oaB-aK-1qG" secondAttribute="bottom" constant="50" id="E0F-eF-Csg"/>
-                <constraint firstItem="oaB-aK-1qG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="45" id="K0B-2P-5Kn"/>
+                <constraint firstItem="oaB-aK-1qG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="K0B-2P-5Kn"/>
                 <constraint firstItem="oaB-aK-1qG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="kgA-st-mRZ"/>
                 <constraint firstAttribute="trailing" secondItem="oaB-aK-1qG" secondAttribute="trailing" id="qOt-C1-QtF"/>
             </constraints>

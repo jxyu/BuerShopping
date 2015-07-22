@@ -99,7 +99,7 @@
                     }
                 }
             }
-            [dataprovider Buy_Stepone:userinfoWithFile[@"key"] andcart_id:strprm andifcart:@"1"];
+            [dataprovider Buy_Stepone:@"3ae653eb52824dbc4ba977de343e2e12" andcart_id:strprm andifcart:@"1"];
             
         }
         else
@@ -120,7 +120,7 @@
     if (!dict[@"datas"][@"error"]) {
         ShoppingCarOrderForSureViewController * orderforsure=[[ShoppingCarOrderForSureViewController alloc] initWithNibName:@"ShoppingCarOrderForSureViewController" bundle:[NSBundle mainBundle]];
         orderforsure.OrderData=dict[@"datas"];
-        orderforsure.key=userinfoWithFile[@"key"];
+        orderforsure.key=@"3ae653eb52824dbc4ba977de343e2e12";
         [self.navigationController pushViewController:orderforsure animated:YES];
     }
 }
@@ -128,7 +128,7 @@
 {
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetOrderListBackCall:"];
-    [dataprovider GetShopCarList:userinfoWithFile[@"key"]];
+    [dataprovider GetShopCarList:@"3ae653eb52824dbc4ba977de343e2e12"];
 }
 -(void)GetOrderListBackCall:(id)dict
 {
@@ -387,15 +387,27 @@
                 }
             }
         }
+        if ([self isSectionExist:[NSString stringWithFormat:@"%ld",(long)sender.tag]]) {//判断该section是否已被选中
+            if (sectionArray) {
+                for (NSString *items in sectionArray) {
+                    if ([items isEqualToString:[NSString stringWithFormat:@"%ld",(long)sender.tag]]) {
+                        [sectionArray removeObject:items];
+                    }
+                }
+            }
+            
+        }
         sender.tag=0;
         for (int i=0; i<Orderdata.count; i++) {
-            NSMutableArray * itemArray=[[NSMutableArray alloc] initWithArray:Orderdata[i][@"store_list"]];
+            NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithDictionary:Orderdata[i]];
+            NSMutableArray * itemArray=[[NSMutableArray alloc] initWithArray:dict[@"store_list"]];
             for (id d in itemArray) {
                 NSMutableDictionary*item =[NSMutableDictionary dictionaryWithDictionary:d];
                 if ([item[@"goods_id"] isEqual:CarListArray[indexPath.section][@"store_list"][indexPath.row][@"goods_id"]]) {
                     [itemArray removeObject:item];
                     NSArray *noarray=[[NSArray alloc] initWithArray:itemArray];
-                    [Orderdata[i] setObject:noarray forKey:@"store_list" ];
+                    [dict setObject:noarray forKey:@"store_list" ];
+                    [Orderdata setObject:dict atIndexedSubscript:i];
                     break;
                 }
             }
@@ -422,10 +434,12 @@
         }
         for (int i=0; i<Orderdata.count; i++) {
             if ([Orderdata[i][@"store_id"] isEqualToString:CarListArray[indexPath.section][@"store_id"]]) {
-                NSMutableArray * itemArray=[[NSMutableArray alloc] initWithArray:Orderdata[i][@"store_list"]];
+                NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithDictionary:Orderdata[i]];
+                NSMutableArray * itemArray=[[NSMutableArray alloc] initWithArray:dict[@"store_list"]];
                 [itemArray addObject:CarListArray[indexPath.section][@"store_list"][indexPath.row]];
                 NSArray *noarray=[[NSArray alloc] initWithArray:itemArray];
-                [Orderdata[i] setObject:noarray forKey:@"store_list" ];
+                [dict setObject:noarray forKey:@"store_list" ];
+                [Orderdata setObject:dict atIndexedSubscript:i];
                 break;
             }
         }
@@ -561,7 +575,7 @@
         
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"delgoodsBackCall:"];
-        [dataprovider DelGoodsWithKey:userinfoWithFile[@"key"] andcartid:CarListArray[goodDelindexPath.section][@"store_list"][goodDelindexPath.row][@"cart_id"]];
+        [dataprovider DelGoodsWithKey:@"3ae653eb52824dbc4ba977de343e2e12" andcartid:CarListArray[goodDelindexPath.section][@"store_list"][goodDelindexPath.row][@"cart_id"]];
         NSMutableDictionary * itemdict=[NSMutableDictionary dictionaryWithDictionary:CarListArray[goodDelindexPath.section]];
         NSMutableArray *goodsArray=[[NSMutableArray alloc] initWithArray:itemdict[@"store_list"]];
         NSString *cartgood_id=goodsArray[goodDelindexPath.row][@"cart_id"];
@@ -611,7 +625,7 @@
 {
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"EditGoodBackCall:"];
-    [dataprovider EditGoodsNumWithKey:userinfoWithFile[@"key"] andCartid:cartid andnum:num];
+    [dataprovider EditGoodsNumWithKey:@"3ae653eb52824dbc4ba977de343e2e12" andCartid:cartid andnum:num];
 }
 -(void)EditGoodBackCall:(id)dict
 {

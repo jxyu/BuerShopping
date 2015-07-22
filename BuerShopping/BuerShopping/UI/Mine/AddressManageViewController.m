@@ -50,7 +50,7 @@
 
 -(void)InitAllView
 {
-    _mytbView=[[UITableView alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-125)];
+    _mytbView=[[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-125)];
     _mytbView.delegate=self;
     _mytbView.dataSource=self;
     [self.view addSubview:_mytbView];

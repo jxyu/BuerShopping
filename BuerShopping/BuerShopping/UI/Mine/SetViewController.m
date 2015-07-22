@@ -8,6 +8,8 @@
 
 #import "SetViewController.h"
 #import "AppDelegate.h"
+#import "RealNameViewController.h"
+#import "RegisterViewController.h"
 
 @interface SetViewController ()
 
@@ -85,6 +87,7 @@
             img_Go.image=[UIImage imageNamed:@"index_go"];
             [cell addSubview:img_Go];
             UIButton * btn_shimingrenzheng=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 38)];
+            [btn_shimingrenzheng addTarget:self action:@selector(JumpToRealNameVC:) forControlEvents:UIControlEventTouchUpInside];
             [cell addSubview:btn_shimingrenzheng];
         }
             break;
@@ -97,6 +100,7 @@
             img_Go.image=[UIImage imageNamed:@"index_go"];
             [cell addSubview:img_Go];
             UIButton * btn_shimingrenzheng=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 38)];
+            [btn_shimingrenzheng addTarget:self action:@selector(JumpToResetPWD) forControlEvents:UIControlEventTouchUpInside];
             [cell addSubview:btn_shimingrenzheng];
         }
             break;
@@ -110,6 +114,9 @@
                     UIImageView * img_Go=[[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width-17, 15, 7, 12)];
                     img_Go.image=[UIImage imageNamed:@"index_go"];
                     [cell addSubview:img_Go];
+                    UIButton * btn_shimingrenzheng=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 12)];
+                    [btn_shimingrenzheng addTarget:self action:@selector(AboutUs) forControlEvents:UIControlEventTouchUpInside];
+                    [cell addSubview:btn_shimingrenzheng];
                 }
                     break;
                 case 1:
@@ -139,8 +146,9 @@
             
             [cell addSubview:lbl_shimingrenzheng];
             
-            UIButton * btn_shimingrenzheng=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 38)];
-            [cell addSubview:btn_shimingrenzheng];
+//            UIButton * btn_shimingrenzheng=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 38)];
+//            
+//            [cell addSubview:btn_shimingrenzheng];
         }
             break;
         case 3:
@@ -198,6 +206,29 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 5;
+}
+
+/**
+ *  跳转到实名认证
+ *
+ *  @param sender <#sender description#>
+ */
+-(void)JumpToRealNameVC:(UIButton *)sender
+{
+    RealNameViewController * relname=[[RealNameViewController alloc] initWithNibName:@"RealNameViewController" bundle:[NSBundle mainBundle]];
+    [self.navigationController pushViewController:relname animated:YES];
+}
+-(void)JumpToResetPWD
+{
+    RegisterViewController * resetVC=[[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:[NSBundle mainBundle]];
+    resetVC.resetPwd=YES;
+    resetVC.viewTitle=@"密码重置";
+    [self.navigationController pushViewController:resetVC animated:YES];
+}
+-(void)AboutUs
+{
+    UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"" message:@"关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
 }
 
 - (void)didReceiveMemoryWarning {

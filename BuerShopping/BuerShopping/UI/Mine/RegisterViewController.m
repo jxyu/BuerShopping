@@ -22,7 +22,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTitle:_viewTitle];
+    _lblTitle.text=_viewTitle;
+    _lblTitle.textColor=[UIColor whiteColor];
     [self addLeftButton:@"Icon_Back@2x.png"];
     _FirstView.layer.masksToBounds=YES;
     _FirstView.layer.cornerRadius=6;
@@ -36,6 +37,7 @@
     _Submit.layer.cornerRadius=6;
     [_GetVerifyCode addTarget:self action:@selector(GetVerifyCodeFunc:) forControlEvents:UIControlEventTouchUpInside];
     [_Submit addTarget:self action:@selector(SubmitInfoToReg) forControlEvents:UIControlEventTouchUpInside];
+    [_Submit setTitle:_viewTitle forState:UIControlStateNormal];
 }
 -(void)clickLeftButton:(UIButton *)sender
 {
@@ -87,6 +89,11 @@
             [dataprovider RegisterUserInfo:prm];
             
         }
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请填写完整数据" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles: nil];
+        [alert show];
     }
 }
 

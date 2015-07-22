@@ -332,6 +332,79 @@
  *  @param image       (上传图片时返回图片名称 多个用逗号分隔)
  */
 -(void)ShowOrderSendWithKey:(NSString *)key anddescription:(NSString *)description andimage:(NSString *)image;
+/**
+ *  店铺收藏
+ *
+ *  @param key      <#key description#>
+ *  @param store_id <#store_id description#>
+ */
+-(void)CollectShopWithKey:(NSString *)key andstore_id:(NSString *)store_id;
+/**
+ *  货物收藏
+ *
+ *  @param key      <#key description#>
+ *  @param goods_id <#goods_id description#>
+ */
+-(void)CollectGoodWithKey:(NSString *)key andgoods_id:(NSString *)goods_id;
+/**
+ *  获取收藏货物列表
+ *
+ *  @param key <#key description#>
+ */
+-(void)GetGoodCollectList:(NSString *)key;
+/**
+ *  获取收藏店铺列表
+ *
+ *  @param key <#key description#>
+ */
+-(void)GetStoreCollectList:(NSString *)key;
+/**
+ *  删除收藏的货物
+ *
+ *  @param key    <#key description#>
+ *  @param fav_id <#fav_id description#>
+ */
+-(void)DelGoodsCollectWithKey:(NSString *)key andfav_id:(NSString *)fav_id;
+/**
+ *  删除收藏的店铺
+ *
+ *  @param key      <#key description#>
+ *  @param store_id <#store_id description#>
+ */
+-(void)DelStoreCollectWithKey:(NSString *)key andstore_id:(NSString *)store_id;
+/**
+ *  上传身份证扫描件
+ *
+ *  @param imagedata <#imagedata description#>
+ *  @param key       <#key description#>
+ */
+-(void)UpLoadIDCardImg:(NSData *)imagedata andkey:(NSString *)key;
+/**
+ *  实名认证提交
+ *
+ *  @param prm <#prm description#>
+ */
+-(void)RealNameSubmit:(id)prm;
+/**
+ *  获取订单详情
+ *
+ *  @param key      <#key description#>
+ *  @param order_id <#order_id description#>
+ */
+-(void)GetOrderDetialWithKey:(NSString *)key andorder_id:(NSString *)order_id;
+/**
+ *  上传商品评价图片
+ *
+ *  @param imagedata <#imagedata description#>
+ *  @param key       <#key description#>
+ */
+-(void)UploadPingJiaImg:(NSData *)imagedata andkey:(NSString *)key;
+/**
+ *  提交评论
+ *
+ *  @param prm <#prm description#>
+ */
+-(void)SubmitPingjia:(id)prm;
 
 
 

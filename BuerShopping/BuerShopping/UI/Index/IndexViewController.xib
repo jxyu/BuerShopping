@@ -24,9 +24,9 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="igF-rY-jF8" secondAttribute="bottom" constant="50" id="ha4-96-1JW"/>
                 <constraint firstAttribute="trailing" secondItem="igF-rY-jF8" secondAttribute="trailing" id="hgK-oj-Ffv">
-                    <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="5"/>
                 </constraint>
-                <constraint firstItem="igF-rY-jF8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="vut-gx-guC"/>
+                <constraint firstItem="igF-rY-jF8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="vut-gx-guC"/>
                 <constraint firstItem="igF-rY-jF8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="wlt-GL-YFE"/>
             </constraints>
             <variation key="default">

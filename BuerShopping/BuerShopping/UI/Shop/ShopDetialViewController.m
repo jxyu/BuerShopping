@@ -125,6 +125,15 @@
 
 -(void)InitAllView
 {
+    UIButton * btn_collect=[[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-50, 20, 50, 40)];
+    [btn_collect setImage:[UIImage imageNamed:@"collect_no_icon"] forState:UIControlStateNormal];
+    [btn_collect addTarget:self action:@selector(CollectShop:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn_collect];
+    UIButton * btn_share=[[UIButton alloc] initWithFrame:CGRectMake(btn_collect.frame.origin.x-50, 20, 50, 40)];
+    [btn_share setImage:[UIImage imageNamed:@"share_icon_shop"] forState:UIControlStateNormal];
+    [btn_share addTarget:self action:@selector(shareShop:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn_share];
+//    btn_collect
     _myTableVeiw.delegate=self;
     _myTableVeiw.dataSource=self;
     // 下拉刷新
@@ -152,6 +161,26 @@
 -(void)MakeCallForStore
 {
     NSLog(@"打电话");
+}
+-(void)CollectShop:(UIButton *)sender
+{
+    NSLog(@"收藏");
+    if (storeInfo[@"store_id"]) {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"CollectshopBackCall:"];
+        [dataprovider CollectShopWithKey:userinfoWithFile[@"key"] andstore_id:storeInfo[@"store_id"]];
+    }
+}
+-(void)CollectshopBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    if ([dict[@"datas"] intValue]==1) {
+        [SVProgressHUD showSuccessWithStatus:@"收藏成功" maskType:SVProgressHUDMaskTypeBlack];
+    }
+}
+-(void)shareShop:(UIButton *)sender
+{
+    NSLog(@"分享店铺");
 }
 
 -(void)JumptoNavi:(UIButton * )sender

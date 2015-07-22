@@ -14,6 +14,8 @@
 #import "OrderCellTableViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "Pingpp.h"
+#import "PingJiaViewController.h"
+#import "OrderDetialViewController.h"
 
 @interface OrderListViewController ()<HYSegmentedControlDelegate>
 @property (strong, nonatomic)HYSegmentedControl *segmentedControl;
@@ -120,6 +122,14 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSArray * itemarray=[[NSArray alloc] initWithArray:orderListArray[indexPath.section][@"order_list"]];
+    NSArray * goodlist=[[NSArray alloc] initWithArray:itemarray[0][@"extend_order_goods"]];
+    if (indexPath.row<goodlist.count) {
+        OrderDetialViewController * orderdetial=[[OrderDetialViewController alloc] initWithNibName:@"OrderDetialViewController" bundle:[NSBundle mainBundle]];
+        orderdetial.key=_key;
+        orderdetial.orderid=itemarray[0][@"order_id"];
+        [self.navigationController pushViewController:orderdetial animated:YES];
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
@@ -240,10 +250,11 @@
                 btn_pay.tag=indexPath.section;
                 [btn_pay setTitleColor:[UIColor colorWithRed:255/255.0 green:153/255.0 blue:0/255.0 alpha:1.0] forState:UIControlStateNormal];
                 btn_pay.titleLabel.font=[UIFont systemFontOfSize:15];
+                [btn_pay addTarget:self action:@selector(PingjiaVCJumpTo:) forControlEvents:UIControlEventTouchUpInside];
                 [cell addSubview:btn_pay];
             }
             UIView * lastview=[cell.subviews lastObject];
-            UIButton * btn_ChangeGoods=[[UIButton alloc] initWithFrame:CGRectMake(lastview.frame.origin.x-80, 10, 70, 40)];
+            UIButton * btn_ChangeGoods=[[UIButton alloc] initWithFrame:CGRectMake([[cell.subviews lastObject] isKindOfClass:[UIButton class]]?lastview.frame.origin.x-80:cell.frame.size.width-80, 10, 70, 40)];
             btn_ChangeGoods.layer.masksToBounds=YES;
             btn_ChangeGoods.layer.cornerRadius=5;
             btn_ChangeGoods.layer.borderWidth=1;
@@ -428,21 +439,30 @@
         NSString *payWay=@"";
         if (buttonIndex==0) {
             payWay=@"alipay";
-        }else
+            if (itemarray[0][@"order_amount"]) {
+                NSDictionary * prm=@{@"key":_key,@"pdramount":itemarray[0][@"order_amount"],@"channel":payWay};
+                DataProvider * dataprovider=[[DataProvider alloc] init];
+                [dataprovider setDelegateObject:self setBackFunctionName:@"GetChargeBackCall:"];
+                [dataprovider GetChargeObject:prm];
+            }
+        }else if(buttonIndex ==1)
         {
             payWay=@"wx";
+            if (itemarray[0][@"order_amount"]) {
+                NSDictionary * prm=@{@"key":_key,@"pdramount":itemarray[0][@"order_amount"],@"channel":payWay};
+                DataProvider * dataprovider=[[DataProvider alloc] init];
+                [dataprovider setDelegateObject:self setBackFunctionName:@"GetChargeBackCall:"];
+                [dataprovider GetChargeObject:prm];
+            }
         }
-        if (itemarray[0][@"order_amount"]) {
-            NSDictionary * prm=@{@"key":_key,@"pdramount":itemarray[0][@"order_amount"],@"channel":payWay};
-            DataProvider * dataprovider=[[DataProvider alloc] init];
-            [dataprovider setDelegateObject:self setBackFunctionName:@"GetChargeBackCall:"];
-            [dataprovider GetChargeObject:prm];
-        }
+        
 
     }
     else
     {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",itemarray[0][@"store_phone"]]]];
+        if (buttonIndex==0) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",itemarray[0][@"store_phone"]]]];
+        }
     }
     
 }
@@ -517,6 +537,14 @@
     [dataprovider DelOrder:itemarray[0][@"order_id"] andkey:_key];
 }
 
+-(void)PingjiaVCJumpTo:(UIButton *)sender
+{
+    NSArray * itemarray=[[NSArray alloc] initWithArray:orderListArray[sender.tag][@"order_list"]];
+    PingJiaViewController * pingjiaVC=[[PingJiaViewController alloc] initWithNibName:@"PingJiaViewController" bundle:[NSBundle mainBundle]];
+    pingjiaVC.key=_key;
+    pingjiaVC.orderData=itemarray[0];
+    [self.navigationController pushViewController:pingjiaVC animated:YES];
+}
 
 
 - (void)didReceiveMemoryWarning {

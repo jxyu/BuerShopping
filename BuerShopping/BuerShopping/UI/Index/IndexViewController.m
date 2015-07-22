@@ -286,7 +286,8 @@
         btn_zhezhao.backgroundColor=[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.2];
         [self.view addSubview:btn_zhezhao];
         keyboardZhezhaoShow=YES;
-    }}
+    }
+}
 
 -(void)tuichuKeyBoard:(UIButton *)sender
 {
@@ -434,7 +435,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 10;
+    return 5;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

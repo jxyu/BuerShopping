@@ -434,6 +434,96 @@
         [self PostRequest:url andpram:prm];
     }
 }
+-(void)CollectShopWithKey:(NSString *)key andstore_id:(NSString *)store_id
+{
+    if (key&&store_id) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_favorites_store&op=favorites_add",Url];
+        NSDictionary * prm=@{@"key":key,@"store_id":store_id};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)CollectGoodWithKey:(NSString *)key andgoods_id:(NSString *)goods_id
+{
+    if (key&&goods_id) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_favorites&op=favorites_add",Url];
+        NSDictionary * prm=@{@"key":key,@"goods_id":goods_id};
+        [self PostRequest:url andpram:prm];
+    }
+}
+-(void)GetGoodCollectList:(NSString *)key
+{
+    if (key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_favorites&op=favorites_list",Url];
+        NSDictionary * prm=@{@"key":key};
+        [self PostRequest:url andpram:prm];
+    }
+}
+-(void)GetStoreCollectList:(NSString *)key
+{
+    if (key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_favorites_store&op=favorites_list",Url];
+        NSDictionary * prm=@{@"key":key};
+        [self PostRequest:url andpram:prm];
+    }
+}
+-(void)DelGoodsCollectWithKey:(NSString *)key andfav_id:(NSString *)fav_id
+{
+    if (key&&fav_id) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_favorites&op=favorites_del",Url];
+        NSDictionary * prm=@{@"key":key,@"fav_id":fav_id};
+        [self PostRequest:url andpram:prm];
+    }
+}
+-(void)DelStoreCollectWithKey:(NSString *)key andstore_id:(NSString *)store_id
+{
+    if (key&&store_id) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_favorites_store&op=favorites_del",Url];
+        NSDictionary * prm=@{@"key":key,@"store_id":store_id};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)UpLoadIDCardImg:(NSData *)imagedata andkey:(NSString *)key
+{
+    if (imagedata&&key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_index&op=idcard_upload",Url];
+        NSDictionary * prm=@{@"key":key,@"name":@"showorder_img"};
+        [self ShowOrderuploadImageWithImage:imagedata andurl:url andprm:prm andkey:key];
+    }
+}
+-(void)RealNameSubmit:(id)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_index&op=identification",Url];
+        [self PostRequest:url andpram:prm];
+    }
+}
+-(void)GetOrderDetialWithKey:(NSString *)key andorder_id:(NSString *)order_id
+{
+    if (order_id&&key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_order&op=show_order",Url];
+        NSDictionary * prm=@{@"key":key,@"order_id":order_id};
+        [self GetRequest:url andpram:prm];
+    }
+}
+
+-(void)UploadPingJiaImg:(NSData *)imagedata andkey:(NSString *)key
+{
+    if (imagedata&&key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_evaluate&op=image_upload",Url];
+        NSDictionary * prm=@{@"key":key,@"name":@"showorder_img"};
+        [self ShowOrderuploadImageWithImage:imagedata andurl:url andprm:prm andkey:key];
+    }
+}
+
+-(void)SubmitPingjia:(id)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_evaluate&op=save",Url];
+        [self PostRequest:url andpram:prm];
+    }
+}
 
 
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram

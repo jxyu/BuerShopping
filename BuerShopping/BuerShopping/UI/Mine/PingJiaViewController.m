@@ -1,29 +1,35 @@
 //
-//  SendShowOrderViewController.m
+//  PingJiaViewController.m
 //  BuerShopping
 //
-//  Created by 于金祥 on 15/7/20.
+//  Created by 于金祥 on 15/7/22.
 //  Copyright (c) 2015年 zykj.BuerShopping. All rights reserved.
 //
 
-#import "SendShowOrderViewController.h"
-#import "ZLPhoto.h"
+#import "PingJiaViewController.h"
 #import "DataProvider.h"
+#import "UIImageView+WebCache.h"
+#import "OrderCellTableViewCell.h"
+#import "CWStarRateView.h"
+#import "ZLPhoto.h"
 
-#define kImgWidth (SCREEN_WIDTH-50)/4
-
-@interface SendShowOrderViewController () <ZLPhotoPickerViewControllerDelegate,ZLPhotoPickerBrowserViewControllerDataSource,ZLPhotoPickerBrowserViewControllerDelegate>
+@interface PingJiaViewController ()<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,CWStarRateViewDelegate,ZLPhotoPickerViewControllerDelegate,ZLPhotoPickerBrowserViewControllerDataSource,ZLPhotoPickerBrowserViewControllerDelegate>
 @property (nonatomic , strong) NSMutableArray *assets;
 @property (weak,nonatomic) UIScrollView *scrollView;
 
 @end
 
-@implementation SendShowOrderViewController
+@implementation PingJiaViewController
 {
-    NSString * orderText;
+    NSArray * goodList;
+    NSMutableDictionary * startdict;
+    NSMutableDictionary * messagedict;
+    NSMutableDictionary * imagedict;
+    UITextView * txtview;
     BOOL keyboardZhezhaoShow;
     int uplodaimage;
     NSMutableArray * img_array;
+    NSInteger * sectionNow;
 }
 - (NSMutableArray *)assets{
     if (!_assets) {
@@ -31,49 +37,124 @@
     }
     return _assets;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    uplodaimage=0;
-    _lblTitle.text=@"发布详情";
+    _lblTitle.text=@"宝贝评价";
     _lblTitle.textColor=[UIColor whiteColor];
     [self addLeftButton:@"Icon_Back@2x.png"];
-    [self addRightbuttontitle:@"发布"];
+    startdict=[[NSMutableDictionary alloc] init];
+    messagedict=[[NSMutableDictionary alloc] init];
+    imagedict=[[NSMutableDictionary alloc] init];
+    keyboardZhezhaoShow=NO;
+    uplodaimage=0;
+    sectionNow=0;
     img_array=[[NSMutableArray alloc] init];
     //增加监听，当键盘出现或改变时收出消息
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
+                                             selector:@selector(pingjiakeyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
-    keyboardZhezhaoShow=NO;
-//    [self ButildAllView];
+    goodList=[[NSArray alloc] initWithArray:self.orderData[@"extend_order_goods"]];
+    [self BuildAllView];
+}
+-(void)BuildAllView
+{
+    _myTableView.delegate=self;
+    _myTableView.dataSource=self;
     // 这个属性不能少
     self.automaticallyAdjustsScrollViewInsets = NO;
-    int y= self.txt_text.frame.size.height+self.txt_text.frame.origin.y+100;
     UIScrollView *scrollView = [[UIScrollView alloc] init];
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;
-    scrollView.frame = CGRectMake(0, y, SCREEN_WIDTH+280, SCREEN_HEIGHT-y);
+    scrollView.frame = CGRectMake(0, 300, SCREEN_WIDTH+280, 300);
     [self.view addSubview:scrollView];
     scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.scrollView = scrollView;
     
     // 属性scrollView
     [self reloadScrollView];
-    
 }
 
--(void)clickRightButton:(UIButton *)sender
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self BuildDataAndRequest];
-    [SVProgressHUD showWithStatus:@"正在上传图片。。"];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==0) {
+        static NSString *CellIdentifier = @"orderTableViewCellIdentifier";
+        OrderCellTableViewCell *cell = (OrderCellTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        cell.backgroundColor=[UIColor whiteColor];
+        cell.layer.masksToBounds=YES;
+        cell.layer.cornerRadius=5;
+        cell.bounds=CGRectMake(0, 0, SCREEN_WIDTH-50, cell.frame.size.height);
+        cell  = [[[NSBundle mainBundle] loadNibNamed:@"OrderCellTableViewCell" owner:self options:nil] lastObject];
+        cell.layer.masksToBounds=YES;
+        cell.frame=CGRectMake(cell.frame.origin.x, cell.frame.origin.y, tableView.frame.size.width, cell.frame.size.height);
+        cell.lbl_orderTitle.text=[NSString stringWithFormat:@"%@",goodList[indexPath.section][@"goods_name"]];
+        cell.lbl_price.text=[NSString stringWithFormat:@"¥%@",goodList[indexPath.section][@"goods_price"]];
+        cell.lbl_num.text=[NSString stringWithFormat:@"x%@",goodList[indexPath.section][@"goods_num"]];
+        cell.lbl_guige.text=goodList[indexPath.section][@"goods_spec"];
+        [cell.img_log sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",goodList[indexPath.section][@"goods_image_url"]]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+        return cell;
+    }else if (indexPath.row==1) {
+        UITableViewCell * cell=[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
+        UILabel * lbl_storePingija=[[UILabel alloc] initWithFrame:CGRectMake(10, 20, 80, 20)];
+        lbl_storePingija.textColor=[UIColor grayColor];
+        lbl_storePingija.text=@"店铺评分";
+        [cell addSubview:lbl_storePingija];
+        CGFloat x=lbl_storePingija.frame.size.width+lbl_storePingija.frame.origin.x+30;
+        CWStarRateView * weisheng=[[CWStarRateView alloc] initWithFrame:CGRectMake(x,20,cell.frame.size.width-x-10,20) numberOfStars:5];
+        weisheng.scorePercent = 0;
+        weisheng.allowIncompleteStar = NO;
+        weisheng.tag=indexPath.section;
+        weisheng.hasAnimation = YES;
+        weisheng.delegate=self;
+        [cell addSubview:weisheng];
+        return cell;
+    }
+    else {
+        UITableViewCell * cell=[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
+        UITextView * txt_message=[[UITextView alloc] initWithFrame:CGRectMake(10, 10, cell.frame.size.width-100, 70)];
+        txt_message.scrollEnabled=YES;
+        txt_message.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
+        txt_message.delegate=self;
+        txt_message.tag=indexPath.section;
+        [cell addSubview:txt_message];
+        UIButton * btn_addImg=[[UIButton alloc] initWithFrame:CGRectMake(txt_message.frame.size.width+txt_message.frame.origin.x+10, 10, 70, 70)];
+        [btn_addImg setImage:[UIImage imageNamed:@"Upload_img_icon"] forState:UIControlStateNormal];
+        btn_addImg.tag=indexPath.section;
+        [btn_addImg addTarget:self action:@selector(uploadImg:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:btn_addImg];
+        return cell;
+    }
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==1) {
+        return 60;
+    }
+    return 95;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 3;
+}
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return goodList.count;
+}
+
+
+
 -(void)BuildDataAndRequest
 {
     NSArray * imgarray=[[NSArray alloc] initWithArray:[self.scrollView subviews]];
     if ([imgarray[uplodaimage] isKindOfClass:[UIButton class]]) {
         UIButton * item=(UIButton *)imgarray[uplodaimage];
         NSData * imgData=UIImageJPEGRepresentation(item.imageView.image, 1.0);
+        [SVProgressHUD showWithStatus:@"正在保存图片" maskType:SVProgressHUDMaskTypeBlack];
         DataProvider * dataprovider=[[DataProvider alloc] init];
         ++uplodaimage;
         [dataprovider setDelegateObject:self setBackFunctionName:@"UploadeImgBackCall:"];
@@ -104,22 +185,21 @@
                     images=[images stringByAppendingString:[NSString stringWithFormat:@",%@",img_array[i]]];
                 }
             }
-            
-            DataProvider *dataprovider=[[DataProvider alloc] init];
-            [dataprovider setDelegateObject:self setBackFunctionName:@"showorderSendBackCall:"];
-            [dataprovider ShowOrderSendWithKey:_key anddescription:self.txt_text.text andimage:images];
+            [imagedict setObject:images forKey:[goodList objectAtIndex:sectionNow][@"goods_id"]];
+//            DataProvider *dataprovider=[[DataProvider alloc] init];
+//            [dataprovider setDelegateObject:self setBackFunctionName:@"showorderSendBackCall:"];
+//            [dataprovider ShowOrderSendWithKey:_key anddescription:self.txt_text.text andimage:images];
+            NSLog(@"%@",images);
+            [SVProgressHUD showSuccessWithStatus:@"图片保存成功" maskType:SVProgressHUDMaskTypeBlack];
             
         }
     }
 }
-
--(void)showorderSendBackCall:(id)dict
+-(void)uploadImg:(UIButton *)sender
 {
-    if ([dict[@"datas"] intValue]==1) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    sectionNow=sender.tag;
+    [self photoSelecte];
 }
-
 #pragma mark - select Photo Library
 - (void)photoSelecte {
     // 创建控制器
@@ -130,6 +210,7 @@
     pickerVc.callBack = ^(NSArray *status){
         [self.assets addObjectsFromArray:status];
         [self reloadScrollView];
+        [self BuildDataAndRequest];
     };
     [self.navigationController pushViewController:pickerVc animated:YES];
     /**
@@ -223,17 +304,11 @@
     photo.thumbImage = btn.imageView.image;
     return photo;
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-
-
 
 
 
 //当键盘出现或改变时调用
-- (void)keyboardWillShow:(NSNotification *)aNotification
+- (void)pingjiakeyboardWillShow:(NSNotification *)aNotification
 {
     //获取键盘的高度
     NSDictionary *userInfo = [aNotification userInfo];
@@ -247,25 +322,58 @@
         [self.view addSubview:btn_zhezhao];
         keyboardZhezhaoShow=YES;
     }
-    
 }
 
 -(void)tuichuKeyBoard:(UIButton *)sender
 {
     keyboardZhezhaoShow=NO;
-    [self.txt_text resignFirstResponder];
+    [txtview resignFirstResponder];
     [sender removeFromSuperview];
 }
-- (void)textChanged:(NSNotification *)notification
+-(void)textViewDidBeginEditing:(UITextView *)textView
 {
-    if (self.txt_text.text.length == 0) {
-        _lbl_placeholder.text = @"推荐详情";
-        self.lbl_xing.text=@"＊";
-    }else{
-        self.lbl_placeholder.text = @"";
-        self.lbl_xing.text=@"";
-    }
+    txtview= textView;
+}
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+    [messagedict setObject:textView.text forKey:goodList[textView.tag][@"goods_id"]];
+}
+#pragma mark 星星评价代理方法
+-(void)starRateView:(CWStarRateView *)starRateView scroePercentDidChange:(CGFloat)newScorePercent
+{
+    NSLog(@"%f",newScorePercent);
+    [startdict setObject:[NSString stringWithFormat:@"%.0f",newScorePercent*10] forKey:goodList[starRateView.tag][@"goods_id"]];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
-
+- (IBAction)submitClick:(UIButton *)sender {
+    NSMutableDictionary * prm=[[NSMutableDictionary alloc] init];
+    for (int i=0; i<goodList.count; i++) {
+        NSString * goods_id=goodList[i][@"goods_id"];
+        NSDictionary * itemprm=@{@"comment":messagedict[goods_id],@"score":startdict[goods_id],@"image":imagedict[goods_id]};
+        [prm setObject:itemprm forKey:goods_id];
+    }
+    
+//    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:prm
+//                                                       options:NSJSONWritingPrettyPrinted
+//                                                         error:nil];
+//    NSString *jsonString = [[NSString alloc] initWithData:jsonData
+//                                                 encoding:NSUTF8StringEncoding];
+    NSDictionary * sendprm=@{@"key":_key,@"order_id":_orderData[@"order_id"],@"goods":prm};
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    
+    [dataprovider setDelegateObject:self setBackFunctionName:@"submitBackcall:"];
+    [dataprovider SubmitPingjia:sendprm];
+}
+-(void)submitBackcall:(id)dict
+{
+    NSLog(@"%@",dict);
+    if ([[NSString stringWithFormat:@"%@",dict[@"datas"]] isEqualToString:@"1"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+}
 @end

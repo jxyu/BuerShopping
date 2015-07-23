@@ -16,10 +16,15 @@
 #import "iflyMSC/IFlySetting.h"
 #import <AMapNaviKit/AMapNaviKit.h>
 #import "Pingpp.h"
+#import "UMSocial.h"
+#import "UMSocialWechatHandler.h"
+#import "UMSocialQQHandler.h"
+#import "UMSocialSinaHandler.h"
 
-#define appKey @"7bf8c19274e0"
-#define appSecret @"a9544d5cdd5854a62ba4f5978be3ef6f"
-#define APIKey @"d57667019f79800b1cac4d682465f035";
+#define SMSappKey @"7bf8c19274e0"
+#define SMSappSecret @"a9544d5cdd5854a62ba4f5978be3ef6f"
+#define APIKey @"d57667019f79800b1cac4d682465f035"
+#define umeng_app_key @"557e958167e58e0b720041ff"
 
 @interface AppDelegate ()
 
@@ -67,10 +72,41 @@
     /**
      *  短信验证添加
      */
-    [SMS_SDK registerApp:appKey withSecret:appSecret];
+    [SMS_SDK registerApp:SMSappKey withSecret:SMSappSecret];
+    /***************************************分享开始**********************************************/
+    
+    [UMSocialData setAppKey:umeng_app_key];//设置友盟appkey
+    //设置微信AppId，设置分享url，默认使用友盟的网址
+    
+    //    //设置支持没有客户端情况下使用SSO授权
+    [UMSocialQQHandler setSupportWebView:YES];
+    //打开调试log的开关
+    [UMSocialData openLog:YES];
+    
+    //如果你要支持不同的屏幕方向，需要这样设置，否则在iPhone只支持一个竖屏方向
+    [UMSocialConfig setSupportedInterfaceOrientations:UIInterfaceOrientationMaskAll];
+    
+    //设置微信AppId，设置分享url，默认使用友盟的网址
+    [UMSocialWechatHandler setWXAppId:@"wxb54187fbe1e447bd" appSecret:@"b0a3885263e3842f24a64e09717f2597" url:@"http://www.umeng.com/social"];
+    
+    //    //设置分享到QQ空间的应用Id，和分享url 链接
+    [UMSocialQQHandler setQQWithAppId:@"1104753536" appKey:@"gfNQrmLumGooHdCf" url:@"http://www.umeng.com/social"];
+    //    //设置支持没有客户端情况下使用SSO授权
+    [UMSocialQQHandler setSupportWebView:YES];
+    
+    //打开新浪微博的SSO开关，设置新浪微博回调地址，这里必须要和你在新浪微博后台设置的回调地址一致。若在新浪后台设置我们的回调地址，“http://sns.whalecloud.com/sina2/callback”，这里可以传nil ,需要 #import "UMSocialSinaHandler.h"
+    [UMSocialSinaHandler openSSOWithRedirectURL:nil];
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    /***************************************分享开始**********************************************/
     /**
      设置根VC
      */
@@ -257,7 +293,10 @@
     return  YES;
 }
 
-
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return  [UMSocialSnsService handleOpenURL:url];
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

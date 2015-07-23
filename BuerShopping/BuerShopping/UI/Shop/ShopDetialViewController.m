@@ -16,6 +16,10 @@
 #import "MJRefresh.h"
 #import "GoodDetialViewController.h"
 #import "RoutePlanViewController.h"
+#import "UMSocial.h"
+#import "UMSocialSnsService.h"
+
+#define umeng_app_key @"557e958167e58e0b720041ff"
 
 @interface ShopDetialViewController ()
 
@@ -181,6 +185,19 @@
 -(void)shareShop:(UIButton *)sender
 {
     NSLog(@"分享店铺");
+    
+    //分享巴国榜
+    NSString *shareText = @"快来加入不二海淘，享受生活的乐趣吧！";             //分享内嵌文字
+    UIImage *shareImage = [UIImage imageNamed:@"1136-1"];          //分享内嵌图片
+    NSArray* snsList=    [NSArray arrayWithObjects:UMShareToQQ,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina,UMShareToTencent,nil];
+    //调用快速分享接口
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:umeng_app_key
+                                      shareText:shareText
+                                     shareImage:shareImage
+                                shareToSnsNames:snsList
+                                       delegate:nil];
+    
 }
 
 -(void)JumptoNavi:(UIButton * )sender

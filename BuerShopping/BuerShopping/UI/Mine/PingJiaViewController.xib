@@ -63,13 +63,13 @@
                     <exclude reference="1v4-Du-YiH"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="48z-L7-yjo"/>
+                    <exclude reference="7M6-yJ-Xsr"/>
+                    <exclude reference="iWC-l3-epA"/>
                     <exclude reference="QpB-8l-eGY"/>
                     <exclude reference="Sy3-rk-JwY"/>
                     <exclude reference="l4t-i6-kng"/>
                     <exclude reference="xrT-XN-OLa"/>
-                    <exclude reference="48z-L7-yjo"/>
-                    <exclude reference="7M6-yJ-Xsr"/>
-                    <exclude reference="iWC-l3-epA"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -78,13 +78,13 @@
                     <include reference="1v4-Du-YiH"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="48z-L7-yjo"/>
+                    <include reference="7M6-yJ-Xsr"/>
+                    <include reference="iWC-l3-epA"/>
                     <include reference="QpB-8l-eGY"/>
                     <include reference="Sy3-rk-JwY"/>
                     <include reference="l4t-i6-kng"/>
                     <include reference="xrT-XN-OLa"/>
-                    <include reference="48z-L7-yjo"/>
-                    <include reference="7M6-yJ-Xsr"/>
-                    <include reference="iWC-l3-epA"/>
                 </mask>
             </variation>
         </view>

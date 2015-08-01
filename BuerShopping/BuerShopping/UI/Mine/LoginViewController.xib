@@ -188,6 +188,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HpO-PX-adj">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                     <constraints>
+                        <constraint firstAttribute="width" constant="90" id="FUE-EI-zXm"/>
                         <constraint firstAttribute="height" constant="30" id="HoD-E5-AU9"/>
                     </constraints>
                     <state key="normal" title="忘记密码？">
@@ -196,30 +197,85 @@
                     </state>
                     <variation key="default">
                         <mask key="constraints">
+                            <exclude reference="FUE-EI-zXm"/>
                             <exclude reference="HoD-E5-AU9"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
                         <mask key="constraints">
+                            <include reference="FUE-EI-zXm"/>
                             <include reference="HoD-E5-AU9"/>
                         </mask>
                     </variation>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GWb-fP-LFM">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="45" id="ECS-ac-zye"/>
+                        <constraint firstAttribute="height" constant="46" id="d5Z-JW-WJi"/>
+                    </constraints>
+                    <state key="normal" image="login_wechat_logo_normal.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="ECS-ac-zye"/>
+                            <exclude reference="d5Z-JW-WJi"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="ECS-ac-zye"/>
+                            <include reference="d5Z-JW-WJi"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="btn_weixinClick:" destination="-1" eventType="touchUpInside" id="Sx7-AF-OWY"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jg6-1Q-xRX">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="46" id="MOa-PM-teb"/>
+                        <constraint firstAttribute="width" constant="45" id="UOX-6p-31O"/>
+                    </constraints>
+                    <state key="normal" image="login_qq_logo_nomal.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="MOa-PM-teb"/>
+                            <exclude reference="UOX-6p-31O"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="MOa-PM-teb"/>
+                            <include reference="UOX-6p-31O"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="btn_qqClick:" destination="-1" eventType="touchUpInside" id="lXE-0j-kEu"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="HpO-PX-adj" firstAttribute="leading" secondItem="GWb-fP-LFM" secondAttribute="trailing" constant="8" id="0X5-fN-JAT"/>
                 <constraint firstItem="b2k-KA-x9M" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="6X0-r9-KCg"/>
                 <constraint firstItem="U3j-Oz-MPS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="FSb-Yr-Uk6"/>
                 <constraint firstItem="b2k-KA-x9M" firstAttribute="top" secondItem="U3j-Oz-MPS" secondAttribute="bottom" constant="20" id="Mvi-MV-3T9"/>
                 <constraint firstAttribute="trailing" secondItem="b2k-KA-x9M" secondAttribute="trailing" constant="20" id="RmK-ZJ-eaD"/>
-                <constraint firstAttribute="trailing" secondItem="HpO-PX-adj" secondAttribute="trailing" constant="43" id="Sa9-eq-O4v"/>
+                <constraint firstAttribute="trailing" secondItem="HpO-PX-adj" secondAttribute="trailing" constant="20" id="Sa9-eq-O4v"/>
+                <constraint firstItem="GWb-fP-LFM" firstAttribute="leading" secondItem="Jg6-1Q-xRX" secondAttribute="trailing" constant="8" id="WR5-pu-WnW"/>
                 <constraint firstAttribute="trailing" secondItem="sab-1X-x0M" secondAttribute="trailing" constant="10" id="X5Q-as-nlf"/>
                 <constraint firstItem="HpO-PX-adj" firstAttribute="top" secondItem="b2k-KA-x9M" secondAttribute="bottom" constant="27" id="a7j-JF-M2P"/>
                 <constraint firstItem="sab-1X-x0M" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="75" id="aLK-DY-hST"/>
-                <constraint firstItem="HpO-PX-adj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="200" id="dhx-Ll-OJH"/>
                 <constraint firstItem="U3j-Oz-MPS" firstAttribute="top" secondItem="sab-1X-x0M" secondAttribute="bottom" constant="20" id="h3f-rz-25y"/>
                 <constraint firstAttribute="trailing" secondItem="U3j-Oz-MPS" secondAttribute="trailing" constant="10" id="mmV-2L-G0j"/>
                 <constraint firstItem="sab-1X-x0M" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="q6t-8s-GpH"/>
+                <constraint firstItem="Jg6-1Q-xRX" firstAttribute="top" secondItem="b2k-KA-x9M" secondAttribute="bottom" constant="19" id="rSS-Il-QG3"/>
+                <constraint firstItem="GWb-fP-LFM" firstAttribute="top" secondItem="b2k-KA-x9M" secondAttribute="bottom" constant="19" id="tMb-hb-pD3"/>
             </constraints>
             <variation key="default">
                 <mask key="subviews">
@@ -227,20 +283,25 @@
                     <exclude reference="U3j-Oz-MPS"/>
                     <exclude reference="b2k-KA-x9M"/>
                     <exclude reference="HpO-PX-adj"/>
+                    <exclude reference="GWb-fP-LFM"/>
+                    <exclude reference="Jg6-1Q-xRX"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="Sa9-eq-O4v"/>
-                    <exclude reference="a7j-JF-M2P"/>
-                    <exclude reference="dhx-Ll-OJH"/>
-                    <exclude reference="6X0-r9-KCg"/>
-                    <exclude reference="Mvi-MV-3T9"/>
-                    <exclude reference="RmK-ZJ-eaD"/>
-                    <exclude reference="FSb-Yr-Uk6"/>
-                    <exclude reference="h3f-rz-25y"/>
-                    <exclude reference="mmV-2L-G0j"/>
                     <exclude reference="X5Q-as-nlf"/>
                     <exclude reference="aLK-DY-hST"/>
                     <exclude reference="q6t-8s-GpH"/>
+                    <exclude reference="FSb-Yr-Uk6"/>
+                    <exclude reference="h3f-rz-25y"/>
+                    <exclude reference="mmV-2L-G0j"/>
+                    <exclude reference="6X0-r9-KCg"/>
+                    <exclude reference="Mvi-MV-3T9"/>
+                    <exclude reference="RmK-ZJ-eaD"/>
+                    <exclude reference="rSS-Il-QG3"/>
+                    <exclude reference="WR5-pu-WnW"/>
+                    <exclude reference="tMb-hb-pD3"/>
+                    <exclude reference="0X5-fN-JAT"/>
+                    <exclude reference="Sa9-eq-O4v"/>
+                    <exclude reference="a7j-JF-M2P"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -249,22 +310,31 @@
                     <include reference="U3j-Oz-MPS"/>
                     <include reference="b2k-KA-x9M"/>
                     <include reference="HpO-PX-adj"/>
+                    <include reference="GWb-fP-LFM"/>
+                    <include reference="Jg6-1Q-xRX"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="Sa9-eq-O4v"/>
-                    <include reference="a7j-JF-M2P"/>
-                    <include reference="dhx-Ll-OJH"/>
-                    <include reference="6X0-r9-KCg"/>
-                    <include reference="Mvi-MV-3T9"/>
-                    <include reference="RmK-ZJ-eaD"/>
-                    <include reference="FSb-Yr-Uk6"/>
-                    <include reference="h3f-rz-25y"/>
-                    <include reference="mmV-2L-G0j"/>
                     <include reference="X5Q-as-nlf"/>
                     <include reference="aLK-DY-hST"/>
                     <include reference="q6t-8s-GpH"/>
+                    <include reference="FSb-Yr-Uk6"/>
+                    <include reference="h3f-rz-25y"/>
+                    <include reference="mmV-2L-G0j"/>
+                    <include reference="6X0-r9-KCg"/>
+                    <include reference="Mvi-MV-3T9"/>
+                    <include reference="RmK-ZJ-eaD"/>
+                    <include reference="rSS-Il-QG3"/>
+                    <include reference="WR5-pu-WnW"/>
+                    <include reference="tMb-hb-pD3"/>
+                    <include reference="0X5-fN-JAT"/>
+                    <include reference="Sa9-eq-O4v"/>
+                    <include reference="a7j-JF-M2P"/>
                 </mask>
             </variation>
         </view>
     </objects>
+    <resources>
+        <image name="login_qq_logo_nomal.png" width="65" height="65"/>
+        <image name="login_wechat_logo_normal.png" width="65" height="65"/>
+    </resources>
 </document>

@@ -99,7 +99,7 @@
     _TableView_BackView.tag=1;
     _TableView_BackView.showsVerticalScrollIndicator=NO;
     /***************************headerView 开始 **************************/
-    UIView * myheaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 5, SCREEN_WIDTH- 20, 285)];
+    UIView * myheaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 5, SCREEN_WIDTH- 10, 285)];
     myheaderView.backgroundColor=[UIColor colorWithRed:246/255.0 green:246/255.0 blue:246/255.0 alpha:1.0];
     UIView * jianju=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH- 20, 5)];
     jianju.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
@@ -111,50 +111,50 @@
         [images addObject:img];
     }
     // 创建带标题的图片轮播器
-    _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 5, SCREEN_WIDTH- 20, 135) imagesGroup:images ];
+    _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 5, SCREEN_WIDTH- 10, 135) imagesGroup:images ];
     _cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
     _cycleScrollView.delegate = self;
     [myheaderView addSubview:_cycleScrollView];
     UIView * BackView_buttionlist=[[UIView alloc] initWithFrame:CGRectMake(0, _cycleScrollView.frame.origin.y+_cycleScrollView.frame.size.height+5, myheaderView.frame.size.width, 135)];
-    
+    CGFloat x=(SCREEN_WIDTH- 10-200)/5;
     BackView_buttionlist.backgroundColor=[UIColor whiteColor];
-    UIButton * btn_nvshi=[[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH- 20-200)/5, 5, 50, 60)];
+    UIButton * btn_nvshi=[[UIButton alloc] initWithFrame:CGRectMake(x, 5, 50, 60)];
     [btn_nvshi setImage:[UIImage imageNamed:@"nvshi"] forState:UIControlStateNormal];
     btn_nvshi.tag=1099;
     [btn_nvshi addTarget:self action:@selector(JumpToGoodList:) forControlEvents:UIControlEventTouchUpInside];
     [BackView_buttionlist addSubview:btn_nvshi];
-    UIButton * btn_nanshi=[[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH- 20-200)/5*2+50, 5, 50, 60)];
+    UIButton * btn_nanshi=[[UIButton alloc] initWithFrame:CGRectMake(x*2+50, 5, 50, 60)];
     [btn_nanshi setImage:[UIImage imageNamed:@"nanshi"] forState:UIControlStateNormal];
     btn_nanshi.tag=1100;
     [btn_nanshi addTarget:self action:@selector(JumpToGoodList:) forControlEvents:UIControlEventTouchUpInside];
     [BackView_buttionlist addSubview:btn_nanshi];
-    UIButton * btn_muying=[[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH- 20-200)/5*3+100, 5, 50, 60)];
+    UIButton * btn_muying=[[UIButton alloc] initWithFrame:CGRectMake(x*3+100, 5, 50, 60)];
     [btn_muying setImage:[UIImage imageNamed:@"muying"] forState:UIControlStateNormal];
     btn_muying.tag=1100;
     [btn_muying addTarget:self action:@selector(JumpToGoodList:) forControlEvents:UIControlEventTouchUpInside];
     [BackView_buttionlist addSubview:btn_muying];
-    UIButton * btn_huazhuang=[[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH- 20-200)/5*4+150, 5, 50, 60)];
+    UIButton * btn_huazhuang=[[UIButton alloc] initWithFrame:CGRectMake(x*4+150, 5, 50, 60)];
     [btn_huazhuang setImage:[UIImage imageNamed:@"huazhuang"] forState:UIControlStateNormal];
     btn_huazhuang.tag=1064;
     [btn_huazhuang addTarget:self action:@selector(JumpToGoodList:) forControlEvents:UIControlEventTouchUpInside];
     [BackView_buttionlist addSubview:btn_huazhuang];
     [myheaderView addSubview:BackView_buttionlist];
-    UIButton * btn_shouji=[[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH- 20-200)/5, btn_nvshi.frame.origin.y+btn_nvshi.frame.size.height+5, 50, 60)];
+    UIButton * btn_shouji=[[UIButton alloc] initWithFrame:CGRectMake(x, btn_nvshi.frame.origin.y+btn_nvshi.frame.size.height+5, 50, 60)];
     [btn_shouji setImage:[UIImage imageNamed:@"shouji"] forState:UIControlStateNormal];
     btn_shouji.tag=1065;
     [btn_shouji addTarget:self action:@selector(JumpToGoodList:) forControlEvents:UIControlEventTouchUpInside];
     [BackView_buttionlist addSubview:btn_shouji];
-    UIButton * btn_bangong=[[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH- 20-200)/5*2+50, btn_nvshi.frame.origin.y+btn_nvshi.frame.size.height+5, 50, 60)];
+    UIButton * btn_bangong=[[UIButton alloc] initWithFrame:CGRectMake(x*2+50, btn_nvshi.frame.origin.y+btn_nvshi.frame.size.height+5, 50, 60)];
     [btn_bangong setImage:[UIImage imageNamed:@"bangong"] forState:UIControlStateNormal];
     btn_bangong.tag=1066;
     [btn_bangong addTarget:self action:@selector(JumpToGoodList:) forControlEvents:UIControlEventTouchUpInside];
     [BackView_buttionlist addSubview:btn_bangong];
-    UIButton * btn_shenghuo=[[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH- 20-200)/5*3+100, btn_nvshi.frame.origin.y+btn_nvshi.frame.size.height+5, 50, 60)];
+    UIButton * btn_shenghuo=[[UIButton alloc] initWithFrame:CGRectMake(x*3+100, btn_nvshi.frame.origin.y+btn_nvshi.frame.size.height+5, 50, 60)];
     [btn_shenghuo setImage:[UIImage imageNamed:@"shenghuo"] forState:UIControlStateNormal];
     btn_shenghuo.tag=1067;
     [btn_shenghuo addTarget:self action:@selector(JumpToGoodList:) forControlEvents:UIControlEventTouchUpInside];
     [BackView_buttionlist addSubview:btn_shenghuo];
-    UIButton * btn_techan=[[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH- 20-200)/5*4+150, btn_nvshi.frame.origin.y+btn_nvshi.frame.size.height+5, 50, 60)];
+    UIButton * btn_techan=[[UIButton alloc] initWithFrame:CGRectMake(x*4+150, btn_nvshi.frame.origin.y+btn_nvshi.frame.size.height+5, 50, 60)];
     [btn_techan setImage:[UIImage imageNamed:@"techan"] forState:UIControlStateNormal];
     btn_techan.tag=1068;
     [btn_techan addTarget:self action:@selector(JumpToGoodList:) forControlEvents:UIControlEventTouchUpInside];
@@ -338,6 +338,7 @@
                 UILabel * lbl_moreSpecialprice=[[UILabel alloc] initWithFrame:CGRectMake(BackView_SpecialPrice.frame.size.width-30-60, 10, 60, 20)];
                 lbl_moreSpecialprice.text=@"更多";
                 lbl_moreSpecialprice.textAlignment=NSTextAlignmentRight;
+                lbl_moreSpecialprice.font=[UIFont systemFontOfSize:13];
                 lbl_moreSpecialprice.textColor=[UIColor colorWithRed:183/255.0 green:183/255.0 blue:183/255.0 alpha:1.0];
                 [BackView_SpecialPrice addSubview:lbl_moreSpecialprice];
                 UIImageView * img_go=[[UIImageView alloc] initWithFrame:CGRectMake(lbl_moreSpecialprice.frame.origin.x+lbl_moreSpecialprice.frame.size.width+3, 14, 7, 12)];
@@ -435,6 +436,9 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
+    if (tableView.tag!=1) {
+        return 0;
+    }
     return 5;
 }
 
@@ -450,10 +454,10 @@
                 height=150;
                 break;
             case 2:
-                height=410;
+                height=400;
                 break;
             case 3:
-                height=410;
+                height=400;
                 break;
             default:
                 break;
@@ -475,10 +479,10 @@
             cellheight=170;
             break;
         case 2:
-            cellheight=500;
+            cellheight=485;
             break;
         case 3:
-            cellheight=500;
+            cellheight=485;
             break;
         default:
             break;
@@ -488,7 +492,7 @@
     if (tableView.tag==1) {
         if (indexPath.section==0) {
             UIView * BackView_Specialprice=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-20, 95)];
-            UIImageView * img_Specialprice=[[UIImageView alloc] initWithFrame:CGRectMake(10, 30, 75, 75)];
+            UIImageView * img_Specialprice=[[UIImageView alloc] initWithFrame:CGRectMake(10, 15, 75, 75)];
             [img_Specialprice sd_setImageWithURL:[NSURL URLWithString:day_special[0][@"goods_image"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
             [BackView_Specialprice addSubview:img_Specialprice];
             UIImageView * icon_special=[[UIImageView alloc] initWithFrame:CGRectMake(8, 28, 40, 15)];
@@ -499,7 +503,7 @@
             lbl_icon_special.textColor=[UIColor whiteColor];
             lbl_icon_special.text=@"9.2折";
             [BackView_Specialprice addSubview:lbl_icon_special];
-            UILabel * lbl_goodName=[[UILabel alloc] initWithFrame:CGRectMake(img_Specialprice.frame.origin.x+img_Specialprice.frame.size.width+10, 30, 150, 20)];
+            UILabel * lbl_goodName=[[UILabel alloc] initWithFrame:CGRectMake(img_Specialprice.frame.origin.x+img_Specialprice.frame.size.width+10, 15, 150, 20)];
             lbl_goodName.text=day_special[0][@"goods_name"];
             [BackView_Specialprice addSubview:lbl_goodName];
             
@@ -538,15 +542,15 @@
             for (int i = 0; i < circle.count; ++i) {
                 UIView *item=[[UIView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH-20, 140)];
                 item.backgroundColor=[UIColor whiteColor];
-                UIImageView * img_head=[[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 20,20)];
+                UIImageView * img_head=[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 20,20)];
                 [img_head sd_setImageWithURL:[NSURL URLWithString:circle[i][@"avatar"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
                 [item addSubview:img_head];
                 UILabel * lbl_niceName=[[UILabel alloc] initWithFrame:CGRectMake(img_head.frame.origin.x+img_head.frame.size.width+10, 10, 100, 20)];
                 lbl_niceName.text=circle[i][@"member_name"];
                 [item addSubview:lbl_niceName];
-                UIView * BackView_OrderDetial=[[UIView alloc] initWithFrame:CGRectMake(0, img_head.frame.origin.y+img_head.frame.size.height+10, item.frame.size.width, 120)];
-                BackView_OrderDetial.backgroundColor=[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0];
-                UIImageView * img_orderImg=[[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 60, 60)];
+                UIView * BackView_OrderDetial=[[UIView alloc] initWithFrame:CGRectMake(10, img_head.frame.origin.y+img_head.frame.size.height+10, item.frame.size.width-10, 150)];
+//                BackView_OrderDetial.backgroundColor=[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0];
+                UIImageView * img_orderImg=[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
                 [img_orderImg sd_setImageWithURL:[NSURL URLWithString:circle[i][@"image"][@"0"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
                 [BackView_OrderDetial addSubview:img_orderImg];
                 UILabel * lbl_orderTitle=[[UILabel alloc] initWithFrame:CGRectMake(img_orderImg.frame.size.width+10, 5, BackView_OrderDetial.frame.size.width-100, 18)];
@@ -718,6 +722,7 @@
 {
     NSLog(@"天天特价");
     GoodListViewController * goodlist=[[GoodListViewController alloc] initWithNibName:@"GoodListViewController" bundle:[NSBundle mainBundle]];
+    goodlist.type=1;
     [self.navigationController pushViewController:goodlist animated:YES];
 }
 /**
@@ -751,6 +756,7 @@
 {
     NSLog(@"猜你喜欢");
     GoodListViewController * goodlist=[[GoodListViewController alloc] initWithNibName:@"GoodListViewController" bundle:[NSBundle mainBundle]];
+    goodlist.type=2;
     [self.navigationController pushViewController:goodlist animated:YES];
 }
 /**

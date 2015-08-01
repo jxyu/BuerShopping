@@ -16,5 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *txt_pwd;
 @property (weak, nonatomic) IBOutlet UIButton *Btn_Login;
 @property (weak, nonatomic) IBOutlet UIButton *Btn_forgetPwd;
+- (IBAction)btn_weixinClick:(UIButton *)sender;
+- (IBAction)btn_qqClick:(UIButton *)sender;
 
 @end

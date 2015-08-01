@@ -13,5 +13,5 @@
 @property(nonatomic,strong)NSString *KeyWord;
 @property(nonatomic,strong)NSString *gc_id;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
-
+@property (nonatomic)int type;
 @end

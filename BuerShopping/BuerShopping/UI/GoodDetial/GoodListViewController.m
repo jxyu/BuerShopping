@@ -357,17 +357,46 @@
 -(void)TopRefresh
 {
     curpage=1;
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"GetGoodsListBackcall:"];
-    [dataprovider GetGoodsListWithKeyWord:[self BuildPrmfunc]];
+    if (_type!=1&&_type!=2) {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"GetGoodsListBackcall:"];
+        [dataprovider GetGoodsListWithKeyWord:[self BuildPrmfunc]];
+    }
+    else if (_type==1)
+    {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"GetGoodsListBackcall:"];
+        [dataprovider GetSpecGoodsList:[self BuildPrmfunc]];
+    }
+    else
+    {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"GetGoodsListBackcall:"];
+        [dataprovider GessYouLike:[self BuildPrmfunc]];
+    }
 }
 
 -(void)FootRefresh
 {
     curpage++;
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
-    [dataprovider GetGoodsListWithKeyWord:[self BuildPrmfunc]];
+    if (_type!=1&&_type!=2) {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
+        [dataprovider GetGoodsListWithKeyWord:[self BuildPrmfunc]];
+    }
+    else if (_type==1)
+    {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
+        [dataprovider GetSpecGoodsList:[self BuildPrmfunc]];
+    }
+    else
+    {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
+        [dataprovider GessYouLike:[self BuildPrmfunc]];
+    }
+    
 }
 
 -(void)FootRefireshBackCall:(id)dict

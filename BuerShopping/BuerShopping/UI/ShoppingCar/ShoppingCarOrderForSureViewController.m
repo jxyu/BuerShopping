@@ -47,6 +47,7 @@
     useRestMoney=NO;
     payWay=@"";
     payWayToPay=@"";
+    _lbl_price.text=_OrderData[@"available_predeposit"];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(FinishSelectAddress:) name:@"select_address_for_duihuan" object:nil];
     [self buildHeaderview];
     [self initAllView];

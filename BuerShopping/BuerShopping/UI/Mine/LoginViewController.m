@@ -10,6 +10,8 @@
 #import "AppDelegate.h"
 #import "RegisterViewController.h"
 #import "DataProvider.h"
+#import "UMSocialSnsPlatformManager.h"
+#import "UMSocialAccountManager.h"
 
 @interface LoginViewController ()
 @property(nonatomic,strong)RegisterViewController *myRegister;
@@ -68,6 +70,8 @@
 -(void)clickRightButton:(UIButton *)sender
 {
     _myRegister=[[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:[NSBundle mainBundle]];
+    _myRegister.viewTitle=@"注册";
+    _myRegister.resetPwd=NO;
     [self.navigationController pushViewController:_myRegister animated:YES];
 }
 - (void)didReceiveMemoryWarning {
@@ -79,4 +83,53 @@
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] hiddenTabBar];
 }
 
+- (IBAction)btn_weixinClick:(UIButton *)sender {
+    @try {
+        UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
+        
+        snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+            
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                
+                
+                
+                UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
+                
+                NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
+                
+            }
+            
+        });
+    }
+    @catch (NSException *exception) {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"该功能暂时不能使用" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles: nil];
+        [alert show];
+    }
+    @finally {
+        
+    }
+    
+}
+
+- (IBAction)btn_qqClick:(UIButton *)sender {
+    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ];
+    
+    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+        
+        //          获取微博用户名、uid、token等
+        [[UMSocialDataService defaultDataService] requestSnsInformation:UMShareToQQ  completion:^(UMSocialResponseEntity *response){
+            NSLog(@"SnsInformation is %@",response.data);
+        }];
+        
+        if (response.responseCode == UMSResponseCodeSuccess) {
+            //获取accestoken以及QQ用户信息，得到的数据在回调Block对象形参respone的data属性
+            
+            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:UMShareToQQ];
+            
+            NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
+            DataProvider * dataprovider=[[DataProvider alloc] init];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
+            [dataprovider LoginForQQWithopenid:snsAccount.usid andusername:snsAccount.userName];
+        }});
+}
 @end

@@ -525,6 +525,32 @@
     }
 }
 
+-(void)GetSpecGoodsList:(NSDictionary *)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=goods&op=day_special",Url];
+        [self PostRequest:url andpram:prm];
+    }
+}
+-(void)GessYouLike:(NSDictionary *)prm
+{
+    if (prm) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=goods&op=goods_like_list",Url];
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+-(void)LoginForQQWithopenid:(NSString *)openid andusername:(NSString * )username
+{
+    if (openid&&username) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=login&op=qq",Url];
+        NSDictionary * prm=@{@"openid":openid,@"username":username,@"client":@"ios"};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
+
+
 
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram
 {

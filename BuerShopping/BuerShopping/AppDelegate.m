@@ -20,11 +20,14 @@
 #import "UMSocialWechatHandler.h"
 #import "UMSocialQQHandler.h"
 #import "UMSocialSinaHandler.h"
+#import "UMessage.h"
 
 #define SMSappKey @"7bf8c19274e0"
 #define SMSappSecret @"a9544d5cdd5854a62ba4f5978be3ef6f"
 #define APIKey @"d57667019f79800b1cac4d682465f035"
 #define umeng_app_key @"557e958167e58e0b720041ff"
+#define UMSYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define _IPHONE80_ 80000
 
 @interface AppDelegate ()
 
@@ -98,15 +101,63 @@
     [UMSocialSinaHandler openSSOWithRedirectURL:nil];
     
     
+    /***************************************分享结束**********************************************/
     
     
     
+    /*****************************************推送开始********************************************/
+    //set AppKey and LaunchOptions
+    [UMessage startWithAppkey:umeng_app_key launchOptions:launchOptions];
     
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= _IPHONE80_
+    if(UMSYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+    {
+        //register remoteNotification types
+        UIMutableUserNotificationAction *action1 = [[UIMutableUserNotificationAction alloc] init];
+        action1.identifier = @"action1_identifier";
+        action1.title=@"Accept";
+        action1.activationMode = UIUserNotificationActivationModeForeground;//当点击的时候启动程序
+        
+        UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];  //第二按钮
+        action2.identifier = @"action2_identifier";
+        action2.title=@"Reject";
+        action2.activationMode = UIUserNotificationActivationModeBackground;//当点击的时候不启动程序，在后台处理
+        action2.authenticationRequired = YES;//需要解锁才能处理，如果action.activationMode = UIUserNotificationActivationModeForeground;则这个属性被忽略；
+        action2.destructive = YES;
+        
+        UIMutableUserNotificationCategory *categorys = [[UIMutableUserNotificationCategory alloc] init];
+        categorys.identifier = @"category1";//这组动作的唯一标示
+        [categorys setActions:@[action1,action2] forContext:(UIUserNotificationActionContextDefault)];
+        
+        UIUserNotificationSettings *userSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert
+                                                                                     categories:[NSSet setWithObject:categorys]];
+        [UMessage registerRemoteNotificationAndUserNotificationSettings:userSettings];
+        
+        //        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings
+        //                                                                             settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)
+        //                                                                             categories:[NSSet setWithObject:categorys]]];
+        //
+        //
+        //        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else{
+        //register remoteNotification types
+        [UMessage registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge
+         |UIRemoteNotificationTypeSound
+         |UIRemoteNotificationTypeAlert];
+    }
+#else
     
+    //register remoteNotification types
+    [UMessage registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge
+     |UIRemoteNotificationTypeSound
+     |UIRemoteNotificationTypeAlert];
     
+#endif
     
+    //for log
+    [UMessage setLogEnabled:YES];
+    /*****************************************推送结束********************************************/
     
-    /***************************************分享开始**********************************************/
     /**
      设置根VC
      */
@@ -279,24 +330,100 @@
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    [Pingpp handleOpenURL:url
-           withCompletion:^(NSString *result, PingppError *error) {
-               if ([result isEqualToString:@"success"]) {
-                   // 支付成功
-                   NSLog(@"支付成功，准备跳转");
-                   [[NSNotificationCenter defaultCenter] postNotificationName:@"OrderPay_success" object:nil];
-               } else {
-                   // 支付失败或取消
-                   NSLog(@"Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
-               }
-           }];
-    return  YES;
+    BOOL result = [UMSocialSnsService handleOpenURL:url];
+    if (result == FALSE) {
+        //调用其他SDK，例如新浪微博SDK等
+        [Pingpp handleOpenURL:url
+               withCompletion:^(NSString *result, PingppError *error) {
+                   if ([result isEqualToString:@"success"]) {
+                       // 支付成功
+                       NSLog(@"支付成功，准备跳转");
+                       [[NSNotificationCenter defaultCenter] postNotificationName:@"OrderPay_success" object:nil];
+                   } else {
+                       // 支付失败或取消
+                       NSLog(@"Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
+                   }
+               }];
+        return  YES;
+    }
+    return result;
+    
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
     return  [UMSocialSnsService handleOpenURL:url];
 }
+//- (BOOL)application:(UIApplication *)application
+//            openURL:(NSURL *)url
+//  sourceApplication:(NSString *)sourceApplication
+//         annotation:(id)annotation
+//{
+//    return  [UMSocialSnsService handleOpenURL:url];
+//}
+
+#pragma mark - 推送和第三方分享
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [UMessage registerDeviceToken:deviceToken];
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    NSString *stringDeviceToken = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    
+    set_sp(stringDeviceToken, @"devicetoken");
+    //TODO: 是否已经登录，登录使用userid和devicetoken绑定调用推送接口，没有登录不进行绑定，在登陆后绑定
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary* userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    if(userinfoWithFile){
+        //!!!:  已经登录完成，
+        DataProvider* dataProvider=[[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"commitSuccess"];
+//        [dataProvider commitdevicetokenWithUserid:userinfoWithFile[@"userid"] token:stringDeviceToken];
+        
+    }else{
+        //!!!:  还没有登录，跳转登录页面，登录成功后返回这一页面
+    }
+    
+}
+//注册push功能失败 后 返回错误信息，执行相应的处理
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
+{
+    NSLog(@"Push Register Error:%@", err.description);
+}
+-(void)commitSuccess:(id)dict{
+    DLog(@"commitUser-device token:%@",dict);
+}
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    
+    //关闭友盟自带的弹出框
+    //        [UMessage setAutoAlert:YES];
+    
+    DLog(@"remote:%@",userInfo);
+    [UMessage didReceiveRemoteNotification:userInfo];
+    NSString* content=[[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+    //        self.userInfo = userInfo;
+    //定制自定的的弹出框
+    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
+    {
+//        NSRange range=[content rangeOfString:@"餐厅已接单"];
+//        if (range.length>0) {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"Res_Resive_order" object:nil];
+//        }
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:content
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil];
+        
+        [alertView show];
+        
+    }
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

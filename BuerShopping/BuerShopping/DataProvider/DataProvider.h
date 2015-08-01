@@ -405,6 +405,25 @@
  *  @param prm <#prm description#>
  */
 -(void)SubmitPingjia:(id)prm;
+/**
+ *  获取天天特价货物列表
+ *
+ *  @param prm <#prm description#>
+ */
+-(void)GetSpecGoodsList:(NSDictionary *)prm;
+/**
+ *  获取猜你喜欢货物列表
+ *
+ *  @param prm <#prm description#>
+ */
+-(void)GessYouLike:(NSDictionary *)prm;
+/**
+ *  QQ登录
+ *
+ *  @param openid   <#openid description#>
+ *  @param username <#username description#>
+ */
+-(void)LoginForQQWithopenid:(NSString *)openid andusername:(NSString * )username;
 
 
 

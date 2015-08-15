@@ -13,6 +13,7 @@
 #import "DataProvider.h"
 #import "Pingpp.h"
 #import "AppDelegate.h"
+#import "OrderListViewController.h"
 
 @interface ShoppingCarOrderForSureViewController ()
 @property(nonatomic,strong)AddressManageViewController *myaddressManager;
@@ -35,11 +36,13 @@
     _lblTitle.text=@"确认订单";
     _lblTitle.textColor=[UIColor whiteColor];
     [self addLeftButton:@"Icon_Back@2x.png"];
-    addressdict=[[NSDictionary alloc] initWithDictionary:_OrderData[@"address_info"]];
-    storeArray=[[NSArray alloc] initWithArray:_OrderData[@"store_cart_list"]];
+    addressdict=[[NSDictionary alloc] init];
+    storeArray=[[NSArray alloc] init];
     sendWay=[[NSMutableDictionary alloc] init];
     messageDict=[[NSMutableDictionary alloc] init];
     keyboardZhezhaoShow=NO;
+    addressdict=_OrderData[@"address_info"];
+    storeArray=_OrderData[@"store_cart_list"];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
@@ -47,10 +50,18 @@
     useRestMoney=NO;
     payWay=@"";
     payWayToPay=@"";
-    _lbl_price.text=_OrderData[@"available_predeposit"];
+    _lbl_price.text=[_OrderData[@"available_predeposit"] isKindOfClass:[NSNull class]]?@"":_OrderData[@"available_predeposit"];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(JumpToOrderList) name:@"OrderPay_success" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(FinishSelectAddress:) name:@"select_address_for_duihuan" object:nil];
     [self buildHeaderview];
     [self initAllView];
+}
+-(void)JumpToOrderList
+{
+    OrderListViewController *orderlist=[[OrderListViewController alloc] initWithNibName:@"OrderListViewController" bundle:[NSBundle mainBundle]];
+    orderlist.key=_key;
+    orderlist.OrderStatus=@"20";
+    [self.navigationController pushViewController:orderlist animated:YES];
 }
 -(void)initAllView
 {
@@ -98,38 +109,55 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    CGFloat height=60;
     if (indexPath.section==storeArray.count) {
         return 60;
     }
-    NSArray * gooditemArray=[[NSArray alloc] initWithArray:storeArray[indexPath.section][@"goods_list"]];
-    CGFloat height=60;
-    if (indexPath.row<gooditemArray.count) {
-        height=105;
+    else
+    {
+        NSArray * gooditemArray=[[NSArray alloc] initWithArray:storeArray[indexPath.section][@"goods_list"]];
+        
+        if (indexPath.row<gooditemArray.count) {
+            height=105;
+        }
     }
     return height;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==storeArray.count) {
-        if ([_OrderData[@"ifshow_offpay"] intValue]==1) {
+        if (!_OrderData[@"ifshow_offpay"]) {
+            if ([_OrderData[@"ifshow_offpay"] intValue]==1) {
+                UIActionSheet *choiceSheet1 = [[UIActionSheet alloc] initWithTitle:nil
+                                                                          delegate:self
+                                                                 cancelButtonTitle:@"取消"
+                                                            destructiveButtonTitle:nil
+                                                                 otherButtonTitles:@"钱包支付",@"微信支付", @"支付宝支付",@"货到付款", nil];
+                choiceSheet1.tag=2;
+                [choiceSheet1 showInView:self.view];
+            }
+            else
+            {
+                UIActionSheet *choiceSheet1 = [[UIActionSheet alloc] initWithTitle:nil
+                                                                          delegate:self
+                                                                 cancelButtonTitle:@"取消"
+                                                            destructiveButtonTitle:nil
+                                                                 otherButtonTitles:@"钱包支付",@"微信支付", @"支付宝支付", nil];
+                choiceSheet1.tag=3;
+                [choiceSheet1 showInView:self.view];
+            }
+
+        }else
+        {
             UIActionSheet *choiceSheet1 = [[UIActionSheet alloc] initWithTitle:nil
                                                                       delegate:self
                                                              cancelButtonTitle:@"取消"
                                                         destructiveButtonTitle:nil
-                                                             otherButtonTitles:@"钱包支付",@"微信支付", @"支付宝支付",@"货到付款", nil];
-            choiceSheet1.tag=2;
+                                                             otherButtonTitles:@"钱包支付",@"微信支付", @"支付宝支付", nil];
+            choiceSheet1.tag=3;
             [choiceSheet1 showInView:self.view];
         }
-//        else
-//        {
-//            UIActionSheet *choiceSheet1 = [[UIActionSheet alloc] initWithTitle:nil
-//                                                                      delegate:self
-//                                                             cancelButtonTitle:@"取消"
-//                                                        destructiveButtonTitle:nil
-//                                                             otherButtonTitles:@"钱包支付",@"微信支付", @"支付宝支付", nil];
-//            choiceSheet1.tag=3;
-//            [choiceSheet1 showInView:self.view];
-//        }
+        
         
         
     }
@@ -172,13 +200,13 @@
 //        [btn_userrestmoney setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 //        [btn_userrestmoney addTarget:self action:@selector(usePurse:) forControlEvents:UIControlEventTouchUpInside];
 //        [cell addSubview:btn_userrestmoney];
-        if (payWay) {
-            UILabel * lbl_sendWay=[[UILabel alloc] initWithFrame:CGRectMake(cell.frame.size.width-100, 20, 90, 20)];
-            lbl_sendWay.textColor=[UIColor grayColor];
-            lbl_sendWay.text=payWay;
-            lbl_sendWay.textAlignment=NSTextAlignmentRight;
-            [cell addSubview:lbl_sendWay];
-        }
+//        if (payWay) {
+//            UILabel * lbl_sendWay=[[UILabel alloc] initWithFrame:CGRectMake(cell.frame.size.width-100, 20, 90, 20)];
+//            lbl_sendWay.textColor=[UIColor grayColor];
+//            lbl_sendWay.text=payWay;
+//            lbl_sendWay.textAlignment=NSTextAlignmentRight;
+//            [cell addSubview:lbl_sendWay];
+//        }
         return cell;
 
     }
@@ -201,7 +229,7 @@
             cell.lbl_num.text=[NSString stringWithFormat:@"x%@",gooditemArray[indexPath.row][@"goods_num"]];
             //        cell.lbl_guige.text=gooditemArray[indexPath.row][@"goods_spec"];
             [cell.img_log sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",gooditemArray[indexPath.row][@"goods_image_url"]]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-            //        cell.lbl_rescuncun.text=goods_like[indexPath.row][@""];
+//            //        cell.lbl_rescuncun.text=goods_like[indexPath.row][@""];
             return cell;
         }else if (indexPath.row==gooditemArray.count)
         {
@@ -271,8 +299,12 @@
     if (section==storeArray.count) {
         return 1;
     }
-    NSArray * gooditemArray=[[NSArray alloc] initWithArray:storeArray[section][@"goods_list"]];
-    return gooditemArray.count+3;
+    else
+    {
+        NSArray * gooditemArray=[[NSArray alloc] initWithArray:storeArray[section][@"goods_list"]];
+        return gooditemArray.count+3;
+    }
+    
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -284,7 +316,7 @@
 -(void)buildHeaderview
 {
     UIView * headerview=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
-    if (addressdict) {
+    if (addressdict.count>0) {
         UIImageView * img_location=[[UIImageView alloc] initWithFrame:CGRectMake(10, 30, 15, 20)];
         img_location.image=[UIImage imageNamed:@"location_icon"];
         [headerview addSubview:img_location];
@@ -358,7 +390,7 @@
         NSString * store_id=itemarray[0][@"store_id"];
         if (buttonIndex==0) {
             sendwayItem=@"物流配送";
-//            float lastprice=[ gooddict[@"goods_price"] floatValue]+[storedict[@"store_freight_price"] floatValue];
+//            float lastprice=[ gooddict[@"goods_price"] floatValue]+[store_id[@"store_freight_price"] floatValue];
 //            _lbl_price.text=[NSString stringWithFormat:@"¥%.2f",lastprice];
         }
         if (buttonIndex==1) {
@@ -417,27 +449,27 @@
     NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [aValue CGRectValue];
     int height = keyboardRect.size.height;
-    if (!keyboardZhezhaoShow) {
-        UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-65-height)];
-        [btn_zhezhao addTarget:self action:@selector(tuichuKeyBoard1:) forControlEvents:UIControlEventTouchUpInside];
-        btn_zhezhao.backgroundColor=[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.2];
-        [self.view addSubview:btn_zhezhao];
-        keyboardZhezhaoShow=YES;
-    }
+//    if (!keyboardZhezhaoShow) {
+//        UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-65-height)];
+//        [btn_zhezhao addTarget:self action:@selector(tuichuKeyBoard1:) forControlEvents:UIControlEventTouchUpInside];
+//        btn_zhezhao.backgroundColor=[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.2];
+//        [self.view addSubview:btn_zhezhao];
+//        keyboardZhezhaoShow=YES;
+//    }
 
     _mytableview.frame=CGRectMake(_mytableview.frame.origin.x, _mytableview.frame.origin.y, _mytableview.frame.size.width, _mytableview.frame.size.height-height);
 }
 
--(void)tuichuKeyBoard1:(UIButton *)sender
-{
-//    [txt_message resignFirstResponder];
-    [sender removeFromSuperview];
-    _mytableview.frame=CGRectMake(_mytableview.frame.origin.x, _mytableview.frame.origin.y, _mytableview.frame.size.width, SCREEN_HEIGHT-115);
-}
+//-(void)tuichuKeyBoard1:(UIButton *)sender
+//{
+////    [txt_message resignFirstResponder];
+//    [sender removeFromSuperview];
+//    _mytableview.frame=CGRectMake(_mytableview.frame.origin.x, _mytableview.frame.origin.y, _mytableview.frame.size.width, SCREEN_HEIGHT-115);
+//}
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     keyboardZhezhaoShow=NO;
-    _mytableview.frame=CGRectMake(_mytableview.frame.origin.x, _mytableview.frame.origin.y, _mytableview.frame.size.width, SCREEN_HEIGHT-115);
+    _mytableview.frame=CGRectMake(_mytableview.frame.origin.x, 64, _mytableview.frame.size.width, SCREEN_HEIGHT-114);
     [textField resignFirstResponder];//等于上面两行的代码
     NSString * store_id=storeArray[textField.tag][@"goods_list"][0][@"store_id"];
     [messageDict setObject:textField.text forKey:store_id];
@@ -461,6 +493,11 @@
             [dataprovider setDelegateObject:self setBackFunctionName:@"GetChargeBackCall:"];
             [dataprovider OrderPayWithKey:_key andpay_sn:dict[@"datas"][@"pay_sn"] andchannel:payWayToPay];
         }
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"取消" otherButtonTitles: nil];
+        [alert show];
     }
 }
 -(void)GetChargeBackCall:(id)dict

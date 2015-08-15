@@ -39,8 +39,6 @@
 		805A527E1B1D4E3700C93A97 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 805A527B1B1D4E3700C93A97 /* SVProgressHUD.m */; };
 		805B76561B578D9A00D71629 /* ShoppingCarOrderForSureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 805B76541B578D9A00D71629 /* ShoppingCarOrderForSureViewController.m */; };
 		805B76571B578D9A00D71629 /* ShoppingCarOrderForSureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 805B76551B578D9A00D71629 /* ShoppingCarOrderForSureViewController.xib */; };
-		805B765C1B57B6E200D71629 /* ChineseString.m in Sources */ = {isa = PBXBuildFile; fileRef = 805B76591B57B6E200D71629 /* ChineseString.m */; };
-		805B765D1B57B6E200D71629 /* pinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 805B765B1B57B6E200D71629 /* pinyin.m */; };
 		806414581B60E72300CD827D /* 1136-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 806414571B60E72300CD827D /* 1136-1.png */; };
 		8064145C1B60EEB000CD827D /* libUMessage_Sdk_1.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8064145A1B60EEB000CD827D /* libUMessage_Sdk_1.1.0.a */; };
 		806FDD671B1D44AD006F4763 /* SMS_SDKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 806FDD631B1D44AD006F4763 /* SMS_SDKLocalizable.strings */; };
@@ -253,6 +251,8 @@
 		80A3631E1B5CD4AD00EBAA07 /* shanguangdeng2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80A362FC1B5CD4AD00EBAA07 /* shanguangdeng2@2x.png */; };
 		80A3631F1B5CD4AD00EBAA07 /* xiang.png in Resources */ = {isa = PBXBuildFile; fileRef = 80A362FE1B5CD4AD00EBAA07 /* xiang.png */; };
 		80A363201B5CD4AD00EBAA07 /* xiang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80A362FF1B5CD4AD00EBAA07 /* xiang@2x.png */; };
+		80ADB1F01B71AEEB00A676C4 /* ChineseString.m in Sources */ = {isa = PBXBuildFile; fileRef = 80ADB1ED1B71AEEB00A676C4 /* ChineseString.m */; };
+		80ADB1F11B71AEEB00A676C4 /* pinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 80ADB1EF1B71AEEB00A676C4 /* pinyin.m */; };
 		80B419981B55FB0400867B40 /* addressAdd_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B419971B55FB0400867B40 /* addressAdd_icon@2x.png */; };
 		80B942B51B4760ED005BA325 /* 58.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B942B21B4760ED005BA325 /* 58.png */; };
 		80B942B61B4760ED005BA325 /* 80.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B942B31B4760ED005BA325 /* 80.png */; };
@@ -428,10 +428,6 @@
 		805B76531B578D9A00D71629 /* ShoppingCarOrderForSureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCarOrderForSureViewController.h; sourceTree = "<group>"; };
 		805B76541B578D9A00D71629 /* ShoppingCarOrderForSureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCarOrderForSureViewController.m; sourceTree = "<group>"; };
 		805B76551B578D9A00D71629 /* ShoppingCarOrderForSureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShoppingCarOrderForSureViewController.xib; sourceTree = "<group>"; };
-		805B76581B57B6E200D71629 /* ChineseString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseString.h; sourceTree = "<group>"; };
-		805B76591B57B6E200D71629 /* ChineseString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseString.m; sourceTree = "<group>"; };
-		805B765A1B57B6E200D71629 /* pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinyin.h; sourceTree = "<group>"; };
-		805B765B1B57B6E200D71629 /* pinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = pinyin.m; sourceTree = "<group>"; };
 		806414571B60E72300CD827D /* 1136-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1136-1.png"; sourceTree = "<group>"; };
 		8064145A1B60EEB000CD827D /* libUMessage_Sdk_1.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.1.0.a; sourceTree = "<group>"; };
 		8064145B1B60EEB000CD827D /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
@@ -744,6 +740,10 @@
 		80A362FC1B5CD4AD00EBAA07 /* shanguangdeng2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shanguangdeng2@2x.png"; sourceTree = "<group>"; };
 		80A362FE1B5CD4AD00EBAA07 /* xiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiang.png; sourceTree = "<group>"; };
 		80A362FF1B5CD4AD00EBAA07 /* xiang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiang@2x.png"; sourceTree = "<group>"; };
+		80ADB1EC1B71AEEB00A676C4 /* ChineseString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseString.h; sourceTree = "<group>"; };
+		80ADB1ED1B71AEEB00A676C4 /* ChineseString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseString.m; sourceTree = "<group>"; };
+		80ADB1EE1B71AEEB00A676C4 /* pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinyin.h; sourceTree = "<group>"; };
+		80ADB1EF1B71AEEB00A676C4 /* pinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = pinyin.m; sourceTree = "<group>"; };
 		80B419971B55FB0400867B40 /* addressAdd_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addressAdd_icon@2x.png"; sourceTree = "<group>"; };
 		80B942B21B4760ED005BA325 /* 58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 58.png; sourceTree = "<group>"; };
 		80B942B31B4760ED005BA325 /* 80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80.png; sourceTree = "<group>"; };
@@ -1168,10 +1168,10 @@
 		807D3C3D1B194B6F00FBB530 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				807D3C431B194C1800FBB530 /* ShoppingCar */,
 				809504A71B421B2B00B7F282 /* GoodDetial */,
 				807D3C451B194C5900FBB530 /* Mine */,
 				807D3C441B194C4B00FBB530 /* Shop */,
-				807D3C431B194C1800FBB530 /* ShoppingCar */,
 				807D3C421B194C0400FBB530 /* Classify */,
 				807D3C411B194BD100FBB530 /* Index */,
 			);
@@ -1181,11 +1181,11 @@
 		807D3C3E1B194B8200FBB530 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				80ADB1EB1B71AEEB00A676C4 /* ChineseSorting */,
 				8008FF991B5E2C1600EB13E7 /* PickerView */,
 				80A3618B1B5CCDEA00EBAA07 /* MultableImagePicker */,
 				80BBAD0C1B58FBAD0072B03F /* ShowOrder */,
 				800D8B6B1B53AC440034E179 /* segment */,
-				808F43FB1B4D1A4800E17D54 /* ChineseSorting */,
 				808F43961B4CB7EB00E17D54 /* NaviSource */,
 				809504D21B427D5500B7F282 /* DOPDropDownMenu - Enhanced */,
 				809504AD1B42333C00B7F282 /* MJRefresh */,
@@ -1576,18 +1576,6 @@
 			path = Annotation;
 			sourceTree = "<group>";
 		};
-		808F43FB1B4D1A4800E17D54 /* ChineseSorting */ = {
-			isa = PBXGroup;
-			children = (
-				805B76581B57B6E200D71629 /* ChineseString.h */,
-				805B76591B57B6E200D71629 /* ChineseString.m */,
-				805B765A1B57B6E200D71629 /* pinyin.h */,
-				805B765B1B57B6E200D71629 /* pinyin.m */,
-			);
-			name = ChineseSorting;
-			path = "../../../../../Downloads/YUChineseSorting-master/YUChineseSorting/ChineseSorting";
-			sourceTree = "<group>";
-		};
 		809425F91B2C16ED00DFEDF7 /* UpLoadImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1929,6 +1917,17 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		80ADB1EB1B71AEEB00A676C4 /* ChineseSorting */ = {
+			isa = PBXGroup;
+			children = (
+				80ADB1EC1B71AEEB00A676C4 /* ChineseString.h */,
+				80ADB1ED1B71AEEB00A676C4 /* ChineseString.m */,
+				80ADB1EE1B71AEEB00A676C4 /* pinyin.h */,
+				80ADB1EF1B71AEEB00A676C4 /* pinyin.m */,
+			);
+			path = ChineseSorting;
+			sourceTree = "<group>";
+		};
 		80BBAD0C1B58FBAD0072B03F /* ShowOrder */ = {
 			isa = PBXGroup;
 			children = (
@@ -2264,7 +2263,7 @@
 				TargetAttributes = {
 					807D3C131B194AFC00FBB530 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = M7YC435M3S;
+						DevelopmentTeam = 7X578356T4;
 					};
 					807D3C2C1B194AFD00FBB530 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -2500,6 +2499,7 @@
 				80A362AF1B5CD44D00EBAA07 /* ZLCameraViewController.m in Sources */,
 				80941DB31B1EE067007CA325 /* GoodsTableViewCell.m in Sources */,
 				809504D81B427D5500B7F282 /* DOPDropDownMenu.m in Sources */,
+				80ADB1F01B71AEEB00A676C4 /* ChineseString.m in Sources */,
 				8097EC281B43BD68009FB18D /* ShopInsideViewController.m in Sources */,
 				807D3CC21B19A7C200FBB530 /* AFURLConnectionOperation.m in Sources */,
 				8092EECC1B2962B400247599 /* LoginViewController.m in Sources */,
@@ -2526,7 +2526,6 @@
 				803FCC4A1B1C44AF003A0D4C /* SDCycleScrollView.m in Sources */,
 				80BBAD4D1B58FBDB0072B03F /* WFActionSheet.m in Sources */,
 				80F113AF1B1D938000DFBB11 /* UIImageView+HighlightedWebCache.m in Sources */,
-				805B765C1B57B6E200D71629 /* ChineseString.m in Sources */,
 				80A362B91B5CD44D00EBAA07 /* ZLPhotoPickerAssetsViewController.m in Sources */,
 				80941DBA1B1EEB45007CA325 /* CycleScrollView.m in Sources */,
 				80F113A61B1D938000DFBB11 /* SDWebImageDecoder.m in Sources */,
@@ -2582,6 +2581,7 @@
 				80BBAD4E1B58FBDB0072B03F /* WFHudView.m in Sources */,
 				809504CE1B42333C00B7F282 /* MJRefreshLegendHeader.m in Sources */,
 				80BBAD501B58FBDB0072B03F /* WFTextView.m in Sources */,
+				80ADB1F11B71AEEB00A676C4 /* pinyin.m in Sources */,
 				80F113A51B1D938000DFBB11 /* SDWebImageCompat.m in Sources */,
 				80F113A31B1D938000DFBB11 /* NSData+ImageContentType.m in Sources */,
 				80A362BB1B5CD44D00EBAA07 /* ZLPhotoPickerViewController.m in Sources */,
@@ -2616,7 +2616,6 @@
 				80A363021B5CD4AD00EBAA07 /* DACircularProgressView.m in Sources */,
 				80A362BD1B5CD44D00EBAA07 /* ZLPhotoPickerCollectionViewCell.m in Sources */,
 				80A362B71B5CD44D00EBAA07 /* ZLPhotoPickerDatas.m in Sources */,
-				805B765D1B57B6E200D71629 /* pinyin.m in Sources */,
 				808F43A61B4CB99200E17D54 /* NavPointAnnotation.m in Sources */,
 				80F113A21B1D938000DFBB11 /* MKAnnotationView+WebCache.m in Sources */,
 				808293B41B2FCCBF0050F268 /* AddressCellTableViewCell.m in Sources */,
@@ -2777,6 +2776,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BuerShopping/buer.pch";
 				INFOPLIST_FILE = BuerShopping/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2827,6 +2827,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BuerShopping/buer.pch";
 				INFOPLIST_FILE = BuerShopping/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

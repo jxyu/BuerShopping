@@ -549,6 +549,15 @@
     }
 }
 
+-(void)GetPolicatandjifenWithKey:(NSString *)key
+{
+    if (key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_predeposit&op=view",Url];
+        NSDictionary * prm=@{@"key":key};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
 
 
 
@@ -575,6 +584,7 @@
             [CallBackObject performSelector:func_selector withObject:dict];
         }else{
             NSLog(@"回调失败...");
+            [SVProgressHUD dismiss];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -608,9 +618,11 @@
             [CallBackObject performSelector:func_selector withObject:dict];
         }else{
             NSLog(@"回调失败...");
+            [SVProgressHUD dismiss];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:%@",error);
+        [SVProgressHUD dismiss];
     }];
 }
 
@@ -632,6 +644,7 @@
             [CallBackObject performSelector:func_selector withObject:dict];
         }else{
             NSLog(@"回调失败...");
+            [SVProgressHUD dismiss];
         }
         NSLog(@"上传完成");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -668,6 +681,7 @@
             [CallBackObject performSelector:func_selector withObject:dict];
         }else{
             NSLog(@"回调失败...");
+            [SVProgressHUD dismiss];
         }
         NSLog(@"上传完成");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

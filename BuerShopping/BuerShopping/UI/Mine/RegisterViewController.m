@@ -75,6 +75,7 @@
 -(void)SubmitInfoToReg
 {
     if (_txt_PhoneNo.text.length==11&&_txt_VerifyCode.text&&_txt_pwd.text) {
+        [SVProgressHUD showWithStatus:@"正在注册" maskType:SVProgressHUDMaskTypeBlack];
         if (_resetPwd) {
             DataProvider * dataprovider=[[DataProvider alloc] init];
             [dataprovider setDelegateObject:self setBackFunctionName:@"resetPWDBackCall:"];
@@ -99,19 +100,31 @@
 
 -(void)resetPWDBackCall:(id)dict
 {
+    [SVProgressHUD dismiss];
     NSLog(@"%@",dict);
     NSLog(@"%@",dict[@"datas"]);
     if ([dict[@"datas"] isEqual:@"1"]) {
         [self.navigationController popoverPresentationController];
     }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+    }
 }
 
 -(void)registerBackCall:(id)dict
 {
+    [SVProgressHUD dismiss];
     NSLog(@"%@",dict);
-    if (dict[@"datas"][@"error"]==[NSNull null]) {
+    if (!dict[@"datas"][@"error"]) {
         _myLogin=[[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:[NSBundle mainBundle]];
         [self.navigationController pushViewController:_myLogin animated:YES];
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
     }
 }
 - (void)didReceiveMemoryWarning {

@@ -424,6 +424,12 @@
  *  @param username <#username description#>
  */
 -(void)LoginForQQWithopenid:(NSString *)openid andusername:(NSString * )username;
+/**
+ *  获取钱包余额和积分
+ *
+ *  @param key <#key description#>
+ */
+-(void)GetPolicatandjifenWithKey:(NSString *)key;
 
 
 

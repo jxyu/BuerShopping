@@ -9,5 +9,7 @@
 #import "BaseNaviViewController.h"
 
 @interface RoutePlanViewController : BaseNaviViewController
+@property (nonatomic, strong) AMapNaviPoint* startPoint;
+@property (nonatomic, strong) AMapNaviPoint* endPoint;
 
 @end

@@ -12,8 +12,9 @@
 #import "UIImageView+WebCache.h"
 #import "GoodListViewController.h"
 #import "ShopViewController.h"
+#import "CCLocationManager.h"
 
-@interface ClassifyViewController ()
+@interface ClassifyViewController ()<UITextFieldDelegate>
 
 @end
 
@@ -43,12 +44,7 @@
     
     /**********************************head搜索栏开始***********************************/
     selectArray=@[@"宝贝",@"店铺"];
-    //增加监听，当键盘出现或改变时收出消息
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeCityInfo) name:@"ChangeCity" object:nil];
     UIView * BackView_Serch=[[UIView alloc] initWithFrame:CGRectMake(_btnLeft.frame.size.width+_btnLeft.frame.origin.x+10, 20.5, SCREEN_WIDTH-_btnLeft.frame.size.width-_btnLeft.frame.origin.x-22, 35)];
     BackView_Serch.layer.masksToBounds=YES;
     BackView_Serch.layer.cornerRadius=3;
@@ -96,7 +92,39 @@
     DataProvider * dataprovider=[DataProvider alloc];
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetClassifyBackCall:"];
     [dataprovider GetClassify];
+    if (!cityinfoWithFile[@"area_name"]) {
+        [[CCLocationManager shareLocation] getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
+            DataProvider * dataprovider=[[DataProvider alloc] init];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"GetCityBackCall:"];
+//            lng=[NSString stringWithFormat:@"%f",locationCorrrdinate.longitude];
+//            lat=[NSString stringWithFormat:@"%f",locationCorrrdinate.latitude];
+            [dataprovider GetcityInfoWithlng:[NSString stringWithFormat:@"%f",locationCorrrdinate.longitude] andlat:[NSString stringWithFormat:@"%f",locationCorrrdinate.latitude]];
+        }];
+    }
+    
 }
+-(void)GetCityBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    if (!dict[@"datas"][@"error"]) {
+//        areaid=dict[@"datas"][@"area_id"];
+        [self addLeftbuttontitle:dict[@"datas"][@"area_name"]];
+        _lblLeft.font=[UIFont systemFontOfSize:13];
+        UIImageView * img_icon_down=[[UIImageView alloc] initWithFrame:CGRectMake(_btnLeft.frame.size.width-8, 18, 8, 5)];
+        img_icon_down.image=[UIImage imageNamed:@"menu_down"];
+        [_btnLeft addSubview:img_icon_down];
+        //        NSDictionary * areaData=@{@"area_id":areaid,@"area_name":dict[@"datas"][@"area_name"]};
+        //        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+        //                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        //        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"CityInfo.plist"];
+        //        BOOL result= [areaData writeToFile:plistPath atomically:YES];
+        //        if (result) {
+        //            
+        //        }
+    }
+    
+}
+
 -(void)GetClassifyBackCall:(id)dict
 {
     NSLog(@"%@",dict);
@@ -211,7 +239,7 @@
     CGFloat itemWidth=backview_SecondClassify.frame.size.width/3;
     for (int i=0; i<secondMenu.count; i++) {
         UIView * backView_item=[[UIView alloc] initWithFrame:CGRectMake((i%3)*itemWidth, 100*(i/3), itemWidth, 100)];
-        UIImageView * img_iconClassify=[[UIImageView alloc] initWithFrame:CGRectMake(0, 10, itemWidth, itemWidth)];
+        UIImageView * img_iconClassify=[[UIImageView alloc] initWithFrame:CGRectMake(5, 10, itemWidth-10, itemWidth-10)];
         [img_iconClassify sd_setImageWithURL:[NSURL URLWithString:secondMenu[i][@"image"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
         [backView_item addSubview:img_iconClassify];
         UILabel * lbl_classifytitle=[[UILabel alloc] initWithFrame:CGRectMake(0, backView_item.frame.size.height-20, backView_item.frame.size.width, 20)];
@@ -305,30 +333,21 @@
 }
 
 
-//当键盘出现或改变时调用
-- (void)keyboardWillShow:(NSNotification *)aNotification
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    //获取键盘的高度
-    NSDictionary *userInfo = [aNotification userInfo];
-    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect keyboardRect = [aValue CGRectValue];
-    int height = keyboardRect.size.height;
-    if (!keyboardZhezhaoShow) {
-        UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-65-height)];
-        [btn_zhezhao addTarget:self action:@selector(btn_zhezhaoClick:) forControlEvents:UIControlEventTouchUpInside];
-        btn_zhezhao.backgroundColor=[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.2];
-        [self.view addSubview:btn_zhezhao];
-        keyboardZhezhaoShow=YES;
-    }
+    [textField resignFirstResponder];
+    return YES;
 }
-
--(void)btn_zhezhaoClick:(UIButton *)sender
+-(void)changeCityInfo
 {
-    keyboardZhezhaoShow=NO;
-    [txt_searchtext resignFirstResponder];
-    [sender removeFromSuperview];
-}
-
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"CityInfo.plist"];
+    NSDictionary * cityinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    if (cityinfoWithFile[@"area_name"]) {
+//        areaid=cityinfoWithFile[@"area_id"];
+        _lblLeft.text=cityinfoWithFile[@"area_name"];
+    }}
 
 
 

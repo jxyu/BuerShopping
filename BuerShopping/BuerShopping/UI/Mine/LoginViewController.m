@@ -59,6 +59,11 @@
             [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"好的" otherButtonTitles: nil];
+        [alert show];
+    }
 }
 -(void)forgetPwd
 {

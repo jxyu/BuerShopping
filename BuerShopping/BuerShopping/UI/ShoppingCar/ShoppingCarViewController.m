@@ -99,7 +99,7 @@
                     }
                 }
             }
-            [dataprovider Buy_Stepone:@"3ae653eb52824dbc4ba977de343e2e12" andcart_id:strprm andifcart:@"1"];
+            [dataprovider Buy_Stepone:userinfoWithFile[@"key"] andcart_id:strprm andifcart:@"1"];
             
         }
         else
@@ -120,7 +120,7 @@
     if (!dict[@"datas"][@"error"]) {
         ShoppingCarOrderForSureViewController * orderforsure=[[ShoppingCarOrderForSureViewController alloc] initWithNibName:@"ShoppingCarOrderForSureViewController" bundle:[NSBundle mainBundle]];
         orderforsure.OrderData=dict[@"datas"];
-        orderforsure.key=@"3ae653eb52824dbc4ba977de343e2e12";
+        orderforsure.key=userinfoWithFile[@"key"];
         [self.navigationController pushViewController:orderforsure animated:YES];
     }
 }
@@ -128,7 +128,7 @@
 {
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetOrderListBackCall:"];
-    [dataprovider GetShopCarList:@"3ae653eb52824dbc4ba977de343e2e12"];
+    [dataprovider GetShopCarList:userinfoWithFile[@"key"]];
 }
 -(void)GetOrderListBackCall:(id)dict
 {
@@ -186,7 +186,7 @@
     btn_edit.titleLabel.font=[UIFont systemFontOfSize:16];
     [btn_edit addTarget:self action:@selector(EditBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [sectionHeaderView addSubview:btn_edit];
-    UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(sectionHeaderView.frame.size.width-61, 10, 1, 20)];
+    UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(sectionHeaderView.frame.size.width-61, 15, 1, 20)];
     fenge.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
     [sectionHeaderView addSubview:fenge];
     UIView * fenge1=[[UIView alloc] initWithFrame:CGRectMake(10, sectionHeaderView.frame.size.height-1, sectionHeaderView.frame.size.width-20, 1)];
@@ -575,7 +575,7 @@
         
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"delgoodsBackCall:"];
-        [dataprovider DelGoodsWithKey:@"3ae653eb52824dbc4ba977de343e2e12" andcartid:CarListArray[goodDelindexPath.section][@"store_list"][goodDelindexPath.row][@"cart_id"]];
+        [dataprovider DelGoodsWithKey:userinfoWithFile[@"key"] andcartid:CarListArray[goodDelindexPath.section][@"store_list"][goodDelindexPath.row][@"cart_id"]];
         NSMutableDictionary * itemdict=[NSMutableDictionary dictionaryWithDictionary:CarListArray[goodDelindexPath.section]];
         NSMutableArray *goodsArray=[[NSMutableArray alloc] initWithArray:itemdict[@"store_list"]];
         NSString *cartgood_id=goodsArray[goodDelindexPath.row][@"cart_id"];
@@ -625,7 +625,7 @@
 {
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"EditGoodBackCall:"];
-    [dataprovider EditGoodsNumWithKey:@"3ae653eb52824dbc4ba977de343e2e12" andCartid:cartid andnum:num];
+    [dataprovider EditGoodsNumWithKey:userinfoWithFile[@"key"] andCartid:cartid andnum:num];
 }
 -(void)EditGoodBackCall:(id)dict
 {

@@ -21,7 +21,7 @@
 
 #define umeng_app_key @"557e958167e58e0b720041ff"
 
-@interface ShopDetialViewController ()
+@interface ShopDetialViewController ()<UIAlertViewDelegate>
 
 @end
 
@@ -110,7 +110,7 @@
     CGFloat x=img_location.frame.size.width+img_location.frame.origin.x;
     UILabel * lbl_address=[[UILabel alloc] initWithFrame:CGRectMake(img_location.frame.size.width+img_location.frame.origin.x, 9, SCREEN_WIDTH-x-66, 40)];
     lbl_address.textColor=[UIColor grayColor];
-    lbl_address.text=storeInfo[@"location"];
+    lbl_address.text=storeInfo[@"location"]?storeInfo[@"location"]:@"";
     lbl_address.numberOfLines=2;
     [BackView_StoreInfo addSubview:lbl_address];
     UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(lbl_address.frame.size.width+lbl_address.frame.origin.x, 10, 1, 30)];
@@ -129,11 +129,11 @@
 
 -(void)InitAllView
 {
-    UIButton * btn_collect=[[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-50, 20, 50, 40)];
+    UIButton * btn_collect=[[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-45, 25, 40, 30)];
     [btn_collect setImage:[UIImage imageNamed:@"collect_no_icon"] forState:UIControlStateNormal];
     [btn_collect addTarget:self action:@selector(CollectShop:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn_collect];
-    UIButton * btn_share=[[UIButton alloc] initWithFrame:CGRectMake(btn_collect.frame.origin.x-50, 20, 50, 40)];
+    UIButton * btn_share=[[UIButton alloc] initWithFrame:CGRectMake(btn_collect.frame.origin.x-45, 25, 40, 30)];
     [btn_share setImage:[UIImage imageNamed:@"share_icon_shop"] forState:UIControlStateNormal];
     [btn_share addTarget:self action:@selector(shareShop:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn_share];
@@ -165,11 +165,28 @@
 -(void)MakeCallForStore
 {
     NSLog(@"打电话");
+    if (storeInfo[@"store_phone"]) {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:storeInfo[@"store_phone"] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
+        [alert show];
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"商家未设置电话" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+    }
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        // 直接拨号，拨号完成后会停留在通话记录中
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",storeInfo[@"store_phone"]]]];
+    }
 }
 -(void)CollectShop:(UIButton *)sender
 {
     NSLog(@"收藏");
     if (storeInfo[@"store_id"]) {
+        [SVProgressHUD showWithStatus:@"正在收藏" maskType:SVProgressHUDMaskTypeBlack];
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"CollectshopBackCall:"];
         [dataprovider CollectShopWithKey:userinfoWithFile[@"key"] andstore_id:storeInfo[@"store_id"]];
@@ -177,8 +194,9 @@
 }
 -(void)CollectshopBackCall:(id)dict
 {
+    [SVProgressHUD dismiss];
     NSLog(@"%@",dict);
-    if ([dict[@"datas"] intValue]==1) {
+    if ([[NSString stringWithFormat:@"%@",dict[@"datas"]] isEqualToString:@"1"]) {
         [SVProgressHUD showSuccessWithStatus:@"收藏成功" maskType:SVProgressHUDMaskTypeBlack];
     }
 }
@@ -209,9 +227,10 @@
 -(void)TopRefresh
 {
     if (userinfoWithFile[@"key"]) {
+        curpage=1;
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"GetStoreDetialBackCall:"];
-        [dataprovider GetStoreDetialInfoWithKey:userinfoWithFile[@"key"] andstoreid:@"2"];
+        [dataprovider GetStoreDetialInfoWithKey:userinfoWithFile[@"key"] andstoreid:_sc_id];
     }
     else
     {
@@ -224,7 +243,7 @@
 {
     isfooterrefresh=NO;
     ++curpage;
-    NSDictionary * prm=@{@"store_id":@"2",@"page":@"6",@"curpage":[NSString stringWithFormat:@"%d",curpage]};
+    NSDictionary * prm=@{@"store_id":_sc_id,@"page":@"6",@"curpage":[NSString stringWithFormat:@"%d",curpage]};
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
     [dataprovider GetStoreGoodList:prm];
@@ -277,11 +296,11 @@
     cell  = [[[NSBundle mainBundle] loadNibNamed:@"GoodsTableViewCell" owner:self options:nil] lastObject];
     cell.layer.masksToBounds=YES;
     cell.frame=CGRectMake(cell.frame.origin.x, cell.frame.origin.y, tableView.frame.size.width, cell.frame.size.height);
-    cell.lbl_goodsName.text=goods_list[indexPath.row][@"goods_name"];
-    cell.lbl_goodsDetial.text=goods_list[indexPath.row][@"goods_jingle"];
-    cell.lbl_long.text=goods_list[indexPath.row][@"juli"];
-    cell.lbl_price.text=goods_list[indexPath.row][@"goods_price"];
-    [cell.img_goodsicon sd_setImageWithURL:[NSURL URLWithString:goods_list[indexPath.row][@"goods_image_url"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    cell.lbl_goodsName.text=goods_list[indexPath.row][@"goods_name"]?goods_list[indexPath.row][@"goods_name"]:@"";
+    cell.lbl_goodsDetial.text=goods_list[indexPath.row][@"goods_jingle"]?goods_list[indexPath.row][@"goods_jingle"]:@"";
+    cell.lbl_long.text=goods_list[indexPath.row][@"juli"]?goods_list[indexPath.row][@"juli"]:@"";
+    cell.lbl_price.text=goods_list[indexPath.row][@"goods_price"]?goods_list[indexPath.row][@"goods_price"]:@"";
+    [cell.img_goodsicon sd_setImageWithURL:[NSURL URLWithString:goods_list[indexPath.row][@"goods_image_url"]?goods_list[indexPath.row][@"goods_image_url"]:@""] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     //        cell.lbl_rescuncun.text=goods_like[indexPath.row][@""];
     return cell;
 }

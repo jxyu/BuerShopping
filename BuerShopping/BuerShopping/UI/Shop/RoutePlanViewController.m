@@ -26,8 +26,7 @@ typedef NS_ENUM(NSInteger, TravelTypes)
 
 @interface RoutePlanViewController ()<AMapNaviViewControllerDelegate>
 
-@property (nonatomic, strong) AMapNaviPoint* startPoint;
-@property (nonatomic, strong) AMapNaviPoint* endPoint;
+
 
 @property (nonatomic, strong) NSArray *annotations;
 
@@ -67,9 +66,10 @@ typedef NS_ENUM(NSInteger, TravelTypes)
     [self addLeftButton:@"Icon_Back@2x.png"];
     _lblTitle.text=@"导航";
     _lblTitle.textColor=[UIColor whiteColor];
-    [self configSubViews];
+//    [self configSubViews];
     
     [self configMapView];
+    
 }
 
 
@@ -90,6 +90,8 @@ typedef NS_ENUM(NSInteger, TravelTypes)
     {
         [self.mapView addAnnotations:self.annotations];
     }
+    
+    [self routeCal];
 }
 
 
@@ -98,8 +100,8 @@ typedef NS_ENUM(NSInteger, TravelTypes)
 
 - (void)initNaviPoints
 {
-    _startPoint = [AMapNaviPoint locationWithLatitude:39.989614 longitude:116.481763];
-    _endPoint   = [AMapNaviPoint locationWithLatitude:39.983456 longitude:116.315495];
+    _startPoint = [AMapNaviPoint locationWithLatitude:35.989614 longitude:118.481763];
+    _endPoint   = [AMapNaviPoint locationWithLatitude:35.983456 longitude:118.315495];
 }
 
 
@@ -155,21 +157,21 @@ typedef NS_ENUM(NSInteger, TravelTypes)
     
     UIButton *routeBtn = [self createToolButton];
     [routeBtn setTitle:@"路径规划" forState:UIControlStateNormal];
-    [routeBtn addTarget:self action:@selector(routeCal:) forControlEvents:UIControlEventTouchUpInside];
+    [routeBtn addTarget:self action:@selector(routeCal) forControlEvents:UIControlEventTouchUpInside];
     routeBtn.left = 60;
     routeBtn.top  = 110;
     [self.view addSubview:routeBtn];
     
     UIButton *simuBtn = [self createToolButton];
     [simuBtn setTitle:@"模拟导航" forState:UIControlStateNormal];
-    [simuBtn addTarget:self action:@selector(simulatorNavi:) forControlEvents:UIControlEventTouchUpInside];
+    [simuBtn addTarget:self action:@selector(simulatorNavi) forControlEvents:UIControlEventTouchUpInside];
     simuBtn.left = 130;
     simuBtn.top  = 110;
     [self.view addSubview:simuBtn];
     
     UIButton *gpsBtn = [self createToolButton];
     [gpsBtn setTitle:@"实时导航" forState:UIControlStateNormal];
-    [gpsBtn addTarget:self action:@selector(gpsNavi:) forControlEvents:UIControlEventTouchUpInside];
+    [gpsBtn addTarget:self action:@selector(gpsNavi) forControlEvents:UIControlEventTouchUpInside];
     gpsBtn.left = 200;
     gpsBtn.top  = 100;
     [self.view addSubview:gpsBtn];
@@ -220,7 +222,7 @@ typedef NS_ENUM(NSInteger, TravelTypes)
 
 #pragma mark - Button Actions
 
-- (void)routeCal:(id)sender
+- (void)routeCal
 {
     NSArray *startPoints = @[_startPoint];
     NSArray *endPoints   = @[_endPoint];
@@ -233,10 +235,11 @@ typedef NS_ENUM(NSInteger, TravelTypes)
     {
         [self.naviManager calculateWalkRouteWithStartPoints:startPoints endPoints:endPoints];
     }
+    
 }
 
 
-- (void)simulatorNavi:(id)sender
+- (void)simulatorNavi
 {
     if (_calRouteSuccess)
     {
@@ -261,7 +264,7 @@ typedef NS_ENUM(NSInteger, TravelTypes)
 }
 
 
-- (void)gpsNavi:(id)sender
+- (void)gpsNavi
 {
     if (_calRouteSuccess)
     {
@@ -304,6 +307,7 @@ typedef NS_ENUM(NSInteger, TravelTypes)
     [self showRouteWithNaviRoute:[[naviManager naviRoute] copy]];
     
     _calRouteSuccess = YES;
+    [self simulatorNavi];
 }
 
 

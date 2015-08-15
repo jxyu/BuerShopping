@@ -25,7 +25,7 @@
     NSDictionary * goodInfo;
     NSDictionary * evaluate;
     NSDictionary * imgdict;
-    NSDictionary * dictspectitle;
+    NSArray * dictspectitle;
     NSDictionary * dictspecValue;
     NSDictionary * goodsID;
     NSDictionary * userinfoWithFile;
@@ -45,7 +45,7 @@
     goodInfo=[[NSDictionary alloc] init];
     evaluate=[[NSDictionary alloc] init];
     imgdict=[[NSDictionary alloc] init];
-    dictspectitle=[[NSDictionary alloc] init];
+    dictspectitle=[[NSArray alloc] init];
     dictspecValue=[[NSDictionary alloc] init];
     goodsID=[[NSDictionary alloc] init];
     userinfoWithFile=[[NSDictionary alloc] init];
@@ -120,9 +120,13 @@
         arrayslider=dict[@"datas"][@"goods_image"];
         goodInfo=dict[@"datas"][@"goods_info"];
         evaluate=dict[@"datas"][@"evaluate"];
-        imgdict=dict[@"datas"][@"evaluate"][@"image"];
-        dictspectitle=dict[@"datas"][@"goods_info"][@"spec_name"];
-        dictspecValue=dict[@"datas"][@"goods_info"][@"spec_value"];
+        if (evaluate.count>0) {
+            imgdict=dict[@"datas"][@"evaluate"][@"image"];
+        }
+        if (dict[@"datas"][@"goods_info"]) {
+            dictspectitle=dict[@"datas"][@"goods_info"][@"spec_name"];
+            dictspecValue=dict[@"datas"][@"goods_info"][@"spec_value"];
+        }
         goodsID=dict[@"datas"][@"spec_list"];
         [self BuildHeaderView];
         [self BuildBodyTableView];
@@ -175,11 +179,11 @@
     lbl_price.font=[UIFont systemFontOfSize:18];
     if ([goodInfo[@"is_special"] intValue]==1)
     {
-        lbl_price.text=goodInfo[@"goods_promotion_price"];
+        lbl_price.text=[NSString stringWithFormat:@"¥%@",goodInfo[@"goods_promotion_price"]];
     }
     else
     {
-        lbl_price.text=goodInfo[@"goods_price"];
+        lbl_price.text=[NSString stringWithFormat:@"¥%@",goodInfo[@"goods_price"]];
     }
     
     lbl_price.textColor=[UIColor redColor];
@@ -188,8 +192,8 @@
     if ([goodInfo[@"is_special"] intValue]==1) {
         UILabel * lbl_proformprice=[[UILabel alloc] initWithFrame:CGRectMake(10, lbl_price.frame.size.height+lbl_price.frame.origin.y, 100, 20)];
         lbl_proformprice.textColor=[UIColor grayColor];
-        lbl_proformprice.text=[NSString stringWithFormat:@"价格:%@",goodInfo[@"goods_price"]];
-        lbl_proformprice.font=[UIFont systemFontOfSize:14];
+        lbl_proformprice.text=[NSString stringWithFormat:@"价格:¥%@",goodInfo[@"goods_price"]];
+        lbl_proformprice.font=[UIFont systemFontOfSize:15];
         lbl_proformprice.textAlignment=NSTextAlignmentCenter;
         [backview_goodinfo2 addSubview:lbl_proformprice];
         UIView * delLine=[[UIView alloc] initWithFrame:CGRectMake(0, lbl_proformprice.frame.size.height/2, lbl_proformprice.frame.size.width, 1)];
@@ -299,58 +303,60 @@
         [cell addSubview:img_go];
     }
     if (indexPath.section==1) {
-        
-        UILabel * lbl_pinglunTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 150, 20)];
-        lbl_pinglunTitle.text=[NSString stringWithFormat:@"宝贝评价(%@)",goodInfo[@"evaluation_count"]];
-        [cell addSubview:lbl_pinglunTitle];
-        UILabel * lbl_zogpingfen=[[UILabel alloc] initWithFrame:CGRectMake(lbl_pinglunTitle.frame.size.width+lbl_pinglunTitle.frame.origin.x, 10, SCREEN_WIDTH-(lbl_pinglunTitle.frame.size.width+lbl_pinglunTitle.frame.origin.x)-20, 20)];
-        lbl_zogpingfen.text=[NSString stringWithFormat:@"总评分:%@",goodInfo[@"evaluation_good_star"]];
-        lbl_zogpingfen.textColor=[UIColor colorWithRed:243/255.0 green:152/255.0 blue:0/255.0 alpha:1.0];
-        lbl_zogpingfen.textAlignment=NSTextAlignmentRight;
-        [cell addSubview:lbl_zogpingfen];
-        UIImageView * img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(10, lbl_pinglunTitle.frame.origin.y+lbl_pinglunTitle.frame.size.height+5, 30, 30)];
-        [img_avatar sd_setImageWithURL:[NSURL URLWithString:evaluate[@"geval_avatar"]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
-        img_avatar.layer.masksToBounds=YES;
-        img_avatar.layer.cornerRadius=15;
-        [cell addSubview:img_avatar];
-        UILabel * lbl_pingluner=[[UILabel alloc] initWithFrame:CGRectMake(img_avatar.frame.size.width+img_avatar.frame.origin.x+10, img_avatar.frame.origin.y+5, 200, 20)];
-        lbl_pingluner.text=evaluate[@"geval_frommembername"];
-        [cell addSubview:lbl_pingluner];
-        CWStarRateView * weisheng=[[CWStarRateView alloc] initWithFrame:CGRectMake(10,img_avatar.frame.origin.y+img_avatar.frame.size.height+10,150,15) numberOfStars:5];
-        weisheng.scorePercent = [evaluate[@"geval_scores"] floatValue]/5;
-        weisheng.allowIncompleteStar = NO;
-        weisheng.hasAnimation = YES;
-        [cell addSubview:weisheng];
-        UILabel * lbl_content=[[UILabel alloc] initWithFrame:CGRectMake(10, weisheng.frame.size.height+weisheng.frame.origin.y+10, SCREEN_WIDTH, 20)];
-        lbl_content.text=evaluate[@"geval_content"];
-        lbl_content.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
-        [cell addSubview:lbl_content];
-        CGFloat y=lbl_content.frame.size.height+lbl_content.frame.origin.y;
-        if (imgdict&&imgdict.count>0) {
-            for (int i=0; i<imgdict.count; i++) {
-                UIView * backview_item=[[UIView alloc] initWithFrame:CGRectMake(50*(i%6), y+(50*(i/6)), 50, 50)];
-                backview_item.backgroundColor=[UIColor whiteColor];
-                UIImageView * img_item=[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];
-                [img_item sd_setImageWithURL:[NSURL URLWithString:imgdict[[NSString stringWithFormat:@"%d",i]]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
-                [backview_item addSubview:img_item];
-                [cell addSubview:backview_item];
+        if (evaluate.count>0) {
+            UILabel * lbl_pinglunTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 150, 20)];
+            lbl_pinglunTitle.text=[NSString stringWithFormat:@"宝贝评价(%@)",goodInfo[@"evaluation_count"]];
+            [cell addSubview:lbl_pinglunTitle];
+            UILabel * lbl_zogpingfen=[[UILabel alloc] initWithFrame:CGRectMake(lbl_pinglunTitle.frame.size.width+lbl_pinglunTitle.frame.origin.x, 10, SCREEN_WIDTH-(lbl_pinglunTitle.frame.size.width+lbl_pinglunTitle.frame.origin.x)-20, 20)];
+            lbl_zogpingfen.text=[NSString stringWithFormat:@"总评分:%@",goodInfo[@"evaluation_good_star"]];
+            lbl_zogpingfen.textColor=[UIColor colorWithRed:243/255.0 green:152/255.0 blue:0/255.0 alpha:1.0];
+            lbl_zogpingfen.textAlignment=NSTextAlignmentRight;
+            [cell addSubview:lbl_zogpingfen];
+            UIImageView * img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(10, lbl_pinglunTitle.frame.origin.y+lbl_pinglunTitle.frame.size.height+5, 30, 30)];
+            [img_avatar sd_setImageWithURL:[NSURL URLWithString:evaluate[@"geval_avatar"]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+            img_avatar.layer.masksToBounds=YES;
+            img_avatar.layer.cornerRadius=15;
+            [cell addSubview:img_avatar];
+            UILabel * lbl_pingluner=[[UILabel alloc] initWithFrame:CGRectMake(img_avatar.frame.size.width+img_avatar.frame.origin.x+10, img_avatar.frame.origin.y+5, 200, 20)];
+            lbl_pingluner.text=evaluate[@"geval_frommembername"];
+            [cell addSubview:lbl_pingluner];
+            CWStarRateView * weisheng=[[CWStarRateView alloc] initWithFrame:CGRectMake(10,img_avatar.frame.origin.y+img_avatar.frame.size.height+10,150,15) numberOfStars:5];
+            weisheng.scorePercent = [evaluate[@"geval_scores"] floatValue]/5;
+            weisheng.allowIncompleteStar = NO;
+            weisheng.hasAnimation = YES;
+            [cell addSubview:weisheng];
+            UILabel * lbl_content=[[UILabel alloc] initWithFrame:CGRectMake(10, weisheng.frame.size.height+weisheng.frame.origin.y+10, SCREEN_WIDTH, 20)];
+            lbl_content.text=evaluate[@"geval_content"];
+            lbl_content.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+            [cell addSubview:lbl_content];
+            CGFloat y=lbl_content.frame.size.height+lbl_content.frame.origin.y;
+            if (imgdict&&imgdict.count>0) {
+                for (int i=0; i<imgdict.count; i++) {
+                    UIView * backview_item=[[UIView alloc] initWithFrame:CGRectMake(50*(i%6), y+(50*(i/6)), 50, 50)];
+                    backview_item.backgroundColor=[UIColor whiteColor];
+                    UIImageView * img_item=[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];
+                    [img_item sd_setImageWithURL:[NSURL URLWithString:imgdict[[NSString stringWithFormat:@"%d",i]]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+                    [backview_item addSubview:img_item];
+                    [cell addSubview:backview_item];
+                }
             }
+            UIView * lastview=[cell.subviews lastObject];
+            UILabel * lbl_spec=[[UILabel alloc] initWithFrame:CGRectMake(10, lastview.frame.size.height+lastview.frame.origin.y+10, SCREEN_WIDTH-20, 20)];
+            lbl_spec.text=evaluate[@"geval_spec"];
+            lbl_spec.textColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
+            lbl_spec.font=[UIFont systemFontOfSize:15];
+            [cell addSubview:lbl_spec];
+            UIView * backview_fenge=[[UIView alloc] initWithFrame:CGRectMake(10, lbl_spec.frame.origin.y+lbl_spec.frame.size.height+5, SCREEN_WIDTH-20, 1)];
+            backview_fenge.backgroundColor=[UIColor grayColor];
+            [cell addSubview:backview_fenge];
+            UIButton * btn_morePinglun=[[UIButton alloc] initWithFrame:CGRectMake(0, backview_fenge.frame.origin.y+backview_fenge.frame.size.height, SCREEN_WIDTH, 50)];
+            [btn_morePinglun setTitle:@"查看更多评价" forState:UIControlStateNormal];
+            [btn_morePinglun setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            btn_morePinglun.tag=indexPath.row;
+            [btn_morePinglun addTarget:self action:@selector(MorePinglun:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:btn_morePinglun];
         }
-        UIView * lastview=[cell.subviews lastObject];
-        UILabel * lbl_spec=[[UILabel alloc] initWithFrame:CGRectMake(10, lastview.frame.size.height+lastview.frame.origin.y+10, SCREEN_WIDTH-20, 20)];
-        lbl_spec.text=evaluate[@"geval_spec"];
-        lbl_spec.textColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
-        lbl_spec.font=[UIFont systemFontOfSize:15];
-        [cell addSubview:lbl_spec];
-        UIView * backview_fenge=[[UIView alloc] initWithFrame:CGRectMake(10, lbl_spec.frame.origin.y+lbl_spec.frame.size.height+5, SCREEN_WIDTH-20, 1)];
-        backview_fenge.backgroundColor=[UIColor grayColor];
-        [cell addSubview:backview_fenge];
-        UIButton * btn_morePinglun=[[UIButton alloc] initWithFrame:CGRectMake(0, backview_fenge.frame.origin.y+backview_fenge.frame.size.height, SCREEN_WIDTH, 50)];
-        [btn_morePinglun setTitle:@"查看更多评价" forState:UIControlStateNormal];
-        [btn_morePinglun setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        btn_morePinglun.tag=indexPath.row;
-        [btn_morePinglun addTarget:self action:@selector(MorePinglun:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:btn_morePinglun];
+        
     }
     return cell;
 }
@@ -378,91 +384,100 @@
 
 -(void)BuildPageForSelect
 {
-    page=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    page.backgroundColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
-    UIView * backview_form=[[UIView alloc] initWithFrame:CGRectMake(0, page.frame.size.height-400, page.frame.size.width, 400)];
-    backview_form.backgroundColor=[UIColor whiteColor];
-    UIButton * btn_addtoshoppingcar=[[UIButton alloc] initWithFrame:CGRectMake(0, backview_form.frame.size.height-50, backview_form.frame.size.width/2, 50)];
-    btn_addtoshoppingcar.backgroundColor=[UIColor colorWithRed:254/255.0 green:205/255.0 blue:1/255.0 alpha:1.0];
-    [btn_addtoshoppingcar setTitle:@"加入购物车" forState:UIControlStateNormal];
-    [btn_addtoshoppingcar setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btn_addtoshoppingcar addTarget:self action:@selector(AddToShoppingCar:) forControlEvents:UIControlEventTouchUpInside];
-    [backview_form addSubview:btn_addtoshoppingcar];
-    UIButton * btn_payrightnow=[[UIButton alloc] initWithFrame:CGRectMake(btn_addtoshoppingcar.frame.size.width, backview_form.frame.size.height-50, backview_form.frame.size.width/2, 50)];
-    btn_payrightnow.backgroundColor=[UIColor colorWithRed:255/255.0 green:154/255.0 blue:1/255.0 alpha:1.0];
-    [btn_payrightnow setTitle:@"立即购买" forState:UIControlStateNormal];
-    [btn_payrightnow setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btn_payrightnow addTarget:self action:@selector(PayRithtNow:) forControlEvents:UIControlEventTouchUpInside];
-    [backview_form addSubview:btn_payrightnow];
-    UIView * BackVew_selectTitle=[[UIView alloc] initWithFrame:CGRectMake(0, 0, backview_form.frame.size.width, 110)];
-    UIButton * btn_cancel=[[UIButton alloc] initWithFrame:CGRectMake(BackVew_selectTitle.frame.size.width-35, 10, 25, 25)];
-    [btn_cancel setImage:[UIImage imageNamed:@"cancel_for_select@2x.png"] forState:UIControlStateNormal];
-    [btn_cancel addTarget:self action:@selector(cancelPageSelect:) forControlEvents:UIControlEventTouchUpInside];
-    [BackVew_selectTitle addSubview:btn_cancel];
-    UILabel * lbl_price=[[UILabel alloc] initWithFrame:CGRectMake(140, btn_cancel.frame.size.height+btn_cancel.frame.origin.y+5, BackVew_selectTitle.frame.size.width-150, 20)];
-    lbl_price.textColor=[UIColor colorWithRed:255/255.0 green:154/255.0 blue:1/255.0 alpha:1.0];
-    lbl_price.text=goodInfo[@"goods_price"];
-    [BackVew_selectTitle addSubview:lbl_price];
-    UILabel * lbl_kucun=[[UILabel alloc] initWithFrame:CGRectMake(lbl_price.frame.origin.x, lbl_price.frame.origin.y+lbl_price.frame.size.height+5, lbl_price.frame.size.width, 20)];
-    lbl_kucun.font=[UIFont systemFontOfSize:13];
-    lbl_kucun.text=[NSString stringWithFormat:@"库存%@件",goodInfo[@"goods_storage"]];
-    [BackVew_selectTitle addSubview:lbl_kucun];
-    UILabel * lbl_tishi=[[UILabel alloc] initWithFrame:CGRectMake(lbl_kucun.frame.origin.x, lbl_kucun.frame.size.height+lbl_kucun.frame.origin.y+5, lbl_kucun.frame.size.width, 20)];
-    lbl_tishi.text=@"请选择 机身颜色 套餐类型";
-    lbl_tishi.font=[UIFont systemFontOfSize:13];
-    [BackVew_selectTitle addSubview:lbl_tishi];
-    UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, BackVew_selectTitle.frame.size.height-1, BackVew_selectTitle.frame.size.width-20, 1)];
-    fenge.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
-    [BackVew_selectTitle addSubview:fenge];
-    [backview_form addSubview:BackVew_selectTitle];
-    UIScrollView * scrollviw=[[UIScrollView alloc] initWithFrame:CGRectMake(0, BackVew_selectTitle.frame.size.height, backview_form.frame.size.width, backview_form.frame.size.height-BackVew_selectTitle.frame.size.height-50)];
-    scrollviw.scrollEnabled=YES;
-    if (![dictspectitle isKindOfClass:[NSNull class]]) {
-        for (int i=1; i<=dictspectitle.count; i++) {
-            UIView * lastview=[scrollviw.subviews lastObject];
-            UIView * firstselect=[[UIView alloc] initWithFrame:CGRectMake(0, lastview.frame.size.height+lastview.frame.origin.y, scrollviw.frame.size.width, 100)];
-            UILabel * lbl_firstselectTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, firstselect.frame.size.width, 20)];
-            lbl_firstselectTitle.text=dictspectitle[[NSString stringWithFormat:@"%d",i]];
-            [firstselect addSubview:lbl_firstselectTitle];
-            NSArray * arrayitem=[[NSArray alloc] initWithArray:dictspecValue[[NSString stringWithFormat:@"%d",i]]];
-            if (arrayitem.count>0) {
-                for (int j=0; j<arrayitem.count; j++) {
-                    int num=j/4;
-                    int yushu=j%4;
-                    UIButton * btn_item=[[UIButton alloc] initWithFrame:CGRectMake( yushu==0?10:((firstselect.frame.size.width-50)/4)*(j%4)+(j+1)*10, num==0?lbl_firstselectTitle.frame.size.height+lbl_firstselectTitle.frame.origin.y+10:50*num, (firstselect.frame.size.width-50)/4, 40)];
-                    btn_item.layer.masksToBounds=YES;
-                    btn_item.tag=i*1000+[arrayitem[j][@"id"]  intValue];
-                    [btn_item setTitle:arrayitem[j][@"name"] forState:UIControlStateNormal];
-                    btn_item.titleLabel.font=[UIFont systemFontOfSize:15];
-                    [btn_item setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                    [btn_item addTarget:self action:@selector(itemselectchange:) forControlEvents:UIControlEventTouchUpInside];
-                    btn_item.layer.cornerRadius=5;
-                    btn_item.layer.borderWidth=1;
-                    btn_item.layer.borderColor=[RGB(102, 102, 102) CGColor];
-                    [firstselect addSubview:btn_item];
+    @try {
+        page=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        page.backgroundColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+        UIView * backview_form=[[UIView alloc] initWithFrame:CGRectMake(0, page.frame.size.height-400, page.frame.size.width, 400)];
+        backview_form.backgroundColor=[UIColor whiteColor];
+        UIButton * btn_addtoshoppingcar=[[UIButton alloc] initWithFrame:CGRectMake(0, backview_form.frame.size.height-50, backview_form.frame.size.width/2, 50)];
+        btn_addtoshoppingcar.backgroundColor=[UIColor colorWithRed:254/255.0 green:205/255.0 blue:1/255.0 alpha:1.0];
+        [btn_addtoshoppingcar setTitle:@"加入购物车" forState:UIControlStateNormal];
+        [btn_addtoshoppingcar setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [btn_addtoshoppingcar addTarget:self action:@selector(AddToShoppingCar:) forControlEvents:UIControlEventTouchUpInside];
+        [backview_form addSubview:btn_addtoshoppingcar];
+        UIButton * btn_payrightnow=[[UIButton alloc] initWithFrame:CGRectMake(btn_addtoshoppingcar.frame.size.width, backview_form.frame.size.height-50, backview_form.frame.size.width/2, 50)];
+        btn_payrightnow.backgroundColor=[UIColor colorWithRed:255/255.0 green:154/255.0 blue:1/255.0 alpha:1.0];
+        [btn_payrightnow setTitle:@"立即购买" forState:UIControlStateNormal];
+        [btn_payrightnow setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [btn_payrightnow addTarget:self action:@selector(PayRithtNow:) forControlEvents:UIControlEventTouchUpInside];
+        [backview_form addSubview:btn_payrightnow];
+        UIView * BackVew_selectTitle=[[UIView alloc] initWithFrame:CGRectMake(0, 0, backview_form.frame.size.width, 110)];
+        UIButton * btn_cancel=[[UIButton alloc] initWithFrame:CGRectMake(BackVew_selectTitle.frame.size.width-35, 10, 25, 25)];
+        [btn_cancel setImage:[UIImage imageNamed:@"cancel_for_select@2x.png"] forState:UIControlStateNormal];
+        [btn_cancel addTarget:self action:@selector(cancelPageSelect:) forControlEvents:UIControlEventTouchUpInside];
+        [BackVew_selectTitle addSubview:btn_cancel];
+        UILabel * lbl_price=[[UILabel alloc] initWithFrame:CGRectMake(140, btn_cancel.frame.size.height+btn_cancel.frame.origin.y+5, BackVew_selectTitle.frame.size.width-150, 20)];
+        lbl_price.textColor=[UIColor colorWithRed:255/255.0 green:154/255.0 blue:1/255.0 alpha:1.0];
+        lbl_price.text=goodInfo[@"goods_price"];
+        [BackVew_selectTitle addSubview:lbl_price];
+        UILabel * lbl_kucun=[[UILabel alloc] initWithFrame:CGRectMake(lbl_price.frame.origin.x, lbl_price.frame.origin.y+lbl_price.frame.size.height+5, lbl_price.frame.size.width, 20)];
+        lbl_kucun.font=[UIFont systemFontOfSize:13];
+        lbl_kucun.text=[NSString stringWithFormat:@"库存%@件",goodInfo[@"goods_storage"]];
+        [BackVew_selectTitle addSubview:lbl_kucun];
+        UILabel * lbl_tishi=[[UILabel alloc] initWithFrame:CGRectMake(lbl_kucun.frame.origin.x, lbl_kucun.frame.size.height+lbl_kucun.frame.origin.y+5, lbl_kucun.frame.size.width, 20)];
+        lbl_tishi.text=@"请选择 机身颜色 套餐类型";
+        lbl_tishi.font=[UIFont systemFontOfSize:13];
+        [BackVew_selectTitle addSubview:lbl_tishi];
+        UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, BackVew_selectTitle.frame.size.height-1, BackVew_selectTitle.frame.size.width-20, 1)];
+        fenge.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
+        [BackVew_selectTitle addSubview:fenge];
+        [backview_form addSubview:BackVew_selectTitle];
+        UIScrollView * scrollviw=[[UIScrollView alloc] initWithFrame:CGRectMake(0, BackVew_selectTitle.frame.size.height, backview_form.frame.size.width, backview_form.frame.size.height-BackVew_selectTitle.frame.size.height-50)];
+        scrollviw.scrollEnabled=YES;
+        if (![dictspectitle isKindOfClass:[NSNull class]]) {
+            for (int i=1; i<=dictspectitle.count; i++) {
+                UIView * lastview=[scrollviw.subviews lastObject];
+                UIView * firstselect=[[UIView alloc] initWithFrame:CGRectMake(0, lastview.frame.size.height+lastview.frame.origin.y, scrollviw.frame.size.width, 100)];
+                UILabel * lbl_firstselectTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, firstselect.frame.size.width, 20)];
+                lbl_firstselectTitle.text=dictspectitle[i-1][@"name"];
+                [firstselect addSubview:lbl_firstselectTitle];
+                NSArray * arrayitem=[[NSArray alloc] initWithArray:dictspecValue[[NSString stringWithFormat:@"%@",dictspectitle[i-1][@"id"]]]];
+                if (arrayitem.count>0) {
+                    for (int j=0; j<arrayitem.count; j++) {
+                        int num=j/4;
+                        int yushu=j%4;
+                        UIButton * btn_item=[[UIButton alloc] initWithFrame:CGRectMake( yushu==0?10:((firstselect.frame.size.width-50)/4)*(j%4)+(j+1)*10, num==0?lbl_firstselectTitle.frame.size.height+lbl_firstselectTitle.frame.origin.y+10:50*num, (firstselect.frame.size.width-50)/4, 40)];
+                        btn_item.layer.masksToBounds=YES;
+                        btn_item.tag=i*1000+[arrayitem[j][@"id"]  intValue];
+                        [btn_item setTitle:arrayitem[j][@"name"] forState:UIControlStateNormal];
+                        btn_item.titleLabel.font=[UIFont systemFontOfSize:15];
+                        [btn_item setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                        [btn_item addTarget:self action:@selector(itemselectchange:) forControlEvents:UIControlEventTouchUpInside];
+                        btn_item.layer.cornerRadius=5;
+                        btn_item.layer.borderWidth=1;
+                        btn_item.layer.borderColor=[RGB(102, 102, 102) CGColor];
+                        [firstselect addSubview:btn_item];
+                    }
                 }
+                UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, firstselect.frame.size.height-1, firstselect.frame.size.width-20, 1)];
+                fenge.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
+                [firstselect addSubview:fenge];
+                [scrollviw addSubview:firstselect];
+                
             }
-            UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, firstselect.frame.size.height-1, firstselect.frame.size.width-20, 1)];
-            fenge.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
-            [firstselect addSubview:fenge];
-            [scrollviw addSubview:firstselect];
-            
+            UIView * lastview=[scrollviw.subviews lastObject];
+            scrollviw.contentSize=CGSizeMake(0, lastview.frame.size.height+lastview.frame.origin.y+50);
         }
-        UIView * lastview=[scrollviw.subviews lastObject];
-        scrollviw.contentSize=CGSizeMake(0, lastview.frame.size.height+lastview.frame.origin.y+50);
+        
+        
+        [backview_form addSubview:scrollviw];
+        [page addSubview:backview_form];
+        UIImageView * img_good=[[UIImageView alloc] initWithFrame:CGRectMake(10, backview_form.frame.origin.y-30, 120, 120)];
+        [img_good sd_setImageWithURL:[NSURL URLWithString:arrayslider[@"0"]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+        img_good.layer.masksToBounds=YES;
+        img_good.layer.cornerRadius=5;
+        img_good.layer.borderWidth=2;
+        img_good.layer.borderColor=[RGB(255, 255, 255) CGColor];
+        [page addSubview:img_good];
+        [self.view addSubview:page];
+    }
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        
     }
     
-    
-    [backview_form addSubview:scrollviw];
-    [page addSubview:backview_form];
-    UIImageView * img_good=[[UIImageView alloc] initWithFrame:CGRectMake(10, backview_form.frame.origin.y-30, 120, 120)];
-    [img_good sd_setImageWithURL:[NSURL URLWithString:arrayslider[@"0"]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
-    img_good.layer.masksToBounds=YES;
-    img_good.layer.cornerRadius=5;
-    img_good.layer.borderWidth=2;
-    img_good.layer.borderColor=[RGB(255, 255, 255) CGColor];
-    [page addSubview:img_good];
-    [self.view addSubview:page];
 }
 
 -(void)itemselectchange:(UIButton * )sender
@@ -495,35 +510,116 @@
 {
     
     
-    if (userinfoWithFile[@"key"]) {
-        if (select1&&select2) {
-            if (goodsID[[NSString stringWithFormat:@"%d|%d",select1,select2]]) {
-                DataProvider * dataprovider=[[DataProvider alloc] init];
-                [dataprovider setDelegateObject:self setBackFunctionName:@"AddToshoppingCarBackCall:"];
-                [dataprovider AddToShoppingCar:userinfoWithFile[@"key"] andgoods_id:goodsID[[NSString stringWithFormat:@"%d|%d",select1,select2]] andquantity:@"1"];
+    @try {
+        if (userinfoWithFile[@"key"]) {
+            switch (dictspectitle.count) {
+                case 0:
+                {
+                    DataProvider * dataprovider=[[DataProvider alloc] init];
+                    [dataprovider setDelegateObject:self setBackFunctionName:@"AddToshoppingCarBackCall:"];
+                    [dataprovider AddToShoppingCar:userinfoWithFile[@"key"] andgoods_id:@"" andquantity:@"1"];
+                    
+                    
+                }
+                    break;
+                case 1:
+                {
+                    if (select1||select2) {
+                        if (goodsID[[NSString stringWithFormat:@"%d|%d",select1,select2]]) {
+                            DataProvider * dataprovider=[[DataProvider alloc] init];
+                            [dataprovider setDelegateObject:self setBackFunctionName:@"AddToshoppingCarBackCall:"];
+                            [dataprovider AddToShoppingCar:userinfoWithFile[@"key"] andgoods_id:goodsID[[NSString stringWithFormat:@"%d%d",select1,select2]] andquantity:@"1"];
+                        }
+                    }
+                    else
+                    {
+                        //            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择商品的规格" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                        //            [alert show];
+                        if (page) {
+                            page.frame=CGRectMake(page.frame.origin.x, 0, page.frame.size.width, page.frame.size.height);
+                        }
+                        else
+                        {
+                            [self BuildPageForSelect];
+                        }
+                    }
+                }
+                    break;
+                case 2:
+                {
+                    if (select1&&select2) {
+                        if (goodsID[[NSString stringWithFormat:@"%d|%d",select1,select2]]) {
+                            DataProvider * dataprovider=[[DataProvider alloc] init];
+                            [dataprovider setDelegateObject:self setBackFunctionName:@"AddToshoppingCarBackCall:"];
+                            [dataprovider AddToShoppingCar:userinfoWithFile[@"key"] andgoods_id:goodsID[[NSString stringWithFormat:@"%d|%d",select1,select2]] andquantity:@"1"];
+                        }
+                    }
+                    else
+                    {
+                        //            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择商品的规格" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                        //            [alert show];
+                        if (page) {
+                            page.frame=CGRectMake(page.frame.origin.x, 0, page.frame.size.width, page.frame.size.height);
+                        }
+                        else
+                        {
+                            [self BuildPageForSelect];
+                        }
+                    }
+                }
+                    break;
+                default:
+                    break;
+            }
+            if (select1&&select2) {
+                if (goodsID[[NSString stringWithFormat:@"%d|%d",select1,select2]]) {
+                    DataProvider * dataprovider=[[DataProvider alloc] init];
+                    [dataprovider setDelegateObject:self setBackFunctionName:@"AddToshoppingCarBackCall:"];
+                    [dataprovider AddToShoppingCar:userinfoWithFile[@"key"] andgoods_id:goodsID[[NSString stringWithFormat:@"%d|%d",select1,select2]] andquantity:@"1"];
+                }
+            }
+            else
+            {
+                //            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择商品的规格" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                //            [alert show];
+                if (page) {
+                    page.frame=CGRectMake(page.frame.origin.x, 0, page.frame.size.width, page.frame.size.height);
+                }
+                else
+                {
+                    [self BuildPageForSelect];
+                }
             }
         }
         else
         {
-            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择商品的规格" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请先登录" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
             [alert show];
         }
+        NSLog(@"加入购物车");
     }
-    else
-    {
-        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请先登录" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
-        [alert show];
+    @catch (NSException *exception) {
+        
     }
-    NSLog(@"加入购物车");
+    @finally {
+        
+    }
     
     
 }
 -(void)AddToshoppingCarBackCall:(id)dict
 {
     NSLog(@"%@",dict);
-    if ([dict[@"datas"] intValue]==1) {
+    if ([[NSString stringWithFormat:@"%@",dict[@"datas"]] isEqual:@"1"]) {
         UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"已加入到购物车" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles: nil];
         [alert show];
+    }
+    else
+    {
+        if (dict[@"datas"][@"error"]) {
+            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"好的" otherButtonTitles: nil];
+            [alert show];
+        }
     }
     
 }
@@ -545,8 +641,15 @@
         }
         else
         {
-            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择商品的规格" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
-            [alert show];
+//            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择商品的规格" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+//            [alert show];
+            if (page) {
+                page.frame=CGRectMake(page.frame.origin.x, 0, page.frame.size.width, page.frame.size.height);
+            }
+            else
+            {
+                [self BuildPageForSelect];
+            }
         }
     }
     else
@@ -563,6 +666,11 @@
         orderforsure.OrderData=dict[@"datas"];
         orderforsure.key=userinfoWithFile[@"key"];
         [self.navigationController pushViewController:orderforsure animated:YES];
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
     }
 }
 - (void)didReceiveMemoryWarning {

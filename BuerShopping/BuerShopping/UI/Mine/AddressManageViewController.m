@@ -50,7 +50,7 @@
 
 -(void)InitAllView
 {
-    _mytbView=[[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-125)];
+    _mytbView=[[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-124)];
     _mytbView.delegate=self;
     _mytbView.dataSource=self;
     [self.view addSubview:_mytbView];
@@ -140,6 +140,7 @@
         cell.Btn_setdefault.tag=indexPath.row;
         [cell.Btn_setdefault addTarget:self action:@selector(setDefaultAddress:) forControlEvents:UIControlEventTouchUpInside];
     }
+    cell.address_addres.text=addressArray[indexPath.row][@"address"]==[NSNull null]?@"":addressArray[indexPath.row][@"address"];
     
     return cell;
 }

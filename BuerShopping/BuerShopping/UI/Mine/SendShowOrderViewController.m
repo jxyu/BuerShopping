@@ -115,8 +115,15 @@
 
 -(void)showorderSendBackCall:(id)dict
 {
-    if ([dict[@"datas"] intValue]==1) {
+    if ([[NSString stringWithFormat:@"%@",dict[@"datas"]] isEqualToString:@"1"]) {
         [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        if (dict[@"datas"][@"error"]) {
+            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"好的" otherButtonTitles: nil];
+            [alert show];
+        }
     }
 }
 

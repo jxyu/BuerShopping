@@ -327,7 +327,7 @@
                                                              delegate:self
                                                     cancelButtonTitle:@"取消"
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"支付宝充值", @"微信充值", nil];
+                                                    otherButtonTitles:@"支付宝支付", @"微信支付", nil];
     
     choiceSheet.tag=1;
     [choiceSheet showInView:self.view];
@@ -342,19 +342,17 @@
         if (buttonIndex==0) {
             payWay=@"alipay";
             if (order_info[@"order_amount"]) {
-                NSDictionary * prm=@{@"key":_key,@"pdramount":order_info[@"order_amount"],@"channel":payWay};
                 DataProvider * dataprovider=[[DataProvider alloc] init];
                 [dataprovider setDelegateObject:self setBackFunctionName:@"GetChargeBackCall:"];
-                [dataprovider GetChargeObject:prm];
+                [dataprovider OrderPayWithKey:_key andpay_sn:order_info[@"order_sn"] andchannel:payWay];
             }
         }else if(buttonIndex==1)
         {
             payWay=@"wx";
             if (order_info[@"order_amount"]) {
-                NSDictionary * prm=@{@"key":_key,@"pdramount":order_info[@"order_amount"],@"channel":payWay};
                 DataProvider * dataprovider=[[DataProvider alloc] init];
                 [dataprovider setDelegateObject:self setBackFunctionName:@"GetChargeBackCall:"];
-                [dataprovider GetChargeObject:prm];
+                [dataprovider OrderPayWithKey:_key andpay_sn:order_info[@"order_sn"] andchannel:payWay];
             }
         }
         

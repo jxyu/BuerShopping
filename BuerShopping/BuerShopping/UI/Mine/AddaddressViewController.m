@@ -401,6 +401,7 @@
         if (dict[@"datas"][@"address_id"]) {
             address_id=dict[@"datas"][@"address_id"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"Save_address_success" object:nil];
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }
 }

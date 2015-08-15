@@ -241,11 +241,11 @@
 {
     NSLog(@"---->%@",[[self.LetterResultArr objectAtIndex:indexPath.section]objectAtIndex:indexPath.row]);
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
-                                                    message:[[self.LetterResultArr objectAtIndex:indexPath.section]objectAtIndex:indexPath.row]
-                                                   delegate:nil
-                                          cancelButtonTitle:@"YES" otherButtonTitles:nil];
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+//                                                    message:[[self.LetterResultArr objectAtIndex:indexPath.section]objectAtIndex:indexPath.row]
+//                                                   delegate:nil
+//                                          cancelButtonTitle:@"YES" otherButtonTitles:nil];
+//    [alert show];
     BOOL isexist=NO;
     NSDictionary * dict=[[NSDictionary alloc] init];
     for (NSDictionary *item in itemarray) {

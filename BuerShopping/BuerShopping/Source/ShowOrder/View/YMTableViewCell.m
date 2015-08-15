@@ -43,7 +43,7 @@
         _userNameLbl = [[UILabel alloc] initWithFrame:CGRectMake( TableHeader + 20, 5, screenWidth - 120, TableHeader/2)];
         _userNameLbl.textAlignment = NSTextAlignmentLeft;
         _userNameLbl.font = [UIFont systemFontOfSize:15.0];
-        _userNameLbl.textColor = [UIColor colorWithRed:104/255.0 green:109/255.0 blue:248/255.0 alpha:1.0];
+        _userNameLbl.textColor = [UIColor darkGrayColor];
         [self.contentView addSubview:_userNameLbl];
         
         
@@ -119,6 +119,7 @@
 #pragma mark -  //头像 昵称 简介
     [_userHeaderImage sd_setImageWithURL:[NSURL URLWithString:tempDate.messageBody.posterImgstr] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     _userNameLbl.text = tempDate.messageBody.posterName;
+    
     _userIntroLbl.text = tempDate.messageBody.posterIntro;
     
     //移除说说view 避免滚动时内容重叠
@@ -228,7 +229,7 @@
     favourView.isDraw = YES;
     favourView.isFold = NO;
     favourView.canClickAll = NO;
-    favourView.textColor = [UIColor redColor];
+    favourView.textColor = [UIColor colorWithRed:115/255.0 green:73/255.0 blue:139/255.0 alpha:1.0];
     [favourView setOldString:ymData.showFavour andNewString:ymData.completionFavour];
     favourView.frame = CGRectMake(offSet_X + 80,TableHeader + 10 + ShowImage_H + (ShowImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance, screenWidth - offSet_X * 2 - 80, ymData.favourHeight);
     [self.contentView addSubview:favourView];

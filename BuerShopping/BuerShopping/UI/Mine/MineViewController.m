@@ -19,6 +19,7 @@
 #import "OrderListViewController.h"
 #import "WXViewController.h"
 #import "CollectViewController.h"
+#import "ShowOrderViewController.h"
 
 #define ORIGINAL_MAX_WIDTH 640.0f
 
@@ -31,7 +32,7 @@
 
 @implementation MineViewController
 {
-    NSDictionary* userinfoWithFile;
+    NSMutableDictionary* userinfoWithFile;
     NSString * nickName;
     UILabel * lbl_jifeneveryday;
     UILabel * lbl_qiandaoBack;
@@ -53,8 +54,37 @@
     NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                               NSUserDomainMask, YES) objectAtIndex:0];
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-    userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    userinfoWithFile =[[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    if (userinfoWithFile[@"key"]) {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"GetPolictBackCall:"];
+        [dataprovider GetPolicatandjifenWithKey:userinfoWithFile[@"key"]];
+    }
+    
     NSLog(@"%@",userinfoWithFile);
+}
+-(void)GetPolictBackCall:(id)dict
+{
+    @try {
+        if (!dict[@"datas"][@"error"]) {
+            [userinfoWithFile setObject:dict[@"datas"][@"points"] forKey:@"member_points"];
+            [userinfoWithFile setObject:dict[@"datas"][@"predeposit"] forKey:@"predeposit"];
+            NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                      NSUserDomainMask, YES) objectAtIndex:0];
+            NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+            BOOL result= [userinfoWithFile writeToFile:plistPath atomically:YES];
+            if (result) {
+                [self BuildHeaderViewAfterLogin];
+            }
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"我的中写入钱包与积分出错。。");
+    }
+    @finally {
+        
+    }
+    
 }
 -(void)initAllTheView
 {
@@ -315,7 +345,7 @@
             [BackView_SpecialPrice addSubview:img_iconForCell];
             UILabel * lbl_specialpriceTitle=[[UILabel alloc] initWithFrame:CGRectMake(30, 12, 150, 20)];
             lbl_specialpriceTitle.text=@"我的收货地址";
-            lbl_specialpriceTitle.font=[UIFont systemFontOfSize:14];
+            lbl_specialpriceTitle.font=[UIFont systemFontOfSize:16];
             [BackView_SpecialPrice addSubview:lbl_specialpriceTitle];
             UILabel * lbl_moreSpecialprice=[[UILabel alloc] initWithFrame:CGRectMake(BackView_SpecialPrice.frame.size.width-30-60, 12, 60, 20)];
             lbl_moreSpecialprice.text=@"";
@@ -341,7 +371,7 @@
             [BackView_SpecialPrice addSubview:img_iconForCell];
             UILabel * lbl_specialpriceTitle=[[UILabel alloc] initWithFrame:CGRectMake(30, 5+7, 100, 20)];
             lbl_specialpriceTitle.text=@"我的收藏";
-            lbl_specialpriceTitle.font=[UIFont systemFontOfSize:14];
+            lbl_specialpriceTitle.font=[UIFont systemFontOfSize:16];
             [BackView_SpecialPrice addSubview:lbl_specialpriceTitle];
             UILabel * lbl_moreSpecialprice=[[UILabel alloc] initWithFrame:CGRectMake(BackView_SpecialPrice.frame.size.width-30-100, 5+7, 100, 20)];
             lbl_moreSpecialprice.text=@"";
@@ -368,7 +398,7 @@
             [BackView_SpecialPrice addSubview:img_iconForCell];
             UILabel * lbl_specialpriceTitle=[[UILabel alloc] initWithFrame:CGRectMake(30, 5+7, 100, 20)];
             lbl_specialpriceTitle.text=@"积分商城";
-            lbl_specialpriceTitle.font=[UIFont systemFontOfSize:14];
+            lbl_specialpriceTitle.font=[UIFont systemFontOfSize:16];
             [BackView_SpecialPrice addSubview:lbl_specialpriceTitle];
             UILabel * lbl_moreSpecialprice=[[UILabel alloc] initWithFrame:CGRectMake(BackView_SpecialPrice.frame.size.width-30-100, 5+7, 100, 20)];
             lbl_moreSpecialprice.text=@"";
@@ -395,7 +425,7 @@
             [BackView_SpecialPrice addSubview:img_iconForCell];
             UILabel * lbl_specialpriceTitle=[[UILabel alloc] initWithFrame:CGRectMake(30, 5+7, 100, 20)];
             lbl_specialpriceTitle.text=@"设置";
-            lbl_specialpriceTitle.font=[UIFont systemFontOfSize:14];
+            lbl_specialpriceTitle.font=[UIFont systemFontOfSize:16];
             [BackView_SpecialPrice addSubview:lbl_specialpriceTitle];
             UILabel * lbl_moreSpecialprice=[[UILabel alloc] initWithFrame:CGRectMake(BackView_SpecialPrice.frame.size.width-30-100, 5+7, 100, 20)];
             lbl_moreSpecialprice.text=@"";
@@ -459,11 +489,23 @@
  */
 -(void)Btn_ShowOrderClick
 {
-    WXViewController *wxVc = [WXViewController new];
-    wxVc.key=userinfoWithFile[@"key"];
-    wxVc.nickName=userinfoWithFile[@"username"];
-    wxVc.avatarImageHeader=userinfoWithFile[@"avatar"];
-    [self.navigationController pushViewController:wxVc animated:YES];
+//    WXViewController *wxVc = [WXViewController new];
+//    wxVc.key=userinfoWithFile[@"key"];
+//    wxVc.nickName=userinfoWithFile[@"username"];
+//    wxVc.avatarImageHeader=userinfoWithFile[@"avatar"];
+//    [self.navigationController pushViewController:wxVc animated:YES];
+    if (userinfoWithFile[@"key"]) {
+        ShowOrderViewController * showorder=[[ShowOrderViewController alloc] init];
+        showorder.key=userinfoWithFile[@"key"];
+        showorder.nickName=userinfoWithFile[@"username"];
+        showorder.avatarImageHeader=userinfoWithFile[@"avatar"];
+        [self.navigationController pushViewController:showorder animated:YES];
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"请先登录" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+    }
 }
 
 -(void)loginSuccess
@@ -478,7 +520,7 @@
     NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                               NSUserDomainMask, YES) objectAtIndex:0];
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-    userinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    userinfoWithFile =[[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
     
     UIView * myHeaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 205)];
     myHeaderView.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/25.0 alpha:1.0];

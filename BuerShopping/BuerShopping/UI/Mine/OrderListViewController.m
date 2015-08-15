@@ -179,7 +179,7 @@
     {
         UITableViewCell * cell=[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
         if ([_OrderStatus isEqualToString:@"10"]) {
-            UIButton * btn_pay=[[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width-80, 10, 70, 40)];
+            UIButton * btn_pay=[[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-80, 10, 70, 40)];
             btn_pay.layer.masksToBounds=YES;
             btn_pay.layer.cornerRadius=5;
             btn_pay.layer.borderWidth=1;
@@ -203,7 +203,7 @@
             [cell addSubview:btn_cancelOrder];
         }
         if ([_OrderStatus isEqualToString:@"20"]) {
-            UIButton * btn_cancelOrder=[[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width-80, 10, 70, 40)];
+            UIButton * btn_cancelOrder=[[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-80, 10, 70, 40)];
             btn_cancelOrder.layer.masksToBounds=YES;
             btn_cancelOrder.layer.cornerRadius=5;
             btn_cancelOrder.layer.borderWidth=1;
@@ -216,7 +216,7 @@
             [cell addSubview:btn_cancelOrder];
         }
         if ([_OrderStatus isEqualToString:@"30"]) {
-            UIButton * btn_pay=[[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width-80, 10, 70, 40)];
+            UIButton * btn_pay=[[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-80, 10, 70, 40)];
             btn_pay.layer.masksToBounds=YES;
             btn_pay.layer.cornerRadius=5;
             btn_pay.layer.borderWidth=1;
@@ -241,7 +241,7 @@
         }
         if ([_OrderStatus isEqualToString:@"40"]) {
             if ([[NSString stringWithFormat:@"%@",itemarray[0][@"if_evaluation"]] isEqualToString:@"1"]) {
-                UIButton * btn_pay=[[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width-80, 10, 70, 40)];
+                UIButton * btn_pay=[[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-80, 10, 70, 40)];
                 btn_pay.layer.masksToBounds=YES;
                 btn_pay.layer.cornerRadius=5;
                 btn_pay.layer.borderWidth=1;
@@ -254,7 +254,7 @@
                 [cell addSubview:btn_pay];
             }
             UIView * lastview=[cell.subviews lastObject];
-            UIButton * btn_ChangeGoods=[[UIButton alloc] initWithFrame:CGRectMake([[cell.subviews lastObject] isKindOfClass:[UIButton class]]?lastview.frame.origin.x-80:cell.frame.size.width-80, 10, 70, 40)];
+            UIButton * btn_ChangeGoods=[[UIButton alloc] initWithFrame:CGRectMake([[cell.subviews lastObject] isKindOfClass:[UIButton class]]?lastview.frame.origin.x-80:SCREEN_WIDTH-80, 10, 70, 40)];
             btn_ChangeGoods.layer.masksToBounds=YES;
             btn_ChangeGoods.layer.cornerRadius=5;
             btn_ChangeGoods.layer.borderWidth=1;
@@ -424,7 +424,7 @@
                                                              delegate:self
                                                     cancelButtonTitle:@"取消"
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"支付宝充值", @"微信充值", nil];
+                                                    otherButtonTitles:@"支付宝支付", @"微信支付", nil];
     
     choiceSheet.tag=1;
     [choiceSheet showInView:self.view];
@@ -440,19 +440,17 @@
         if (buttonIndex==0) {
             payWay=@"alipay";
             if (itemarray[0][@"order_amount"]) {
-                NSDictionary * prm=@{@"key":_key,@"pdramount":itemarray[0][@"order_amount"],@"channel":payWay};
                 DataProvider * dataprovider=[[DataProvider alloc] init];
                 [dataprovider setDelegateObject:self setBackFunctionName:@"GetChargeBackCall:"];
-                [dataprovider GetChargeObject:prm];
+                [dataprovider OrderPayWithKey:_key andpay_sn:itemarray[0][@"order_sn"] andchannel:payWay];
             }
         }else if(buttonIndex ==1)
         {
             payWay=@"wx";
             if (itemarray[0][@"order_amount"]) {
-                NSDictionary * prm=@{@"key":_key,@"pdramount":itemarray[0][@"order_amount"],@"channel":payWay};
                 DataProvider * dataprovider=[[DataProvider alloc] init];
                 [dataprovider setDelegateObject:self setBackFunctionName:@"GetChargeBackCall:"];
-                [dataprovider GetChargeObject:prm];
+                [dataprovider OrderPayWithKey:_key andpay_sn:itemarray[0][@"order_sn"] andchannel:payWay];
             }
         }
         
@@ -484,6 +482,10 @@
                        NSLog(@"Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);
                    }
                }];
+    }
+    else{
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
     }
 }
 

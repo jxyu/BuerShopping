@@ -52,10 +52,7 @@
     self.view.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
     arrayGoodList=[[NSArray alloc] init];
     keyboardZhezhaoShow=NO;
-    [[CCLocationManager shareLocation] getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
-        lat=[NSString stringWithFormat:@"%f",locationCorrrdinate.latitude];
-        lng=[NSString stringWithFormat:@"%f",locationCorrrdinate.longitude];
-    }];
+    
     isfooterrefresh=NO;
     isSelectViewShow=NO;
     isxiaoliangup=NO;
@@ -150,7 +147,12 @@
         
         [self TopRefresh];
     }];
-    [_myTableView.header beginRefreshing];
+    [[CCLocationManager shareLocation] getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
+        lat=[NSString stringWithFormat:@"%f",locationCorrrdinate.latitude];
+        lng=[NSString stringWithFormat:@"%f",locationCorrrdinate.longitude];
+        [_myTableView.header beginRefreshing];
+    }];
+    
     
     // 上拉刷新
     [_myTableView addLegendFooterWithRefreshingBlock:^{
@@ -166,14 +168,18 @@
 }
 -(void)loadAllData
 {
-    key=@"";
-    order=@"";
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSDictionary * UserinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    key=UserinfoWithFile[@"key"];
+    order=@"1";
     [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
     page=@"8";
     curpage=1;
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"GetGoodsListBackcall:"];
-    [dataprovider GetGoodsListWithKeyWord:[self BuildPrmfunc]];
+//    DataProvider * dataprovider=[[DataProvider alloc] init];
+//    [dataprovider setDelegateObject:self setBackFunctionName:@"GetGoodsListBackcall:"];
+//    [dataprovider GetGoodsListWithKeyWord:[self BuildPrmfunc]];
 }
 
 -(void)GetGoodsListBackcall:(id)dict
@@ -193,14 +199,15 @@
                                                               NSUserDomainMask, YES) objectAtIndex:0];
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"CityInfo.plist"];
     NSDictionary * cityinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    areaid=cityinfoWithFile[@"area_id"];
     if (_KeyWord) {
-        NSDictionary * dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":@"88",@"keyword":_KeyWord,@"lng":@"1",@"lat":@"1",@"key":key,@"order":order};
+        NSDictionary * dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":areaid,@"keyword":_KeyWord,@"lng":lng,@"lat":lat,@"key":key,@"order":order};
         areaid=cityinfoWithFile[@"area_id"];
         return dict;
     }
     else
     {
-        NSDictionary *dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":@"88",@"gc_id":@"1067",@"lng":@"1",@"lat":@"1",@"key":key,@"order":order};
+        NSDictionary *dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":areaid,@"gc_id":_gc_id,@"lng":lng,@"lat":lat,@"key":key,@"order":order};
         return dict;
     }
 }

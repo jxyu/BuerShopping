@@ -14,6 +14,7 @@
 #import "UIImageView+WebCache.h"
 #import "CWStarRateView.h"
 #import "ShopDetialViewController.h"
+#import "CCLocationManager.h"
 
 @interface ShopViewController ()
 @property (nonatomic, strong) NSMutableArray *classifys;
@@ -39,6 +40,7 @@
     NSArray * arrayStoreList;
     NSDictionary * cityinfoWithFile;
     BOOL keyboardZhezhaoShow;
+    NSDictionary * UserinfoWithFile;
 }
 
 - (void)viewDidLoad {
@@ -51,8 +53,10 @@
 -(void)loadAllData
 {
     // 数据
-    key=@"";
-    order=@"";
+    key=@"1";
+    order=@"1";
+    lat=@"";
+    lng=@"";
     [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
     page=@"8";
     curpage=1;
@@ -75,7 +79,22 @@
                                                               NSUserDomainMask, YES) objectAtIndex:0];
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"CityInfo.plist"];
     cityinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    areaid=cityinfoWithFile[@"area_id"];
     [self addLeftbuttontitle:cityinfoWithFile[@"area_name"]];
+//    plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+//    UserinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+//    key=UserinfoWithFile[@"key"];
+    
+    [[CCLocationManager shareLocation] getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
+        lng=[NSString stringWithFormat:@"%f",locationCorrrdinate.longitude];
+        lat=[NSString stringWithFormat:@"%f",locationCorrrdinate.latitude];
+        if (!cityinfoWithFile[@"area_name"]) {
+            DataProvider * dataprovider=[[DataProvider alloc] init];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"GetCityBackCall:"];
+            [dataprovider GetcityInfoWithlng:[NSString stringWithFormat:@"%f",locationCorrrdinate.longitude] andlat:[NSString stringWithFormat:@"%f",locationCorrrdinate.latitude]];
+        }
+    }];
+    
     _lblLeft.font=[UIFont systemFontOfSize:13];
     UIImageView * img_icon_down=[[UIImageView alloc] initWithFrame:CGRectMake(_btnLeft.frame.size.width-8, 18, 8, 5)];
     img_icon_down.image=[UIImage imageNamed:@"menu_down"];
@@ -83,12 +102,7 @@
     
     /**********************************head搜索栏开始***********************************/
     selectArray=@[@"宝贝",@"店铺"];
-    //增加监听，当键盘出现或改变时收出消息
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeCityInfo) name:@"ChangeCity" object:nil];
     UIView * BackView_Serch=[[UIView alloc] initWithFrame:CGRectMake(_btnLeft.frame.size.width+_btnLeft.frame.origin.x+10, 20.5, SCREEN_WIDTH-_btnLeft.frame.size.width-_btnLeft.frame.origin.x-22, 35)];
     BackView_Serch.layer.masksToBounds=YES;
     BackView_Serch.layer.cornerRadius=3;
@@ -128,6 +142,8 @@
     }];
     // 默认先隐藏footer
     _myTableview.footer.hidden = NO;
+    
+    
     
 }
 
@@ -306,29 +322,13 @@
 }
 
 
-//当键盘出现或改变时调用
-- (void)keyboardWillShow:(NSNotification *)aNotification
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    //获取键盘的高度
-    NSDictionary *userInfo = [aNotification userInfo];
-    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect keyboardRect = [aValue CGRectValue];
-    int height = keyboardRect.size.height;
-    if (!keyboardZhezhaoShow) {
-        UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-65-height)];
-        [btn_zhezhao addTarget:self action:@selector(btn_zhezhaoClick1:) forControlEvents:UIControlEventTouchUpInside];
-        btn_zhezhao.backgroundColor=[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.2];
-        [self.view addSubview:btn_zhezhao];
-        keyboardZhezhaoShow=YES;
-    }
+    NSLog(@"表格tag%ld",(long)textField.tag);
+    [textField resignFirstResponder];
+    return YES;
 }
 
--(void)btn_zhezhaoClick1:(UIButton *)sender
-{
-    keyboardZhezhaoShow=NO;
-    [txt_searchtext resignFirstResponder];
-    [sender removeFromSuperview];
-}
 
 
 - (NSInteger)numberOfColumnsInMenu:(DOPDropDownMenu *)menu
@@ -373,21 +373,49 @@
 -(NSDictionary * )BuildStorePrmfunc
 {
     if (_keyWord) {
-        NSDictionary * dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":@"88",@"keyword":_keyWord,@"lng":@"1",@"lat":@"1",@"key":key,@"order":order};
+        NSDictionary * dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":areaid,@"keyword":_keyWord,@"lng":lng,@"lat":lat,@"key":key,@"order":order};
         areaid=cityinfoWithFile[@"area_id"];
         return dict;
     }
     else if(_sc_id)
     {
-        NSDictionary *dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":@"88",@"sc_id":_sc_id,@"lng":@"1",@"lat":@"1",@"key":key,@"order":order};
+        NSDictionary *dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":areaid,@"sc_id":_sc_id,@"lng":lng,@"lat":lat,@"key":key,@"order":order};
         return dict;
     }
     else
     {
-        NSDictionary *dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":@"88",@"lng":@"1",@"lat":@"1",@"key":key,@"order":order};
+        NSDictionary *dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":areaid,@"lng":lng,@"lat":lat,@"key":key,@"order":order};
         return dict;
     }
 }
+
+-(void)GetCityBackCall:(id)dict
+{
+    NSLog(@"%@",dict);
+    if (!dict[@"datas"][@"error"]) {
+        areaid=dict[@"datas"][@"area_id"];
+        [self addLeftbuttontitle:dict[@"datas"][@"area_name"]];
+        _lblLeft.font=[UIFont systemFontOfSize:13];
+        UIImageView * img_icon_down=[[UIImageView alloc] initWithFrame:CGRectMake(_btnLeft.frame.size.width-8, 18, 8, 5)];
+        img_icon_down.image=[UIImage imageNamed:@"menu_down"];
+        [_btnLeft addSubview:img_icon_down];
+        
+        [self StoreTopRefresh];
+    }
+    
+}
+-(void)changeCityInfo
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"CityInfo.plist"];
+    cityinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    if (cityinfoWithFile[@"area_name"]) {
+        areaid=cityinfoWithFile[@"area_id"];
+        _lblLeft.text=cityinfoWithFile[@"area_name"];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

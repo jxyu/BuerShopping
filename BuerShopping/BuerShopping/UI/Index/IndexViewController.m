@@ -64,11 +64,6 @@
 {
     /**********************************head搜索栏开始***********************************/
     selectArray=@[@"宝贝",@"店铺"];
-    //增加监听，当键盘出现或改变时收出消息
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeCityInfo) name:@"ChangeCity" object:nil];
     
     UIView * BackView_Serch=[[UIView alloc] initWithFrame:CGRectMake(_btnLeft.frame.size.width+_btnLeft.frame.origin.x+10, 20.5, SCREEN_WIDTH-_btnLeft.frame.size.width-_btnLeft.frame.origin.x-22, 35)];
@@ -202,7 +197,7 @@
         [_btnLeft addSubview:img_icon_down];
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"GetIndexData:"];
-        [dataprovider GetIndexDataWithAreaid:@"88" andlng:lng andlat:lat];//areaid
+        [dataprovider GetIndexDataWithAreaid:areaid andlng:lng andlat:lat];//areaid
 //        NSDictionary * areaData=@{@"area_id":areaid,@"area_name":dict[@"datas"][@"area_name"]};
 //        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
 //                                                                  NSUserDomainMask, YES) objectAtIndex:0];
@@ -272,30 +267,6 @@
 }
 
 
-//当键盘出现或改变时调用
-- (void)keyboardWillShow:(NSNotification *)aNotification
-{
-    //获取键盘的高度
-    NSDictionary *userInfo = [aNotification userInfo];
-    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect keyboardRect = [aValue CGRectValue];
-    int height = keyboardRect.size.height;
-    if (!keyboardZhezhaoShow) {
-        UIButton * btn_zhezhao=[[UIButton alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-65-height)];
-        [btn_zhezhao addTarget:self action:@selector(tuichuKeyBoard:) forControlEvents:UIControlEventTouchUpInside];
-        btn_zhezhao.backgroundColor=[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.2];
-        [self.view addSubview:btn_zhezhao];
-        keyboardZhezhaoShow=YES;
-    }
-}
-
--(void)tuichuKeyBoard:(UIButton *)sender
-{
-    keyboardZhezhaoShow=NO;
-    [txt_searchtext resignFirstResponder];
-    [sender removeFromSuperview];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -335,7 +306,7 @@
                 UILabel * lbl_specialpriceTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
                 lbl_specialpriceTitle.text=@"天天特价";
                 [BackView_SpecialPrice addSubview:lbl_specialpriceTitle];
-                UILabel * lbl_moreSpecialprice=[[UILabel alloc] initWithFrame:CGRectMake(BackView_SpecialPrice.frame.size.width-30-60, 10, 60, 20)];
+                UILabel * lbl_moreSpecialprice=[[UILabel alloc] initWithFrame:CGRectMake(BackView_SpecialPrice.frame.size.width-10-60, 10, 60, 20)];
                 lbl_moreSpecialprice.text=@"更多";
                 lbl_moreSpecialprice.textAlignment=NSTextAlignmentRight;
                 lbl_moreSpecialprice.font=[UIFont systemFontOfSize:13];
@@ -347,7 +318,7 @@
                 UIButton * btn_morespecialprice=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_SpecialPrice.frame.size.width, BackView_SpecialPrice.frame.size.height)];
                 [btn_morespecialprice addTarget:self action:@selector(btn_MorespecialPriceClick) forControlEvents:UIControlEventTouchUpInside];
                 [BackView_SpecialPrice addSubview:btn_morespecialprice];
-                UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, BackView_SpecialPrice.frame.size.height, BackView_SpecialPrice.frame.size.width-20, 1)];
+                UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, BackView_SpecialPrice.frame.size.height, BackView_SpecialPrice.frame.size.width-10, 1)];
                 fenge.backgroundColor=[UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
                 [BackView_SpecialPrice addSubview:fenge];
             }
@@ -357,7 +328,7 @@
                 UILabel * lbl_specialpriceTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
                 lbl_specialpriceTitle.text=@"晒单圈";
                 [BackView_SpecialPrice addSubview:lbl_specialpriceTitle];
-                UILabel * lbl_moreSpecialprice=[[UILabel alloc] initWithFrame:CGRectMake(BackView_SpecialPrice.frame.size.width-30-100, 10, 100, 20)];
+                UILabel * lbl_moreSpecialprice=[[UILabel alloc] initWithFrame:CGRectMake(BackView_SpecialPrice.frame.size.width-10-100, 10, 100, 20)];
                 lbl_moreSpecialprice.text=@"N条内容更新";
                 lbl_moreSpecialprice.textColor=[UIColor colorWithRed:183/255.0 green:183/255.0 blue:183/255.0 alpha:1.0];
                 lbl_moreSpecialprice.font=[UIFont systemFontOfSize:13];
@@ -369,7 +340,7 @@
                 UIButton * btn_morespecialprice=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_SpecialPrice.frame.size.width, BackView_SpecialPrice.frame.size.height)];
                 [btn_morespecialprice addTarget:self action:@selector(Btn_MoreshowOrderClick) forControlEvents:UIControlEventTouchUpInside];
                 [BackView_SpecialPrice addSubview:btn_morespecialprice];
-                UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, BackView_SpecialPrice.frame.size.height, BackView_SpecialPrice.frame.size.width-20, 1)];
+                UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, BackView_SpecialPrice.frame.size.height, BackView_SpecialPrice.frame.size.width-10, 1)];
                 fenge.backgroundColor=[UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
                 [BackView_SpecialPrice addSubview:fenge];
             }
@@ -378,7 +349,7 @@
             {            UILabel * lbl_specialpriceTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
                 lbl_specialpriceTitle.text=@"猜你喜欢";
                 [BackView_SpecialPrice addSubview:lbl_specialpriceTitle];
-                UILabel * lbl_moreSpecialprice=[[UILabel alloc] initWithFrame:CGRectMake(BackView_SpecialPrice.frame.size.width-30-100, 10, 100, 20)];
+                UILabel * lbl_moreSpecialprice=[[UILabel alloc] initWithFrame:CGRectMake(BackView_SpecialPrice.frame.size.width-10-100, 10, 100, 20)];
                 lbl_moreSpecialprice.text=@"查看更多";
                 lbl_moreSpecialprice.textColor=[UIColor colorWithRed:183/255.0 green:183/255.0 blue:183/255.0 alpha:1.0];
                 lbl_moreSpecialprice.font=[UIFont systemFontOfSize:13];
@@ -390,7 +361,7 @@
                 UIButton * btn_morespecialprice=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_SpecialPrice.frame.size.width, BackView_SpecialPrice.frame.size.height)];
                 [btn_morespecialprice addTarget:self action:@selector(Btn_GuessYoulike) forControlEvents:UIControlEventTouchUpInside];
                 [BackView_SpecialPrice addSubview:btn_morespecialprice];
-                UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, BackView_SpecialPrice.frame.size.height, BackView_SpecialPrice.frame.size.width-20, 1)];
+                UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, BackView_SpecialPrice.frame.size.height, BackView_SpecialPrice.frame.size.width-10, 1)];
                 fenge.backgroundColor=[UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
                 [BackView_SpecialPrice addSubview:fenge];
             }
@@ -400,7 +371,7 @@
                 UILabel * lbl_specialpriceTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
                 lbl_specialpriceTitle.text=@"每日好店";
                 [BackView_SpecialPrice addSubview:lbl_specialpriceTitle];
-                UILabel * lbl_moreSpecialprice=[[UILabel alloc] initWithFrame:CGRectMake(BackView_SpecialPrice.frame.size.width-30-100, 10, 100, 20)];
+                UILabel * lbl_moreSpecialprice=[[UILabel alloc] initWithFrame:CGRectMake(BackView_SpecialPrice.frame.size.width-10-100, 10, 100, 20)];
                 lbl_moreSpecialprice.text=@"你中意的店铺";
                 lbl_moreSpecialprice.textColor=[UIColor colorWithRed:183/255.0 green:183/255.0 blue:183/255.0 alpha:1.0];
                 lbl_moreSpecialprice.font=[UIFont systemFontOfSize:13];
@@ -412,7 +383,7 @@
                 UIButton * btn_morespecialprice=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, BackView_SpecialPrice.frame.size.width, BackView_SpecialPrice.frame.size.height)];
                 [btn_morespecialprice addTarget:self action:@selector(btn_GoodResEveryDay) forControlEvents:UIControlEventTouchUpInside];
                 [BackView_SpecialPrice addSubview:btn_morespecialprice];
-                UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, BackView_SpecialPrice.frame.size.height, BackView_SpecialPrice.frame.size.width-20, 1)];
+                UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(10, BackView_SpecialPrice.frame.size.height, BackView_SpecialPrice.frame.size.width-10, 1)];
                 fenge.backgroundColor=[UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
                 [BackView_SpecialPrice addSubview:fenge];
             }
@@ -424,15 +395,28 @@
     }
     else
     {
-        UIView * header=[[UIView alloc] init];
-        return header;
+        
+        return nil;
     }
     return BackView_SpecialPrice;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    if (tableView.tag==1) {
+        if (section<=3) {
+            return 40;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    else
+    {
+        return 0;
+    }
+    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
@@ -448,16 +432,16 @@
     if (tableView.tag==1) {
         switch (indexPath.section) {
             case 0:
-                height=120;
+                height=100;
                 break;
             case 1:
                 height=150;
                 break;
             case 2:
-                height=400;
+                height=goods_like.count*80;
                 break;
             case 3:
-                height=400;
+                height=good_store.count*80;
                 break;
             default:
                 break;
@@ -473,16 +457,16 @@
     CGFloat cellheight=95;
     switch (indexPath.section) {
         case 0:
-            cellheight=95;
+            cellheight=85;
             break;
         case 1:
             cellheight=170;
             break;
         case 2:
-            cellheight=485;
+            cellheight=80;
             break;
         case 3:
-            cellheight=485;
+            cellheight=80;
             break;
         default:
             break;
@@ -491,49 +475,51 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (tableView.tag==1) {
         if (indexPath.section==0) {
-            UIView * BackView_Specialprice=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-20, 95)];
+            UIView * BackView_Specialprice=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-20, 85)];
             UIImageView * img_Specialprice=[[UIImageView alloc] initWithFrame:CGRectMake(10, 15, 75, 75)];
-            [img_Specialprice sd_setImageWithURL:[NSURL URLWithString:day_special[0][@"goods_image"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-            [BackView_Specialprice addSubview:img_Specialprice];
-            UIImageView * icon_special=[[UIImageView alloc] initWithFrame:CGRectMake(8, 28, 40, 15)];
-            icon_special.image=[UIImage imageNamed:@"Specialprice"];
-            [BackView_Specialprice addSubview:icon_special];
-            UILabel * lbl_icon_special=[[UILabel alloc] initWithFrame:icon_special.frame];
-            lbl_icon_special.font=[UIFont systemFontOfSize:13];
-            lbl_icon_special.textColor=[UIColor whiteColor];
-            lbl_icon_special.text=@"9.2折";
-            [BackView_Specialprice addSubview:lbl_icon_special];
-            UILabel * lbl_goodName=[[UILabel alloc] initWithFrame:CGRectMake(img_Specialprice.frame.origin.x+img_Specialprice.frame.size.width+10, 15, 150, 20)];
-            lbl_goodName.text=day_special[0][@"goods_name"];
-            [BackView_Specialprice addSubview:lbl_goodName];
-            
-            UILabel * lbl_GoodDetial=[[UILabel alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, lbl_goodName.frame.origin.y+lbl_goodName.frame.size.height+4, SCREEN_WIDTH-img_Specialprice.frame.origin.x-img_Specialprice.frame.size.width-40, 40)];
-            lbl_GoodDetial.text=day_special[0][@"goods_jingle"];
-            lbl_GoodDetial.textColor=[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0];
-            lbl_GoodDetial.numberOfLines=2;
-            lbl_GoodDetial.font=[UIFont systemFontOfSize:14];
-            [BackView_Specialprice addSubview:lbl_GoodDetial];
-            UILabel * lbl_priceNow=[[UILabel alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, lbl_GoodDetial.frame.origin.y+lbl_GoodDetial.frame.size.height+4, 60, 20)];
-            lbl_priceNow.text=day_special[0][@"goods_promotion_price"];
-            lbl_priceNow.textColor=[UIColor redColor];
-            [BackView_Specialprice addSubview:lbl_priceNow];
-            UILabel * lbl_priceOld=[[UILabel alloc] initWithFrame:CGRectMake(lbl_priceNow.frame.origin.x+lbl_priceNow.frame.size.width+10, lbl_priceNow.frame.origin.y+5, 40, 15)];
-            lbl_priceOld.textColor=[UIColor colorWithRed:183/255.0 green:183/255.0 blue:183/255.0 alpha:1.0];
-            lbl_priceOld.text=day_special[0][@"goods_price"];
-            lbl_priceOld.font=[UIFont systemFontOfSize:13];
-            [BackView_Specialprice addSubview:lbl_priceOld];
-            UIView * del_view=[[UIView alloc] initWithFrame:CGRectMake(lbl_priceOld.frame.origin.x, lbl_priceOld.frame.origin.y+7.5, 40, 1)];
-            del_view.backgroundColor=[UIColor colorWithRed:183/255.0 green:183/255.0 blue:183/255.0 alpha:1.0];
-            [BackView_Specialprice addSubview:del_view];
-            UIButton *btn_morebtn=[[UIButton alloc] initWithFrame:CGRectMake(BackView_Specialprice.frame.size.width-50, lbl_priceNow.frame.origin.y, 40, 20)];
-            [btn_morebtn setImage:[UIImage imageNamed:@"more_icon"] forState:UIControlStateNormal];
-            [BackView_Specialprice addSubview:btn_morebtn];
-            day_sprcial_more=[[UIView alloc] initWithFrame:CGRectMake(BackView_Specialprice.frame.size.width-150, 0, 150, BackView_Specialprice.frame.size.height)];
-            day_sprcial_more.backgroundColor=[UIColor colorWithRed:244/255.0 green:240/255.0 blue:241/255.0 alpha:1.0];
-            day_sprcial_more.hidden=YES;
-//            UILabel * lbl_juliTitle=[[UILabel alloc] initWithFrame:CGRectMake(0, 0, day_sprcial_more.frame.size.width/2, 15)];
-            
-            [BackView_Specialprice addSubview:day_sprcial_more];
+            if (day_special.count>0) {
+                [img_Specialprice sd_setImageWithURL:[NSURL URLWithString:day_special[0][@"goods_image"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                [BackView_Specialprice addSubview:img_Specialprice];
+                UIImageView * icon_special=[[UIImageView alloc] initWithFrame:CGRectMake(8, 15, 40, 15)];
+                icon_special.image=[UIImage imageNamed:@"Specialprice"];
+                [BackView_Specialprice addSubview:icon_special];
+                UILabel * lbl_icon_special=[[UILabel alloc] initWithFrame:icon_special.frame];
+                lbl_icon_special.font=[UIFont systemFontOfSize:13];
+                lbl_icon_special.textColor=[UIColor whiteColor];
+                lbl_icon_special.text=@"9.2折";
+                [BackView_Specialprice addSubview:lbl_icon_special];
+                UILabel * lbl_goodName=[[UILabel alloc] initWithFrame:CGRectMake(img_Specialprice.frame.origin.x+img_Specialprice.frame.size.width+10, 15, 150, 20)];
+                lbl_goodName.text=day_special[0][@"goods_name"];
+                [BackView_Specialprice addSubview:lbl_goodName];
+                
+                UILabel * lbl_GoodDetial=[[UILabel alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, lbl_goodName.frame.origin.y+lbl_goodName.frame.size.height+4, SCREEN_WIDTH-img_Specialprice.frame.origin.x-img_Specialprice.frame.size.width-40, 40)];
+                lbl_GoodDetial.text=day_special[0][@"goods_jingle"];
+                lbl_GoodDetial.textColor=[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0];
+                lbl_GoodDetial.numberOfLines=2;
+                lbl_GoodDetial.font=[UIFont systemFontOfSize:14];
+                [BackView_Specialprice addSubview:lbl_GoodDetial];
+                UILabel * lbl_priceNow=[[UILabel alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, lbl_GoodDetial.frame.origin.y+lbl_GoodDetial.frame.size.height-8, 60, 20)];
+                lbl_priceNow.text=[NSString stringWithFormat:@"¥%@",day_special[0][@"goods_promotion_price"]];
+                lbl_priceNow.textColor=[UIColor redColor];
+                [BackView_Specialprice addSubview:lbl_priceNow];
+                UILabel * lbl_priceOld=[[UILabel alloc] initWithFrame:CGRectMake(lbl_priceNow.frame.origin.x+lbl_priceNow.frame.size.width+10, lbl_priceNow.frame.origin.y+5, 40, 15)];
+                lbl_priceOld.textColor=[UIColor colorWithRed:183/255.0 green:183/255.0 blue:183/255.0 alpha:1.0];
+                lbl_priceOld.text=[NSString stringWithFormat:@"¥%@",day_special[0][@"goods_price"]];
+                lbl_priceOld.font=[UIFont systemFontOfSize:13];
+                [BackView_Specialprice addSubview:lbl_priceOld];
+                UIView * del_view=[[UIView alloc] initWithFrame:CGRectMake(lbl_priceOld.frame.origin.x, lbl_priceOld.frame.origin.y+7.5, 40, 1)];
+                del_view.backgroundColor=[UIColor colorWithRed:183/255.0 green:183/255.0 blue:183/255.0 alpha:1.0];
+                [BackView_Specialprice addSubview:del_view];
+                UIButton *btn_morebtn=[[UIButton alloc] initWithFrame:CGRectMake(BackView_Specialprice.frame.size.width-50, lbl_priceNow.frame.origin.y, 40, 20)];
+                [btn_morebtn setImage:[UIImage imageNamed:@"more_icon"] forState:UIControlStateNormal];
+                [BackView_Specialprice addSubview:btn_morebtn];
+                day_sprcial_more=[[UIView alloc] initWithFrame:CGRectMake(BackView_Specialprice.frame.size.width-150, 0, 150, BackView_Specialprice.frame.size.height)];
+                day_sprcial_more.backgroundColor=[UIColor colorWithRed:244/255.0 green:240/255.0 blue:241/255.0 alpha:1.0];
+                day_sprcial_more.hidden=YES;
+                //            UILabel * lbl_juliTitle=[[UILabel alloc] initWithFrame:CGRectMake(0, 0, day_sprcial_more.frame.size.width/2, 15)];
+                
+                [BackView_Specialprice addSubview:day_sprcial_more];
+            }
             [cell addSubview:BackView_Specialprice];
             
         }
@@ -550,7 +536,7 @@
                 [item addSubview:lbl_niceName];
                 UIView * BackView_OrderDetial=[[UIView alloc] initWithFrame:CGRectMake(10, img_head.frame.origin.y+img_head.frame.size.height+10, item.frame.size.width-10, 150)];
 //                BackView_OrderDetial.backgroundColor=[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0];
-                UIImageView * img_orderImg=[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
+                UIImageView * img_orderImg=[[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 60, 60)];
                 [img_orderImg sd_setImageWithURL:[NSURL URLWithString:circle[i][@"image"][@"0"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
                 [BackView_OrderDetial addSubview:img_orderImg];
                 UILabel * lbl_orderTitle=[[UILabel alloc] initWithFrame:CGRectMake(img_orderImg.frame.size.width+10, 5, BackView_OrderDetial.frame.size.width-100, 18)];
@@ -571,14 +557,14 @@
                 [btn_dianzan setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
                 btn_dianzan.imageView.bounds=CGRectMake(0, 0, 12, 15);
                 btn_dianzan.titleLabel.font=[UIFont systemFontOfSize:15];
-                [btn_dianzan setTitle:[NSString stringWithFormat:@"  %@",circle[i][@"praise"]] forState:UIControlStateNormal];
+                [btn_dianzan setTitle:[NSString stringWithFormat:@"   %@",circle[i][@"praise"]] forState:UIControlStateNormal];
                 [btn_dianzan setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
                 [BackView_OrderDetial addSubview:btn_dianzan];
                 UIButton * btn_pinglun=[[UIButton alloc] initWithFrame:CGRectMake(btn_dianzan.frame.origin.x+btn_dianzan.frame.size.width+5, btn_dianzan.frame.origin.y, 80, 15)];
                 [btn_pinglun setImage:[UIImage imageNamed:@"pinglun"] forState:UIControlStateNormal];
                 btn_pinglun.imageView.bounds=CGRectMake(0, 0, 15, 15);
                 btn_pinglun.titleLabel.font=[UIFont systemFontOfSize:15];
-                [btn_pinglun setTitle:[ NSString stringWithFormat:@"  %@",circle[i][@"replys"]] forState:UIControlStateNormal];
+                [btn_pinglun setTitle:[ NSString stringWithFormat:@"    %@",circle[i][@"replys"]] forState:UIControlStateNormal];
                 [btn_pinglun setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
                 [BackView_OrderDetial addSubview:btn_pinglun];
                 [item addSubview:BackView_OrderDetial];
@@ -600,19 +586,21 @@
             [cell addSubview:_mainScorllView];
         }
         if (indexPath.section==2) {
-            tableView_GessYouLike=[[UITableView alloc] initWithFrame:CGRectMake(0, -40, SCREEN_WIDTH-20 ,cellheight)];
+            tableView_GessYouLike=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-20 ,cellheight)];
             tableView_GessYouLike.delegate=self;
             tableView_GessYouLike.dataSource=self;
             tableView_GessYouLike.tag=2;
             tableView_GessYouLike.scrollEnabled=NO;
+            [tableView_GessYouLike setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
             [cell addSubview:tableView_GessYouLike];
         }
         if (indexPath.section==3) {
-            tableView_GoodResEveryday =[[UITableView alloc] initWithFrame:CGRectMake(0, -40, SCREEN_WIDTH-20, cellheight)];
+            tableView_GoodResEveryday =[[UITableView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH-20, cellheight)];
             tableView_GoodResEveryday.delegate=self;
             tableView_GoodResEveryday.dataSource=self;
             tableView_GoodResEveryday.tag=3;
             tableView_GoodResEveryday.scrollEnabled=NO;
+            [tableView_GessYouLike setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
             [cell addSubview:tableView_GoodResEveryday];
         }
     }
@@ -625,7 +613,7 @@
         cell.lbl_goodsName.text=goods_like[indexPath.row][@"goods_name"];
         cell.lbl_goodsDetial.text=goods_like[indexPath.row][@"goods_jingle"];
         cell.lbl_long.text=goods_like[indexPath.row][@"juli"];
-        cell.lbl_price.text=goods_like[indexPath.row][@"goods_price"];
+        cell.lbl_price.text=[NSString stringWithFormat:@"¥%@",goods_like[indexPath.row][@"goods_price"]];
         [cell.img_goodsicon sd_setImageWithURL:[NSURL URLWithString:goods_like[indexPath.row][@"goods_image"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
 //        cell.lbl_rescuncun.text=goods_like[indexPath.row][@""];
         return cell;
@@ -658,9 +646,12 @@
     if (tableView.tag==1) {
         return 1;
     }
-    else
+    else if(tableView.tag==2)
     {
-        return 5;
+        return goods_like.count;
+    }else
+    {
+        return good_store.count;
     }
 }
 
@@ -677,28 +668,47 @@
 }
 
 
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+//-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+//{
+//    if ([@"\n" isEqualToString:string] == YES)
+//    {
+//        [textField resignFirstResponder];
+//        NSRange range= [searchType rangeOfString:@"宝贝"];
+//        if (range.length>0) {
+//            GoodListViewController * goodlist=[[GoodListViewController alloc] initWithNibName:@"GoodListViewController" bundle:[NSBundle mainBundle]];
+//            goodlist.KeyWord=textField.text;
+//            [self.navigationController pushViewController:goodlist animated:YES];
+//        }
+//        else
+//        {
+//            ShopInsideViewController * shoplist=[[ShopInsideViewController alloc] initWithNibName:@"ShopInsideViewController" bundle:[NSBundle mainBundle]];
+//            shoplist.keyWord=textField.text;
+//            [self.navigationController pushViewController:shoplist animated:YES];
+//        }
+//        return NO;
+//    }
+//    
+//    return YES;
+//}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if ([@"\n" isEqualToString:string] == YES)
-    {
-        [textField resignFirstResponder];
-        NSRange range= [searchType rangeOfString:@"宝贝"];
-        if (range.length>0) {
-            GoodListViewController * goodlist=[[GoodListViewController alloc] initWithNibName:@"GoodListViewController" bundle:[NSBundle mainBundle]];
-            goodlist.KeyWord=textField.text;
-            [self.navigationController pushViewController:goodlist animated:YES];
-        }
-        else
-        {
-            ShopInsideViewController * shoplist=[[ShopInsideViewController alloc] initWithNibName:@"ShopInsideViewController" bundle:[NSBundle mainBundle]];
-            shoplist.keyWord=textField.text;
-            [self.navigationController pushViewController:shoplist animated:YES];
-        }
-        return NO;
+    NSLog(@"表格tag%ld",(long)textField.tag);
+    [textField resignFirstResponder];
+    NSRange range= [searchType rangeOfString:@"宝贝"];
+    if (range.length>0) {
+        GoodListViewController * goodlist=[[GoodListViewController alloc] initWithNibName:@"GoodListViewController" bundle:[NSBundle mainBundle]];
+        goodlist.KeyWord=textField.text;
+        [self.navigationController pushViewController:goodlist animated:YES];
     }
-    
+    else
+    {
+        ShopInsideViewController * shoplist=[[ShopInsideViewController alloc] initWithNibName:@"ShopInsideViewController" bundle:[NSBundle mainBundle]];
+        shoplist.keyWord=textField.text;
+        [self.navigationController pushViewController:shoplist animated:YES];
+    }
     return YES;
 }
+
 
 -(void)clickLeftButton:(UIButton *)sender
 {
@@ -774,7 +784,7 @@
 -(void)JumpToGoodList:(UIButton *)sender
 {
     GoodListViewController * goodlist=[[GoodListViewController alloc] initWithNibName:@"GoodListViewController" bundle:[NSBundle mainBundle]];
-    goodlist.gc_id=[NSString stringWithFormat:@"sender.tag"];
+    goodlist.gc_id=[NSString stringWithFormat:@"%ld",(long)sender.tag];
     [self.navigationController pushViewController:goodlist animated:YES];
 }
 -(void)changeCityInfo
@@ -789,7 +799,7 @@
     }
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetIndexData:"];
-    [dataprovider GetIndexDataWithAreaid:@"88" andlng:lng andlat:lat];//areaid
+    [dataprovider GetIndexDataWithAreaid:areaid andlng:lng andlat:lat];//areaid
 }
 -(void)viewWillAppear:(BOOL)animated
 {

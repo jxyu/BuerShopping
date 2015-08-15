@@ -61,27 +61,24 @@
 
 -(void)BuildHeaderView
 {
-    UIView * myheaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT, 50)];
+    UIView * myheaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT, 44)];
     UILabel * lbl_jifenTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
     lbl_jifenTitle.text=@"我的积分：";
     [myheaderView addSubview:lbl_jifenTitle];
-    UILabel * lbl_jifenNum=[[UILabel alloc] initWithFrame:CGRectMake(lbl_jifenTitle.frame.size.width, 10, 80, 20)];
+    UILabel * lbl_jifenNum=[[UILabel alloc] initWithFrame:CGRectMake(lbl_jifenTitle.frame.size.width, 12, 80, 20)];
     lbl_jifenNum.text=jifenStr;
     lbl_jifenNum.textColor=[UIColor colorWithRed:115/255.0 green:73/255.0 blue:139/255.0 alpha:1.0];
     lbl_jifenNum.textAlignment=NSTextAlignmentRight;
     [myheaderView addSubview:lbl_jifenNum];
-    UILabel * lbl_fen=[[UILabel alloc] initWithFrame:CGRectMake(lbl_jifenNum.frame.origin.x+lbl_jifenNum.frame.size.width, 10, 20, 20)];
+    UILabel * lbl_fen=[[UILabel alloc] initWithFrame:CGRectMake(lbl_jifenNum.frame.origin.x+lbl_jifenNum.frame.size.width, 12, 20, 20)];
     lbl_fen.text=@"分";
     [myheaderView addSubview:lbl_fen];
     [_mytableview setTableHeaderView:myheaderView];
-    UIView*view =[ [UIView alloc]init];
-    view.backgroundColor= [UIColor clearColor];
-    [_mytableview setTableFooterView:view];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 110;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

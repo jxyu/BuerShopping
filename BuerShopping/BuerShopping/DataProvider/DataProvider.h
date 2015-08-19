@@ -430,6 +430,12 @@
  *  @param key <#key description#>
  */
 -(void)GetPolicatandjifenWithKey:(NSString *)key;
+/**
+ *  获取兑换纪录
+ *
+ *  @param key <#key description#>
+ */
+-(void)GetDuihuanJilu:(NSString *)key;
 
 
 

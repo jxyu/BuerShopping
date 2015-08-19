@@ -12,6 +12,7 @@
 #import "DataProvider.h"
 #import "UIImageView+WebCache.h"
 #import "DuihuanDetialViewController.h"
+#import "DuiHuanJiluViewController.h"
 
 @interface JiFenShangChengViewController ()
 @property(nonatomic,strong)UITableView * mytableview;
@@ -137,7 +138,10 @@
 
 -(void)clickRightButton:(UIButton *)sender
 {
-    //DuiHuanJiluViewController
+    DuiHuanJiluViewController * duihuanjilu=[[DuiHuanJiluViewController alloc] init];
+    duihuanjilu.key=_userkey;
+    [self.navigationController pushViewController:duihuanjilu animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {

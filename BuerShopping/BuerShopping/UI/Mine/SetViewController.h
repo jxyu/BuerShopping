@@ -11,5 +11,6 @@
 
 @interface SetViewController : BaseNavigationController<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *my_tableView;
+@property (nonatomic) int realNameStatus;
 
 @end

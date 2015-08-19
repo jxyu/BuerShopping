@@ -21,10 +21,11 @@
 #import "HYSegmentedControl.h"
 #import "DataProvider.h"
 #import "WXViewController.h"
+#import "MJRefresh.h"
 
 #define dataCount 10
 #define kLocationToBottom 20
-#define kAdmin @"小虎-tiger"
+#define kAdmin @"我"
 
 @interface ShowOrderViewController ()<UITableViewDataSource,UITableViewDelegate,cellDelegate,InputDelegate,UIActionSheetDelegate,HYSegmentedControlDelegate>
 {
@@ -47,6 +48,8 @@
     NSArray * RequestArray;
     
     int getMineList;//是否获取我发表的额list
+    
+    BOOL isfooterrefresh;
 }
 @property (nonatomic,strong) WFPopView *operationView;
 @property (nonatomic,strong) NSIndexPath *selectedIndexPath;
@@ -66,6 +69,7 @@
 }
 -(void)RequestDataBackCall:(id)dict
 {
+    [mainTable.header endRefreshing];
     NSLog(@"晒单圈数据:%@",dict);
     if (!dict[@"datas"][@"error"]) {
         RequestArray=dict[@"datas"][@"circle_list"];
@@ -76,6 +80,7 @@
         }
         
         [self loadTextData];
+        [mainTable reloadData];
     }
     else
     {
@@ -105,7 +110,7 @@
         messBody1.posterImgstr = RequestArray[i][@"avatar"];
         messBody1.posterName = [RequestArray[i][@"member_name"] isKindOfClass:[NSNull class]]?@"":RequestArray[i][@"member_name"];
         messBody1.posterIntro = [RequestArray[i][@"addtime"] isKindOfClass:[NSNull class]]?@"":RequestArray[i][@"addtime"];
-        messBody1.posterFavour = [NSMutableArray arrayWithObjects:@"路人甲",@"希尔瓦娜斯",kAdmin,@"鹿盔", nil];
+        messBody1.posterFavour = [NSMutableArray arrayWithObjects: nil];
         messBody1.isFavour = NO;
         messBody1.liulanliang=[NSString stringWithFormat:@"%@人浏览过",RequestArray[i][@"views"]];
         NSMutableArray * posterReplies=[[NSMutableArray alloc] init];
@@ -133,6 +138,7 @@
     _lblTitle.textColor=[UIColor whiteColor];
     self.view.backgroundColor = [UIColor whiteColor];
     getMineList=1;
+    isfooterrefresh=NO;
     
     [self RequestData];
 }
@@ -239,8 +245,61 @@
     [self BuildHeaderView];
     mainTable.delegate = self;
     mainTable.dataSource = self;
+    // 下拉刷新
+    [mainTable addLegendHeaderWithRefreshingBlock:^{
+        [self TopRefresh];
+    }];
+    
+    
+//    // 上拉刷新
+//    [mainTable addLegendFooterWithRefreshingBlock:^{
+//        if (!isfooterrefresh) {
+//            isfooterrefresh=YES;
+//            [self FootRefresh];
+//        }
+//        // 结束刷新
+//        [mainTable.footer endRefreshing];
+//    }];
+//    // 默认先隐藏footer
+//    mainTable.footer.hidden = NO;
     [self.view addSubview:mainTable];
     
+}
+
+-(void)TopRefresh
+{
+    [self RequestData];
+    
+}
+
+-(void)FootRefresh
+{
+    
+//    if (ishasmorepage==1) {
+        [self RequestData];
+    
+//    }else{
+//        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"亲，" message:@"没有更多数据了哦" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+//        [alert show];
+//        [mainTable.footer endRefreshing];
+//        isfooterrefresh=NO;
+//    }
+}
+
+-(void)FootRefireshBackCall:(id)dict
+{
+//    isfooterrefresh=NO;
+//    NSLog(@"上拉刷新");
+//    NSMutableArray *itemarray=[[NSMutableArray alloc] initWithArray:arrayGoodList];
+//    if (!dict[@"datas"][@"error"]) {
+//        ishasmorepage=(int)dict[@"hasmore"];
+//        NSArray * arrayitem=dict[@"datas"][@"goods_list"];
+//        for (id item in arrayitem) {
+//            [itemarray addObject:item];
+//        }
+//        arrayGoodList=[[NSArray alloc] initWithArray:itemarray];
+//    }
+//    [mainTable reloadData];
 }
 
 //**

@@ -36,7 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _lblTitle.text=@"购物车(20)";
+    _lblTitle.text=@"购物车";
     _lblTitle.textColor=[UIColor whiteColor];
     isSelectAll=NO;
     isSectionSelect=NO;
@@ -126,17 +126,29 @@
 }
 -(void)TopRefresh
 {
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"GetOrderListBackCall:"];
-    [dataprovider GetShopCarList:userinfoWithFile[@"key"]];
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    userinfoWithFile =[[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    if (userinfoWithFile[@"key"]) {
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"GetOrderListBackCall:"];
+        [dataprovider GetShopCarList:userinfoWithFile[@"key"]];
+    }
+    
 }
 -(void)GetOrderListBackCall:(id)dict
 {
     NSLog(@"%@",dict);
-    
+    int numforGoods=0;
     if (!dict[@"datas"][@"error"]) {
         CarListArray=[dict[@"datas"][@"cart_list"] mutableCopy];
         [_myTableview reloadData];
+        for (int i=0; i<CarListArray.count; i++) {
+            NSArray * itemarray=CarListArray[i][@"store_list"];
+            numforGoods+=itemarray.count;
+        }
+        _lblTitle.text=[NSString stringWithFormat:@"购物车(%d)",numforGoods];
     }
     
     [_myTableview.header endRefreshing];

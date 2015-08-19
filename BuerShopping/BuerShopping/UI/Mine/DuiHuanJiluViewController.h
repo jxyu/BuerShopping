@@ -10,5 +10,6 @@
 #import "BaseNavigationController.h"
 
 @interface DuiHuanJiluViewController : BaseNavigationController
+@property (nonatomic,strong) NSString * key;
 
 @end

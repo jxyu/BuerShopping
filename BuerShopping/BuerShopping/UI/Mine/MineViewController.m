@@ -67,8 +67,10 @@
 {
     @try {
         if (!dict[@"datas"][@"error"]) {
-            [userinfoWithFile setObject:dict[@"datas"][@"points"] forKey:@"member_points"];
-            [userinfoWithFile setObject:dict[@"datas"][@"predeposit"] forKey:@"predeposit"];
+            [userinfoWithFile setObject:dict[@"datas"][@"member_info"][@"point"] forKey:@"member_points"];
+            [userinfoWithFile setObject:dict[@"datas"][@"member_info"][@"predepoit"] forKey:@"predeposit"];
+            [userinfoWithFile setObject:dict[@"datas"][@"member_info"][@"signin_status"] forKey:@"signin_status"];
+            [userinfoWithFile setObject:dict[@"datas"][@"member_info"][@"member_verify"] forKey:@"member_verify"];
             NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                                       NSUserDomainMask, YES) objectAtIndex:0];
             NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
@@ -554,7 +556,8 @@
     
     
     UIImageView * img_touxiang=[[UIImageView alloc] initWithFrame:CGRectMake(18, img_Back.frame.size.height-48, 60, 60)];
-    [img_touxiang sd_setImageWithURL:[NSURL URLWithString:userinfoWithFile[@"avatar"]] placeholderImage:[UIImage imageNamed:@"head_icon_placeholder"]];
+    //[img_touxiang sd_setImageWithURL:[NSURL URLWithString:userinfoWithFile[@"avatar"]] placeholderImage:[UIImage imageNamed:@"head_icon_placeholder"]];
+    [img_touxiang setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:userinfoWithFile[@"avatar"]]]]];
     img_touxiang.layer.masksToBounds=YES;
     img_touxiang.layer.cornerRadius=30;
     img_touxiang.userInteractionEnabled = YES;
@@ -641,6 +644,15 @@
     [BackHeaderViewbottom addSubview:BackView_qiandao];
     [_TableView_Mine setTableHeaderView:myHeaderView];
     
+    if ([[NSString stringWithFormat:@"%@",userinfoWithFile[@"signin_status"]] isEqualToString:@"1"]) {
+        if (lbl_qiandaoBack) {
+            for (UIView * items in lbl_qiandaoBack.subviews) {
+                [items removeFromSuperview];
+            }
+            lbl_qiandaoBack.text=@"已签到";
+        }
+    }
+    
 }
 
 -(void)jumpToJiFenDetial:(UIButton *)sender
@@ -697,7 +709,7 @@
 -(void)changeNickNamebackCall:(id)dict
 {
     NSLog(@"%@",dict);
-    if ([dict[@"data"] isEqual:@"1"]) {
+    if ([dict[@"datas"] isEqual:@"1"]) {
         
         [userinfoWithFile setValue:nickName forKey:@"username"];
         NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
@@ -714,6 +726,7 @@
 -(void)SetBtnclick
 {
     _mySet=[[SetViewController alloc] initWithNibName:@"SetViewController" bundle:[NSBundle mainBundle]];
+    _mySet.realNameStatus=userinfoWithFile[@"member_verify"]?[userinfoWithFile[@"member_verify"] intValue]:0;
     [self.navigationController pushViewController:_mySet animated:YES];
 }
 
@@ -981,7 +994,6 @@
     {
         [SVProgressHUD showErrorWithStatus:[dict[@"datas"] objectForKey:@"error"] maskType:SVProgressHUDMaskTypeBlack];
     }
-    
 }
 -(void)ChangeAvatarBackCall:(id)dict
 {

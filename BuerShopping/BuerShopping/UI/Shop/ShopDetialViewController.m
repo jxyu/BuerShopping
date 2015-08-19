@@ -300,8 +300,10 @@
     cell.lbl_goodsDetial.text=goods_list[indexPath.row][@"goods_jingle"]?goods_list[indexPath.row][@"goods_jingle"]:@"";
     cell.lbl_long.text=goods_list[indexPath.row][@"juli"]?goods_list[indexPath.row][@"juli"]:@"";
     cell.lbl_price.text=goods_list[indexPath.row][@"goods_price"]?goods_list[indexPath.row][@"goods_price"]:@"";
+    cell.lbl_rescuncun.text=goods_list[indexPath.row][@"goods_storage"]?goods_list[indexPath.row][@"goods_storage"]:@"";
+    cell.lbl_resxiaoliang.text=goods_list[indexPath.row][@"goods_salenum"]?goods_list[indexPath.row][@"goods_salenum"]:@"";
+    cell.lbl_liulanliang.text=goods_list[indexPath.row][@"goods_click"]?goods_list[indexPath.row][@"goods_click"]:@"";
     [cell.img_goodsicon sd_setImageWithURL:[NSURL URLWithString:goods_list[indexPath.row][@"goods_image_url"]?goods_list[indexPath.row][@"goods_image_url"]:@""] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    //        cell.lbl_rescuncun.text=goods_like[indexPath.row][@""];
     return cell;
 }
 

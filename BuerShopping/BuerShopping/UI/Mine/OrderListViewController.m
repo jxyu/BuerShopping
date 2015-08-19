@@ -27,6 +27,10 @@
     int curpage;
     NSArray * orderListArray;
     int actionIndex;
+    
+    int ishasmorepage;
+    
+    BOOL isalertShow;
 }
 
 
@@ -38,8 +42,10 @@
     self.view.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
     [self createSegmentedControl];
     isfooterrefresh=NO;
+    isalertShow=NO;
     curpage=1;
     actionIndex=0;
+    ishasmorepage=0;
     orderListArray=[[NSArray alloc] init];
     [self changeIndex];
     [self InitAllView];
@@ -310,6 +316,7 @@
 {
     [SVProgressHUD dismiss];
     if (!dict[@"datas"][@"error"]) {
+        ishasmorepage=(int)dict[@"hasmore"];
         orderListArray=dict[@"datas"][@"order_group_list"];
         [_myTableview reloadData];
     }
@@ -318,19 +325,32 @@
 
 -(void)FootRefresh
 {
-    curpage++;
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
-    [dataprovider GetOrderListWithKey:_key andcurpage:[NSString stringWithFormat:@"%d",curpage] andorder_state:_OrderStatus];
+    if (ishasmorepage==1) {
+        curpage++;
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
+        [dataprovider GetOrderListWithKey:_key andcurpage:[NSString stringWithFormat:@"%d",curpage] andorder_state:_OrderStatus];
+    }else{
+        if(!isalertShow)
+        {
+            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"亲，" message:@"没有更多数据了哦" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+            [alert show];
+            isalertShow=YES;
+        }
+        [_myTableview.footer endRefreshing];
+        isfooterrefresh=NO;
+    }
 }
 
 
 -(void)FootRefireshBackCall:(id)dict
 {
+    isalertShow=NO;
     isfooterrefresh=NO;
     NSLog(@"上拉刷新");
     NSMutableArray *itemarray=[[NSMutableArray alloc] initWithArray:orderListArray];
     if (!dict[@"datas"][@"error"]) {
+        ishasmorepage=(int)dict[@"hasmore"];
         NSArray * arrayitem=dict[@"datas"][@"order_group_list"];
         for (id item in arrayitem) {
             [itemarray addObject:item];

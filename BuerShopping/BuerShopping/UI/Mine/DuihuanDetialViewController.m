@@ -51,6 +51,8 @@
 {
     NSLog(@"%@",dict);
     if (!dict[@"datas"][@"error"]) {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"兑换成功" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

@@ -18,6 +18,7 @@
 @implementation PurseViewController
 {
     BOOL keyboardZhezhaoShow;
+    NSMutableDictionary *userinfoWithFile;
 }
 
 - (void)viewDidLoad {
@@ -27,20 +28,43 @@
                                              selector:@selector(PursekeyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(Getpurseinfo) name:@"OrderPay_success" object:nil];
     _lblTitle.text=@"我的钱包";
     _lblTitle.textColor=[UIColor whiteColor];
     [self addLeftButton:@"Icon_Back@2x.png"];
     _btn_chongzhi.layer.masksToBounds=YES;
     _btn_chongzhi.layer.cornerRadius=5;
     [_btn_chongzhi addTarget:self action:@selector(btn_chongzhiClick:) forControlEvents:UIControlEventTouchUpInside];
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+    userinfoWithFile =[[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    _lbl_money.text=[NSString stringWithFormat:@"%@元",userinfoWithFile[@"predeposit"]];
+    
+}
+-(void)Getpurseinfo
+{
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetPurseBackCall:"];
     [dataprovider GetPurseInfo:_key];
+    
 }
 -(void)GetPurseBackCall:(id)dict
 {
     NSLog(@"%@",dict);
-    _lbl_money.text=[NSString stringWithFormat:@"%@元",dict[@"datas"][@"predeposit"]];
+    
+    if (!dict[@"datas"][@"error"]) {
+        _lbl_money.text=[NSString stringWithFormat:@"%@元",dict[@"datas"][@"predeposit"]];
+        [userinfoWithFile setObject:dict[@"datas"][@"predeposit"] forKey:@"predeposit"];
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
+        BOOL result= [userinfoWithFile writeToFile:plistPath atomically:YES];
+        if (result) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Login_success" object:nil];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
 }
 -(void)btn_chongzhiClick:(UIButton * )sender
 {
@@ -90,6 +114,7 @@
                withCompletion:^(NSString *result, PingppError *error) {
                    if ([result isEqualToString:@"success"]) {
                        // 支付成功
+                       NSLog(@"充值支付成功");
                    } else {
                        // 支付失败或取消
                        NSLog(@"Error: code=%lu msg=%@", (unsigned long)error.code, [error getMsg]);

@@ -41,6 +41,9 @@
     NSDictionary * cityinfoWithFile;
     BOOL keyboardZhezhaoShow;
     NSDictionary * UserinfoWithFile;
+    
+    
+    int ishasmorepage;
 }
 
 - (void)viewDidLoad {
@@ -53,11 +56,12 @@
 -(void)loadAllData
 {
     // 数据
-    key=@"";
-    order=@"";
+    key=@"1";
+    order=@"1";
     [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
     page=@"8";
     curpage=1;
+    ishasmorepage=0;
     isfooterrefresh=NO;
     keyboardZhezhaoShow=NO;
     self.classifys=[[NSMutableArray alloc] initWithObjects:@"全部分类", nil];
@@ -203,10 +207,17 @@
 
 -(void)StoreFootRefresh
 {
-    curpage++;
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
-    [dataprovider GetStoreList:[self BuildStorePrmfunc]];
+    if (ishasmorepage==1) {
+        curpage++;
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
+        [dataprovider GetStoreList:[self BuildStorePrmfunc]];
+    }else{
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"亲，" message:@"没有更多数据了哦" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+        [_myTableview.footer endRefreshing];
+        isfooterrefresh=NO;
+    }
 }
 
 -(void)FootRefireshBackCall:(id)dict
@@ -217,6 +228,7 @@
     // 结束刷新
     [_myTableview.footer endRefreshing];
     isfooterrefresh=NO;
+    ishasmorepage=(int)dict[@"hasmore"];
     NSMutableArray *itemarray=[[NSMutableArray alloc] initWithArray:arrayStoreList];
     if (!dict[@"datas"][@"error"]) {
         NSArray * arrayitem=dict[@"datas"][@"goods_list"];
@@ -235,6 +247,7 @@
     [_myTableview.header endRefreshing];
     NSLog(@"店铺列表%@",dict);
     if (!dict[@"datas"][@"error"]) {
+        ishasmorepage=(int)dict[@"hasmore"];
         arrayStoreList=dict[@"datas"][@"goods_list"];
         [_myTableview reloadData];
     }

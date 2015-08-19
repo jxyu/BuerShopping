@@ -552,9 +552,17 @@
 -(void)GetPolicatandjifenWithKey:(NSString *)key
 {
     if (key) {
-        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_predeposit&op=view",Url];
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_index",Url];
         NSDictionary * prm=@{@"key":key};
         [self PostRequest:url andpram:prm];
+    }
+}
+-(void)GetDuihuanJilu:(NSString *)key
+{
+    if (key) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=member_points&op=record",Url];
+        NSDictionary * prm=@{@"key":key};
+        [self GetRequest:url andpram:prm];
     }
 }
 

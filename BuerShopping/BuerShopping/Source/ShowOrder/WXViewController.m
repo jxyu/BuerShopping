@@ -21,10 +21,11 @@
 #import "HYSegmentedControl.h"
 #import "DataProvider.h"
 #import "SendShowOrderViewController.h"
+#import "MJRefresh.h"
 
 #define dataCount 10
 #define kLocationToBottom 20
-#define kAdmin @"小虎-tiger"
+#define kAdmin @"我"
 
 
 @interface WXViewController ()<UITableViewDataSource,UITableViewDelegate,cellDelegate,InputDelegate,UIActionSheetDelegate,HYSegmentedControlDelegate>
@@ -75,6 +76,7 @@
 }
 -(void)RequestDataBackCall:(id)dict
 {
+    [mainTable.header endRefreshing];
     NSLog(@"晒单圈数据:%@",dict);
     if (!dict[@"datas"][@"error"]) {
         RequestArray=dict[@"datas"][@"circle_list"];
@@ -85,6 +87,7 @@
         }
         
         [self loadTextData];
+        [mainTable reloadData];
     }
     else
     {
@@ -114,7 +117,7 @@
         messBody1.posterImgstr = RequestArray[i][@"avatar"];
         messBody1.posterName = [RequestArray[i][@"member_name"] isKindOfClass:[NSNull class]]?@"":RequestArray[i][@"member_name"];
         messBody1.posterIntro = [RequestArray[i][@"addtime"] isKindOfClass:[NSNull class]]?@"":RequestArray[i][@"addtime"];
-        messBody1.posterFavour = [NSMutableArray arrayWithObjects:@"路人甲",@"希尔瓦娜斯",kAdmin,@"鹿盔", nil];
+        messBody1.posterFavour = [NSMutableArray arrayWithObjects: nil];
         messBody1.isFavour = NO;
         messBody1.liulanliang=[NSString stringWithFormat:@"%@人浏览过",RequestArray[i][@"views"]];
         NSMutableArray * posterReplies=[[NSMutableArray alloc] init];
@@ -254,8 +257,18 @@
     [self BuildHeaderView];
     mainTable.delegate = self;
     mainTable.dataSource = self;
+    // 下拉刷新
+    [mainTable addLegendHeaderWithRefreshingBlock:^{
+        [self TopRefresh];
+    }];
+    
     [self.view addSubview:mainTable];
 
+}
+-(void)TopRefresh
+{
+    [self RequestData];
+    
 }
 
 //**

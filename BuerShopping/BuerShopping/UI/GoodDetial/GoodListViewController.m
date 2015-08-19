@@ -43,6 +43,8 @@
     BOOL isjiageup;
     UIView * backView_order;
     BOOL keyboardZhezhaoShow;
+    
+    int ishasmorepage;
 }
 
 - (void)viewDidLoad {
@@ -57,6 +59,7 @@
     isSelectViewShow=NO;
     isxiaoliangup=NO;
     isjiageup=NO;
+    ishasmorepage=0;
     [self loadAllData];
     [self InitAllVeiw];
 }
@@ -168,11 +171,7 @@
 }
 -(void)loadAllData
 {
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"UserInfo.plist"];
-    NSDictionary * UserinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
-    key=UserinfoWithFile[@"key"];
+    key=@"1";
     order=@"1";
     [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
     page=@"8";
@@ -182,12 +181,18 @@
 //    [dataprovider GetGoodsListWithKeyWord:[self BuildPrmfunc]];
 }
 
+
+
+
+
+
 -(void)GetGoodsListBackcall:(id)dict
 {
     [SVProgressHUD dismiss];
     [_myTableView.header endRefreshing];
     NSLog(@"%@",dict);
     if (!dict[@"datas"][@"error"]) {
+        ishasmorepage=(int)dict[@"hasmore"];
         arrayGoodList=dict[@"datas"][@"goods_list"];
         [_myTableView reloadData];
     }
@@ -205,9 +210,14 @@
         areaid=cityinfoWithFile[@"area_id"];
         return dict;
     }
-    else
+    else if(_gc_id)
     {
         NSDictionary *dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":areaid,@"gc_id":_gc_id,@"lng":lng,@"lat":lat,@"key":key,@"order":order};
+        return dict;
+    }
+    else
+    {
+        NSDictionary *dict=@{@"page":page,@"curpage":[NSString stringWithFormat:@"%d",curpage],@"city_id":areaid,@"lng":lng,@"lat":lat,@"key":key,@"order":order};
         return dict;
     }
 }
@@ -305,7 +315,10 @@
     [sender removeFromSuperview];
 }
 
-
+-(void)clickRightButton:(UIButton *)sender
+{
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] selectTableBarIndex:2];
+}
 
 
 
@@ -343,6 +356,9 @@
     cell.lbl_goodsDetial.text=arrayGoodList[indexPath.row][@"goods_jingle"];
     cell.lbl_long.text=arrayGoodList[indexPath.row][@"juli"];
     cell.lbl_price.text=arrayGoodList[indexPath.row][@"goods_price"];
+    cell.lbl_rescuncun.text=arrayGoodList[indexPath.row][@"goods_storage"];
+    cell.lbl_resxiaoliang.text=arrayGoodList[indexPath.row][@"goods_salenum"];
+    cell.lbl_liulanliang.text=arrayGoodList[indexPath.row][@"goods_click"];
     [cell.img_goodsicon sd_setImageWithURL:[NSURL URLWithString:arrayGoodList[indexPath.row][@"goods_image_url"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     //        cell.lbl_rescuncun.text=goods_like[indexPath.row][@""];
     return cell;
@@ -385,25 +401,32 @@
 
 -(void)FootRefresh
 {
-    curpage++;
-    if (_type!=1&&_type!=2) {
-        DataProvider * dataprovider=[[DataProvider alloc] init];
-        [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
-        [dataprovider GetGoodsListWithKeyWord:[self BuildPrmfunc]];
-    }
-    else if (_type==1)
-    {
-        DataProvider * dataprovider=[[DataProvider alloc] init];
-        [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
-        [dataprovider GetSpecGoodsList:[self BuildPrmfunc]];
-    }
-    else
-    {
-        DataProvider * dataprovider=[[DataProvider alloc] init];
-        [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
-        [dataprovider GessYouLike:[self BuildPrmfunc]];
-    }
     
+    if (ishasmorepage==1) {
+        curpage++;
+        if (_type!=1&&_type!=2) {
+            DataProvider * dataprovider=[[DataProvider alloc] init];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
+            [dataprovider GetGoodsListWithKeyWord:[self BuildPrmfunc]];
+        }
+        else if (_type==1)
+        {
+            DataProvider * dataprovider=[[DataProvider alloc] init];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
+            [dataprovider GetSpecGoodsList:[self BuildPrmfunc]];
+        }
+        else
+        {
+            DataProvider * dataprovider=[[DataProvider alloc] init];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
+            [dataprovider GessYouLike:[self BuildPrmfunc]];
+        }
+    }else{
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"亲，" message:@"没有更多数据了哦" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+        [_myTableView.footer endRefreshing];
+        isfooterrefresh=NO;
+    }
 }
 
 -(void)FootRefireshBackCall:(id)dict
@@ -412,6 +435,7 @@
     NSLog(@"上拉刷新");
     NSMutableArray *itemarray=[[NSMutableArray alloc] initWithArray:arrayGoodList];
     if (!dict[@"datas"][@"error"]) {
+        ishasmorepage=(int)dict[@"hasmore"];
         NSArray * arrayitem=dict[@"datas"][@"goods_list"];
         for (id item in arrayitem) {
             [itemarray addObject:item];

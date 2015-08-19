@@ -215,8 +215,22 @@
  */
 -(void)JumpToRealNameVC:(UIButton *)sender
 {
-    RealNameViewController * relname=[[RealNameViewController alloc] initWithNibName:@"RealNameViewController" bundle:[NSBundle mainBundle]];
-    [self.navigationController pushViewController:relname animated:YES];
+    switch (_realNameStatus) {
+        case 0:
+        {
+            RealNameViewController * relname=[[RealNameViewController alloc] initWithNibName:@"RealNameViewController" bundle:[NSBundle mainBundle]];
+            [self.navigationController pushViewController:relname animated:YES];
+        }
+            break;
+            
+        default:
+        {
+            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"亲，您已经实名认证过了哦！" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+            [alert show];
+        }
+            break;
+    }
+    
 }
 -(void)JumpToResetPWD
 {

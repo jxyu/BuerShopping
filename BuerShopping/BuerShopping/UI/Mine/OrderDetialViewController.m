@@ -87,7 +87,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height=60;
-    if (indexPath.row==0) {
+    if (indexPath.row<goods_list.count) {
         height=105;
     }
     if (indexPath.row==goods_list.count+1) {
@@ -189,7 +189,7 @@
     {
         UITableViewCell * cell=[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
         UILabel * lbl_cellTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 20, 150, 20)];
-        lbl_cellTitle.text=@"买家留言";
+        lbl_cellTitle.text=@"卖家留言";
         lbl_cellTitle.textColor=[UIColor grayColor];
         [cell addSubview:lbl_cellTitle];
         CGFloat x=lbl_cellTitle.frame.size.width+lbl_cellTitle.frame.origin.x+10;

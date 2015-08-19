@@ -15,8 +15,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c8W-Mo-bk9">
-                        <rect key="frame" x="8" y="4" width="75" height="71"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c8W-Mo-bk9">
+                        <rect key="frame" x="9" y="8" width="75" height="63"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="75" id="o31-bJ-wJu"/>
+                        </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="产品名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yrT-t4-jnz">
                         <rect key="frame" x="91" y="4" width="158" height="21"/>
@@ -117,8 +120,11 @@
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="kIV-hB-2WN" secondAttribute="trailing" id="9kp-YG-n9L"/>
                     <constraint firstItem="kIV-hB-2WN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="CfK-k5-RVO"/>
+                    <constraint firstItem="c8W-Mo-bk9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="1" id="GBo-AY-3S6"/>
                     <constraint firstAttribute="bottomMargin" secondItem="3i7-g3-fYp" secondAttribute="bottom" constant="-7" id="KAV-1T-r0X"/>
                     <constraint firstAttribute="trailingMargin" secondItem="3i7-g3-fYp" secondAttribute="trailing" constant="5" id="VrJ-U1-SOb"/>
+                    <constraint firstItem="c8W-Mo-bk9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="gfm-l2-Z3w"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="c8W-Mo-bk9" secondAttribute="bottom" id="yJC-sg-O2V"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

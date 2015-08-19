@@ -41,6 +41,8 @@
     NSDictionary * cityinfoWithFile;
     BOOL keyboardZhezhaoShow;
     NSDictionary * UserinfoWithFile;
+    
+    int ishasmorepage;
 }
 
 - (void)viewDidLoad {
@@ -61,6 +63,7 @@
     page=@"8";
     curpage=1;
     isfooterrefresh=NO;
+    ishasmorepage=0;
     self.classifys=[[NSMutableArray alloc] initWithObjects:@"全部分类", nil];
     self.sorts = @[@"智能排序",@"好评优先",@"离我最近"];
     
@@ -211,10 +214,18 @@
 
 -(void)StoreFootRefresh
 {
-    curpage++;
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
-    [dataprovider GetStoreList:[self BuildStorePrmfunc]];
+    if (ishasmorepage==1) {
+        curpage++;
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
+        [dataprovider GetStoreList:[self BuildStorePrmfunc]];
+    }else{
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"亲，" message:@"没有更多数据了哦" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+        [_myTableview.footer endRefreshing];
+        isfooterrefresh=NO;
+    }
+    
 }
 
 -(void)FootRefireshBackCall:(id)dict
@@ -225,6 +236,7 @@
     // 结束刷新
     [_myTableview.footer endRefreshing];
     isfooterrefresh=NO;
+    ishasmorepage=(int)dict[@"hasmore"];
     NSMutableArray *itemarray=[[NSMutableArray alloc] initWithArray:arrayStoreList];
     if (!dict[@"datas"][@"error"]) {
         NSArray * arrayitem=dict[@"datas"][@"goods_list"];
@@ -243,6 +255,7 @@
     [_myTableview.header endRefreshing];
     NSLog(@"店铺列表%@",dict);
     if (!dict[@"datas"][@"error"]) {
+        ishasmorepage=(int)dict[@"hasmore"];
         arrayStoreList=dict[@"datas"][@"goods_list"];
         [_myTableview reloadData];
     }
@@ -251,6 +264,7 @@
 {
     [SVProgressHUD dismiss];
     if (!dict[@"datas"][@"error"]) {
+        
         self.classifys=dict[@"datas"][@"class_list"];
         // 添加下拉菜单
         DOPDropDownMenu *menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, 64) andHeight:44];
@@ -364,8 +378,8 @@
     if (indexPath.column==0) {
         _sc_id=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
     }
-    if (indexPath.column==0) {
-        order=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+    if (indexPath.column==1) {
+        key=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
     }
     [self StoreTopRefresh];
 }

@@ -18,6 +18,7 @@
 #import "RoutePlanViewController.h"
 #import "UMSocial.h"
 #import "UMSocialSnsService.h"
+#import "CCLocationManager.h"
 
 #define umeng_app_key @"557e958167e58e0b720041ff"
 
@@ -33,6 +34,8 @@
     NSArray * goods_list;
     BOOL isfooterrefresh;
     int curpage;
+    
+    int ishasmore;
 }
 
 - (void)viewDidLoad {
@@ -41,6 +44,7 @@
     _lblTitle.text=@"商铺详情";
     _lblTitle.textColor=[UIColor whiteColor];
     isfooterrefresh=NO;
+    ishasmore=0;
     arrayslider=[[NSArray alloc] init];
     goods_list=[[NSArray alloc] init];
     curpage=0;
@@ -61,6 +65,7 @@
 {
     NSLog(@"%@",dict);
     if (!dict[@"datas"][@"error"]) {
+        ishasmore=(int)dict[@"hasmore"];
         arrayslider=dict[@"datas"][@"store_info"][@"mb_sliders"];
         storeInfo=dict[@"datas"][@"store_info"];
         goods_list=dict[@"datas"][@"goods_list"];
@@ -81,6 +86,11 @@
     for (int i=0; i<arrayslider.count; i++) {
         UIImageView * img=[[UIImageView alloc] init];
         [img sd_setImageWithURL:[NSURL URLWithString:arrayslider[i]] placeholderImage:[UIImage imageNamed:@"placeholder.png"] ];
+        [images addObject:img];
+    }
+    if (arrayslider.count<=0) {
+        UIImageView * img=[[UIImageView alloc] init];
+        [img sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"placeholder.png"] ];
         [images addObject:img];
     }
     // 创建带标题的图片轮播器
@@ -153,6 +163,7 @@
     [_myTableVeiw addLegendFooterWithRefreshingBlock:^{
         if (!isfooterrefresh) {
             isfooterrefresh=YES;
+            
             [self FootRefresh];
             [_myTableVeiw reloadData];
         }
@@ -220,8 +231,15 @@
 
 -(void)JumptoNavi:(UIButton * )sender
 {
-    RoutePlanViewController * routeplanVC=[[RoutePlanViewController alloc] init];
-    [self.navigationController pushViewController:routeplanVC animated:YES];
+    [SVProgressHUD showWithStatus:@"正在加载导航信息" maskType:SVProgressHUDMaskTypeBlack];
+    [[CCLocationManager shareLocation] getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
+        [SVProgressHUD dismiss];
+        RoutePlanViewController * routeplanVC=[[RoutePlanViewController alloc] init];
+        routeplanVC.startPoint= [AMapNaviPoint locationWithLatitude:locationCorrrdinate.latitude longitude:locationCorrrdinate.longitude];
+        routeplanVC.endPoint= [AMapNaviPoint locationWithLatitude:[storeInfo[@"lat"] floatValue] longitude:[storeInfo[@"lng"] floatValue]];
+        [self.navigationController pushViewController:routeplanVC animated:YES];
+    }];
+    
 }
 
 -(void)TopRefresh
@@ -242,11 +260,19 @@
 -(void)FootRefresh
 {
     isfooterrefresh=NO;
-    ++curpage;
-    NSDictionary * prm=@{@"store_id":_sc_id,@"page":@"6",@"curpage":[NSString stringWithFormat:@"%d",curpage]};
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
-    [dataprovider GetStoreGoodList:prm];
+    if (ishasmore==1) {
+        ++curpage;
+        NSDictionary * prm=@{@"store_id":_sc_id,@"page":@"6",@"curpage":[NSString stringWithFormat:@"%d",curpage]};
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
+        [dataprovider GetStoreGoodList:prm];
+    }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"没有更多商品了哦" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+    }
+    
     [_myTableVeiw.footer endRefreshing];
 }
 
@@ -257,6 +283,7 @@
     
     NSMutableArray *itemarray=[[NSMutableArray alloc] initWithArray:goods_list];
     if (!dict[@"datas"][@"error"]) {
+        ishasmore=(int)dict[@"hasmore"];
         NSArray * arrayitem=dict[@"datas"][@"goods_list"];
         for (id item in arrayitem) {
             [itemarray addObject:item];

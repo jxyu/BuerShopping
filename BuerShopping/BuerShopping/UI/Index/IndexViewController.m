@@ -463,10 +463,10 @@
             cellheight=170;
             break;
         case 2:
-            cellheight=80;
+            cellheight=80*goods_like.count;
             break;
         case 3:
-            cellheight=80;
+            cellheight=80*good_store.count;
             break;
         default:
             break;

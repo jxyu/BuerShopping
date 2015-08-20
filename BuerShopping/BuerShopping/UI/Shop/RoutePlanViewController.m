@@ -100,8 +100,8 @@ typedef NS_ENUM(NSInteger, TravelTypes)
 
 - (void)initNaviPoints
 {
-    _startPoint = [AMapNaviPoint locationWithLatitude:35.989614 longitude:118.481763];
-    _endPoint   = [AMapNaviPoint locationWithLatitude:35.983456 longitude:118.315495];
+//    _startPoint = [AMapNaviPoint locationWithLatitude:35.989614 longitude:118.481763];
+//    _endPoint   = [AMapNaviPoint locationWithLatitude:35.983456 longitude:118.315495];
 }
 
 
@@ -307,7 +307,7 @@ typedef NS_ENUM(NSInteger, TravelTypes)
     [self showRouteWithNaviRoute:[[naviManager naviRoute] copy]];
     
     _calRouteSuccess = YES;
-    [self simulatorNavi];
+    [self gpsNavi];
 }
 
 

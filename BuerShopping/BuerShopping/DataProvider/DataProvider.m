@@ -529,14 +529,14 @@
 {
     if (prm) {
         NSString * url=[NSString stringWithFormat:@"%@index.php?act=goods&op=day_special",Url];
-        [self PostRequest:url andpram:prm];
+        [self GetRequest:url andpram:prm];
     }
 }
 -(void)GessYouLike:(NSDictionary *)prm
 {
     if (prm) {
         NSString * url=[NSString stringWithFormat:@"%@index.php?act=goods&op=goods_like_list",Url];
-        [self PostRequest:url andpram:prm];
+        [self GetRequest:url andpram:prm];
     }
 }
 

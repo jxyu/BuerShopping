@@ -396,6 +396,7 @@
             for (NSString *items in cellArray) {
                 if ([items isEqualToString:[NSString stringWithFormat:@"%ld|%ld",(long)indexPath.section,(long)indexPath.row]]) {
                     [cellArray removeObject:items];
+                    break;
                 }
             }
         }
@@ -404,6 +405,7 @@
                 for (NSString *items in sectionArray) {
                     if ([items isEqualToString:[NSString stringWithFormat:@"%ld",(long)sender.tag]]) {
                         [sectionArray removeObject:items];
+                        break;
                     }
                 }
             }

@@ -225,7 +225,7 @@
     lbl_nickName.textAlignment=NSTextAlignmentCenter;
     [img_back addSubview:lbl_nickName];
     UIImageView * img_touxiang=[[UIImageView alloc] initWithFrame:CGRectMake((img_back.frame.size.width-70)/2, img_back.frame.size.height-100, 70, 70)];
-    [img_touxiang sd_setImageWithURL:[NSURL URLWithString:_avatarImageHeader] placeholderImage:[UIImage imageNamed:@"head_icon_placeholder"]];
+    img_touxiang.image=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_avatarImageHeader]]];
     img_touxiang.layer.masksToBounds=YES;
     img_touxiang.layer.cornerRadius=35;
     [headerview addSubview:img_touxiang];

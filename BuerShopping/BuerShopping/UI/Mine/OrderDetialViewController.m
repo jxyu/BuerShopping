@@ -172,11 +172,11 @@
     else if(indexPath.row==goods_list.count+2)
     {
         UITableViewCell * cell=[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
-        UILabel * lbl_cellTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 20, 150, 20)];
+        UILabel * lbl_cellTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 20, 80, 20)];
         lbl_cellTitle.text=@"订单编号";
         lbl_cellTitle.textColor=[UIColor grayColor];
         [cell addSubview:lbl_cellTitle];
-        CGFloat x=lbl_cellTitle.frame.size.width+lbl_cellTitle.frame.origin.x+10;
+        CGFloat x=lbl_cellTitle.frame.size.width+lbl_cellTitle.frame.origin.x;
         UILabel * lbl_sendWay=[[UILabel alloc] initWithFrame:CGRectMake(x, 20, SCREEN_WIDTH-x-10, 20)];
         lbl_sendWay.textColor=[UIColor grayColor];
         lbl_sendWay.text=order_info[@"order_sn"];

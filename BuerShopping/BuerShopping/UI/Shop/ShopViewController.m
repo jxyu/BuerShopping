@@ -272,6 +272,11 @@
         menu.dataSource = self;
         [self.view addSubview:menu];
     }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+    }
 }
 
 
@@ -376,7 +381,7 @@
         NSLog(@"点击了 %ld - %ld 项目",indexPath.column,indexPath.row);
     }
     if (indexPath.column==0) {
-        _sc_id=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+        _sc_id=[NSString stringWithFormat:@"%@",self.classifys[indexPath.row][@"sc_id"]];
     }
     if (indexPath.column==1) {
         key=[NSString stringWithFormat:@"%ld",(long)indexPath.row];

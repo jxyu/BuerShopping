@@ -185,7 +185,17 @@
 
 
 
-
+-(void)GetSpecGoodsListBackcall:(id)dict
+{
+    [SVProgressHUD dismiss];
+    [_myTableView.header endRefreshing];
+    NSLog(@"%@",dict);
+    if (!dict[@"datas"][@"error"]) {
+        ishasmorepage=(int)dict[@"hasmore"];
+        arrayGoodList=dict[@"datas"][@"day_special"];
+        [_myTableView reloadData];
+    }
+}
 -(void)GetGoodsListBackcall:(id)dict
 {
     [SVProgressHUD dismiss];
@@ -388,7 +398,7 @@
     else if (_type==1)
     {
         DataProvider * dataprovider=[[DataProvider alloc] init];
-        [dataprovider setDelegateObject:self setBackFunctionName:@"GetGoodsListBackcall:"];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"GetSpecGoodsListBackcall:"];
         [dataprovider GetSpecGoodsList:[self BuildPrmfunc]];
     }
     else
@@ -412,7 +422,7 @@
         else if (_type==1)
         {
             DataProvider * dataprovider=[[DataProvider alloc] init];
-            [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
+            [dataprovider setDelegateObject:self setBackFunctionName:@"SpecFootRefireshBackCall:"];
             [dataprovider GetSpecGoodsList:[self BuildPrmfunc]];
         }
         else
@@ -437,6 +447,21 @@
     if (!dict[@"datas"][@"error"]) {
         ishasmorepage=(int)dict[@"hasmore"];
         NSArray * arrayitem=dict[@"datas"][@"goods_list"];
+        for (id item in arrayitem) {
+            [itemarray addObject:item];
+        }
+        arrayGoodList=[[NSArray alloc] initWithArray:itemarray];
+    }
+    [_myTableView reloadData];
+}
+-(void)SpecFootRefireshBackCall:(id)dict
+{
+    isfooterrefresh=NO;
+    NSLog(@"上拉刷新");
+    NSMutableArray *itemarray=[[NSMutableArray alloc] initWithArray:arrayGoodList];
+    if (!dict[@"datas"][@"error"]) {
+        ishasmorepage=(int)dict[@"hasmore"];
+        NSArray * arrayitem=dict[@"datas"][@"day_special"];
         for (id item in arrayitem) {
             [itemarray addObject:item];
         }

@@ -323,14 +323,14 @@
     cell  = [[[NSBundle mainBundle] loadNibNamed:@"GoodsTableViewCell" owner:self options:nil] lastObject];
     cell.layer.masksToBounds=YES;
     cell.frame=CGRectMake(cell.frame.origin.x, cell.frame.origin.y, tableView.frame.size.width, cell.frame.size.height);
-    cell.lbl_goodsName.text=goods_list[indexPath.row][@"goods_name"]?goods_list[indexPath.row][@"goods_name"]:@"";
-    cell.lbl_goodsDetial.text=goods_list[indexPath.row][@"goods_jingle"]?goods_list[indexPath.row][@"goods_jingle"]:@"";
-    cell.lbl_long.text=goods_list[indexPath.row][@"juli"]?goods_list[indexPath.row][@"juli"]:@"";
-    cell.lbl_price.text=goods_list[indexPath.row][@"goods_price"]?goods_list[indexPath.row][@"goods_price"]:@"";
-    cell.lbl_rescuncun.text=goods_list[indexPath.row][@"goods_storage"]?goods_list[indexPath.row][@"goods_storage"]:@"";
-    cell.lbl_resxiaoliang.text=goods_list[indexPath.row][@"goods_salenum"]?goods_list[indexPath.row][@"goods_salenum"]:@"";
-    cell.lbl_liulanliang.text=goods_list[indexPath.row][@"goods_click"]?goods_list[indexPath.row][@"goods_click"]:@"";
-    [cell.img_goodsicon sd_setImageWithURL:[NSURL URLWithString:goods_list[indexPath.row][@"goods_image_url"]?goods_list[indexPath.row][@"goods_image_url"]:@""] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    cell.lbl_goodsName.text=goods_list[indexPath.section][@"goods_name"]?goods_list[indexPath.section][@"goods_name"]:@"";
+    cell.lbl_goodsDetial.text=goods_list[indexPath.section][@"goods_jingle"]?goods_list[indexPath.section][@"goods_jingle"]:@"";
+    cell.lbl_long.text=goods_list[indexPath.section][@"juli"]?goods_list[indexPath.section][@"juli"]:@"";
+    cell.lbl_price.text=goods_list[indexPath.section][@"goods_price"]?goods_list[indexPath.section][@"goods_price"]:@"";
+    cell.lbl_rescuncun.text=goods_list[indexPath.section][@"goods_storage"]?goods_list[indexPath.section][@"goods_storage"]:@"";
+    cell.lbl_resxiaoliang.text=goods_list[indexPath.section][@"goods_salenum"]?goods_list[indexPath.section][@"goods_salenum"]:@"";
+    cell.lbl_liulanliang.text=goods_list[indexPath.section][@"goods_click"]?goods_list[indexPath.section][@"goods_click"]:@"";
+    [cell.img_goodsicon sd_setImageWithURL:[NSURL URLWithString:goods_list[indexPath.section][@"goods_image_url"]?goods_list[indexPath.section][@"goods_image_url"]:@""] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     return cell;
 }
 

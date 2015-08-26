@@ -244,15 +244,26 @@
     backview_HeaderVeiw.frame=CGRectMake(backview_HeaderVeiw.frame.origin.x, backview_HeaderVeiw.frame.origin.y, backview_HeaderVeiw.frame.size.width, backview_goodinfo2.frame.size.height+backview_goodinfo2.frame.origin.y+10);
     _mytableview.tableHeaderView=backview_HeaderVeiw;
     
-    UIView * tableFooterView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
+    UIView * tableFooterView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 880)];
     tableFooterView.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
     UILabel * lbl_footer=[[UILabel alloc] initWithFrame:CGRectMake(0, 30, SCREEN_WIDTH, 20)];
     lbl_footer.text=@"继续拖动，查看图文详情";
     lbl_footer.textAlignment=NSTextAlignmentCenter;
     lbl_footer.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
     [tableFooterView addSubview:lbl_footer];
-    _mytableview.tableFooterView=tableFooterView;
     
+    
+    UIWebView * mywebView=[[UIWebView alloc] initWithFrame:CGRectMake(0, 80, SCREEN_WIDTH, 800)];
+    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"http://115.28.21.137/mobile/index.php?act=goods&op=goods_body&goods_id=%@",_gc_id]];
+    
+    NSURLRequest *request=[[NSURLRequest alloc] initWithURL:url];
+    
+    [mywebView loadRequest:request];
+    
+    [mywebView setUserInteractionEnabled:YES];
+    
+    [tableFooterView addSubview:mywebView];
+    _mytableview.tableFooterView=tableFooterView;
 }
 -(void)btnShare:(UIButton *)sender
 {
@@ -304,7 +315,14 @@
 {
     CGFloat h=50;
     if (indexPath.section==1) {
-        h=260;
+        if (evaluate.count>0) {
+            h=260;
+        }
+        else
+        {
+            h=0;
+        }
+        
     }
     return h;
 }

@@ -462,7 +462,7 @@
             if (itemarray[0][@"order_amount"]) {
                 DataProvider * dataprovider=[[DataProvider alloc] init];
                 [dataprovider setDelegateObject:self setBackFunctionName:@"GetChargeBackCall:"];
-                [dataprovider OrderPayWithKey:_key andpay_sn:itemarray[0][@"order_sn"] andchannel:payWay];
+                [dataprovider OrderPayWithKey:_key andpay_sn:itemarray[0][@"pay_sn"] andchannel:payWay];
             }
         }else if(buttonIndex ==1)
         {
@@ -470,7 +470,7 @@
             if (itemarray[0][@"order_amount"]) {
                 DataProvider * dataprovider=[[DataProvider alloc] init];
                 [dataprovider setDelegateObject:self setBackFunctionName:@"GetChargeBackCall:"];
-                [dataprovider OrderPayWithKey:_key andpay_sn:itemarray[0][@"order_sn"] andchannel:payWay];
+                [dataprovider OrderPayWithKey:_key andpay_sn:itemarray[0][@"pay_sn"] andchannel:payWay];
             }
         }
         

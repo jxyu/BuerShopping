@@ -198,14 +198,18 @@
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"GetIndexData:"];
         [dataprovider GetIndexDataWithAreaid:areaid andlng:lng andlat:lat];//areaid
-//        NSDictionary * areaData=@{@"area_id":areaid,@"area_name":dict[@"datas"][@"area_name"]};
-//        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-//                                                                  NSUserDomainMask, YES) objectAtIndex:0];
-//        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"CityInfo.plist"];
-//        BOOL result= [areaData writeToFile:plistPath atomically:YES];
-//        if (result) {
-//            
-//        }
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                  NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *plistPath = [rootPath stringByAppendingPathComponent:@"CityInfo.plist"];
+        NSDictionary * cityinfoWithFile =[[NSDictionary alloc] initWithContentsOfFile:plistPath];
+        if (!cityinfoWithFile) {
+            NSDictionary * areaData=@{@"area_id":areaid,@"area_name":dict[@"datas"][@"area_name"]};
+            BOOL result= [areaData writeToFile:plistPath atomically:YES];
+            if (result) {
+                
+            }
+
+        }
     }
     
 }

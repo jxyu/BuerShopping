@@ -11,7 +11,6 @@
 
 @interface GoodDetialViewController : BaseNavigationController<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)NSString * gc_id;
-@property (weak, nonatomic) IBOutlet UITableView *mytableview;
 @property (weak, nonatomic) IBOutlet UIView *backviw_bottom;
 
 @end

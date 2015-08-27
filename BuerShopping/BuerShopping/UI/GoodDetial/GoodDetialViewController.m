@@ -16,10 +16,14 @@
 #import "AppDelegate.h"
 #import "UMSocial.h"
 #import "UMSocialSnsService.h"
+#import "MJRefresh.h"
 
 #define umeng_app_key @"557e958167e58e0b720041ff"
 
 @interface GoodDetialViewController ()
+@property(strong,nonatomic)UIScrollView *scrollV;
+@property(strong,nonatomic)UITableView *tableV;
+@property(strong,nonatomic)UIWebView *webV;
 
 @end
 
@@ -144,7 +148,7 @@
         }
         goodsID=dict[@"datas"][@"spec_list"];
         spec_list_goods=dict[@"datas"][@"spec_list_goods"];
-        [self BuildHeaderView];
+        
         [self BuildBodyTableView];
     }
 }
@@ -242,28 +246,17 @@
     backview_goodinfo2.frame=CGRectMake(backview_goodinfo2.frame.origin.x, backview_goodinfo2.frame.origin.y, backview_goodinfo2.frame.size.width, x+30);
     [backview_HeaderVeiw addSubview:backview_goodinfo2];
     backview_HeaderVeiw.frame=CGRectMake(backview_HeaderVeiw.frame.origin.x, backview_HeaderVeiw.frame.origin.y, backview_HeaderVeiw.frame.size.width, backview_goodinfo2.frame.size.height+backview_goodinfo2.frame.origin.y+10);
-    _mytableview.tableHeaderView=backview_HeaderVeiw;
+    _tableV.tableHeaderView=backview_HeaderVeiw;
     
-    UIView * tableFooterView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 880)];
+    UIView * tableFooterView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
     tableFooterView.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
-    UILabel * lbl_footer=[[UILabel alloc] initWithFrame:CGRectMake(0, 30, SCREEN_WIDTH, 20)];
+    UILabel * lbl_footer=[[UILabel alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 20)];
     lbl_footer.text=@"继续拖动，查看图文详情";
     lbl_footer.textAlignment=NSTextAlignmentCenter;
     lbl_footer.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
     [tableFooterView addSubview:lbl_footer];
     
-    
-    UIWebView * mywebView=[[UIWebView alloc] initWithFrame:CGRectMake(0, 80, SCREEN_WIDTH, 800)];
-    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"http://115.28.21.137/mobile/index.php?act=goods&op=goods_body&goods_id=%@",_gc_id]];
-    
-    NSURLRequest *request=[[NSURLRequest alloc] initWithURL:url];
-    
-    [mywebView loadRequest:request];
-    
-    [mywebView setUserInteractionEnabled:YES];
-    
-    [tableFooterView addSubview:mywebView];
-    _mytableview.tableFooterView=tableFooterView;
+    _tableV.tableFooterView=tableFooterView;
 }
 -(void)btnShare:(UIButton *)sender
 {
@@ -302,9 +295,54 @@
 }
 -(void)BuildBodyTableView
 {
-    _mytableview.delegate=self;
-    _mytableview.dataSource=self;
+    //控件添加到视图上
+    /**
+     *  设置一个 UIScrollView 作为视图底层，并且设置分页为两页
+     *  然后在第一个分页上添加一个 UITableView 并且设置表格能够上提加载（上拉操作即为让视图滚动到下一页）
+     在第二个分页上添加一个 UIWebView 并且设置能有下拉刷新操作（下拉操作即为让视图滚动到上一页）
+     */
+    [self.view addSubview:self.scrollV];
+    [self.scrollV addSubview:self.tableV];
+    [self.scrollV addSubview:self.webV];
+    
+    
+    // 上拉刷新
+    [self.tableV addLegendFooterWithRefreshingBlock:^{
+        //上拉，执行对应的操作---改变底层滚动视图的滚动到对应位置
+        //设置动画效果
+        [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews animations:^{
+            self.scrollV.contentOffset = CGPointMake(0, SCREEN_HEIGHT);
+        } completion:^(BOOL finished) {
+            //结束加载
+            [self.tableV.footer endRefreshing];
+        }];
+        // 结束刷新
+        [self.tableV.footer endRefreshing];
+    }];
+    // 默认先隐藏footer
+    self.tableV.footer.hidden = NO;
+    
+    //设置UIWebView 有下拉操作
+    [self.webV.scrollView addLegendHeaderWithRefreshingBlock:^{
+        
+        //下拉执行对应的操作
+        self.scrollV.contentOffset = CGPointMake(0, 0);
+        //结束加载
+        [self.webV.scrollView.header endRefreshing];
+    }];
+    
+    [self BuildHeaderView];
 }
+
+
+
+
+
+
+
+
+
+
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     UIView * footerview=[[UIView alloc] init];
@@ -778,9 +816,49 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+
+#pragma mark ---- get
+
+-(UIScrollView *)scrollV
+{
+    if (_scrollV == nil)
+    {
+        _scrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-114)];
+        _scrollV.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT * 2);
+        //设置分页效果
+        _scrollV.pagingEnabled = YES;
+        //禁用滚动
+        _scrollV.scrollEnabled = NO;
+    }
+    return _scrollV;
+}
+
+-(UITableView *)tableV
+{
+    if (_tableV == nil)
+    {
+        _tableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-114) style:UITableViewStylePlain];
+        _tableV.delegate = self;
+        _tableV.dataSource = self;
+    }
+    return _tableV;
+}
+
+-(UIWebView *)webV
+{
+    if (_webV == nil)
+    {
+        _webV = [[UIWebView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    }
+    return _webV;
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] hiddenTabBar];
+    [self.webV loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://115.28.21.137/mobile/index.php?act=goods&op=goods_body&goods_id=%@",_gc_id]]]];
 }
 
 

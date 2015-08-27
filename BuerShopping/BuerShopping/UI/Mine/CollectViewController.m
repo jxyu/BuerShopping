@@ -158,11 +158,10 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSMutableArray * itemmurablearray=[[NSMutableArray alloc] initWithArray:arrayGoodList];
-        [itemmurablearray removeObjectAtIndex:indexPath.section];
-        arrayGoodList=[[NSArray alloc] initWithArray:itemmurablearray];
+        
         // Delete the row from the data source.
         //        [TableView_orderList deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [_myTableView reloadData];
+        
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"DelCollectBackCall:"];
         if (isGetGoodsList) {
@@ -172,6 +171,8 @@
         {
             [dataprovider DelStoreCollectWithKey:_key andstore_id:arrayGoodList[indexPath.section][@"store_id"]];
         }
+        [itemmurablearray removeObjectAtIndex:indexPath.section];
+        arrayGoodList=[[NSArray alloc] initWithArray:itemmurablearray];
         
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -183,6 +184,7 @@
     NSLog(@"%@",dict);
     if ([[NSString stringWithFormat:@"%@",dict[@"datas"]] isEqualToString:@"1"]) {
         [SVProgressHUD showSuccessWithStatus:@"删除成功" maskType:SVProgressHUDMaskTypeBlack];
+        [_myTableView reloadData];
     }
     else
     {

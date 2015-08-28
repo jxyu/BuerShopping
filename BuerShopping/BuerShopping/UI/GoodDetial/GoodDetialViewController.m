@@ -17,6 +17,7 @@
 #import "UMSocial.h"
 #import "UMSocialSnsService.h"
 #import "MJRefresh.h"
+#import "ShopDetialViewController.h"
 
 #define umeng_app_key @"557e958167e58e0b720041ff"
 
@@ -48,6 +49,8 @@
     UILabel * lbl_tishi;
     UILabel * lbl_price;
     UILabel * lbl_kucun;
+    
+    NSString* storeid;
 }
 
 - (void)viewDidLoad {
@@ -145,6 +148,7 @@
         if (dict[@"datas"][@"goods_info"]) {
             dictspectitle=dict[@"datas"][@"goods_info"][@"spec_name"];
             dictspecValue=dict[@"datas"][@"goods_info"][@"spec_value"];
+            storeid=dict[@"datas"][@"goods_info"][@"store_id"];
         }
         goodsID=dict[@"datas"][@"spec_list"];
         spec_list_goods=dict[@"datas"][@"spec_list_goods"];
@@ -155,7 +159,9 @@
 
 -(void)JumpTodianpu
 {
-    
+    ShopDetialViewController * shopdetial=[[ShopDetialViewController alloc] initWithNibName:@"ShopDetialViewController" bundle:[NSBundle mainBundle]];
+    shopdetial.sc_id=storeid;
+    [self.navigationController pushViewController:shopdetial animated:YES];
 }
 -(void)BuildHeaderView
 {

@@ -13,6 +13,8 @@
 #import "HYSegmentedControl.h"
 #import "CollectTableViewCell.h"
 #import "AppDelegate.h"
+#import "GoodDetialViewController.h"
+#import "ShopDetialViewController.h"
 
 @interface CollectViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)HYSegmentedControl *segmentedControl;
@@ -24,6 +26,7 @@
     int curpage;
     NSArray *arrayGoodList;
     BOOL isGetGoodsList;
+    
 }
 
 - (void)viewDidLoad {
@@ -37,6 +40,7 @@
     arrayGoodList=[[NSArray alloc] init];
     self.view.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
     [self LoadAllData];
+    
 }
 -(void)LoadAllData
 {
@@ -195,6 +199,22 @@
 
 
 #pragma mark uitableview delegate
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (isGetGoodsList) {
+        GoodDetialViewController * gooddetial=[[GoodDetialViewController alloc] initWithNibName:@"GoodDetialViewController" bundle:[NSBundle mainBundle]];
+        gooddetial.gc_id=arrayGoodList[indexPath.section][@"goods_id"];
+        [self.navigationController pushViewController:gooddetial animated:YES];
+        
+    }
+    else
+    {
+        ShopDetialViewController * shopdetial=[[ShopDetialViewController alloc] initWithNibName:@"ShopDetialViewController" bundle:[NSBundle mainBundle]];
+        shopdetial.sc_id=arrayGoodList[indexPath.section][@"store_id"];
+        [self.navigationController pushViewController:shopdetial animated:YES];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {

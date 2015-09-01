@@ -43,6 +43,7 @@
     NSDictionary * UserinfoWithFile;
     
     int ishasmorepage;
+    BOOL isalertShow;
 }
 
 - (void)viewDidLoad {
@@ -59,6 +60,7 @@
     order=@"1";
     lat=@"";
     lng=@"";
+    isalertShow=NO;
     [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
     page=@"8";
     curpage=1;
@@ -244,6 +246,15 @@
             [itemarray addObject:item];
         }
         arrayStoreList=[[NSArray alloc] initWithArray:itemarray];
+    }
+    else
+    {
+        if(!isalertShow)
+        {
+            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+            [alert show];
+            isalertShow=YES;
+        }
     }
     [_myTableview reloadData];
 }

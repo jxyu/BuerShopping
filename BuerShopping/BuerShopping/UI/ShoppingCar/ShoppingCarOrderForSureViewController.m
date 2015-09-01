@@ -132,7 +132,7 @@
                                                                           delegate:self
                                                                  cancelButtonTitle:@"取消"
                                                             destructiveButtonTitle:nil
-                                                                 otherButtonTitles:@"钱包支付",@"微信支付", @"支付宝支付",@"货到付款", nil];
+                                                                 otherButtonTitles:@"微信支付", @"支付宝支付",@"货到付款", nil];
                 choiceSheet1.tag=2;
                 [choiceSheet1 showInView:self.view];
             }
@@ -142,7 +142,7 @@
                                                                           delegate:self
                                                                  cancelButtonTitle:@"取消"
                                                             destructiveButtonTitle:nil
-                                                                 otherButtonTitles:@"钱包支付",@"微信支付", @"支付宝支付", nil];
+                                                                 otherButtonTitles:@"微信支付", @"支付宝支付", nil];
                 choiceSheet1.tag=3;
                 [choiceSheet1 showInView:self.view];
             }
@@ -153,7 +153,7 @@
                                                                       delegate:self
                                                              cancelButtonTitle:@"取消"
                                                         destructiveButtonTitle:nil
-                                                             otherButtonTitles:@"钱包支付",@"微信支付", @"支付宝支付", nil];
+                                                             otherButtonTitles:@"微信支付", @"支付宝支付", nil];
             choiceSheet1.tag=3;
             [choiceSheet1 showInView:self.view];
         }
@@ -187,26 +187,26 @@
         lbl_cellTitle.text=@"支付方式";
         lbl_cellTitle.textColor=[UIColor grayColor];
         [cell addSubview:lbl_cellTitle];
-//        UIButton *btn_userrestmoney=[[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width-120, 0, 110, 60)];
-//        if (useRestMoney) {
-//            [btn_userrestmoney setImage:[UIImage imageNamed:@"shoppingcar_select_icon"] forState:UIControlStateNormal];
-//        }
-//        else
-//        {
-//            [btn_userrestmoney setImage:[UIImage imageNamed:@"shoppingcar_unselect_icon"] forState:UIControlStateNormal];
-//        }
-//        btn_userrestmoney.titleLabel.font=[UIFont systemFontOfSize:15];
-//        [btn_userrestmoney setTitle:@"使用钱包" forState:UIControlStateNormal];
-//        [btn_userrestmoney setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//        [btn_userrestmoney addTarget:self action:@selector(usePurse:) forControlEvents:UIControlEventTouchUpInside];
-//        [cell addSubview:btn_userrestmoney];
-//        if (payWay) {
-//            UILabel * lbl_sendWay=[[UILabel alloc] initWithFrame:CGRectMake(cell.frame.size.width-100, 20, 90, 20)];
-//            lbl_sendWay.textColor=[UIColor grayColor];
-//            lbl_sendWay.text=payWay;
-//            lbl_sendWay.textAlignment=NSTextAlignmentRight;
-//            [cell addSubview:lbl_sendWay];
-//        }
+        UIButton *btn_userrestmoney=[[UIButton alloc] initWithFrame:CGRectMake(cell.frame.size.width-120, 0, 110, 60)];
+        if (useRestMoney) {
+            [btn_userrestmoney setImage:[UIImage imageNamed:@"shoppingcar_select_icon"] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [btn_userrestmoney setImage:[UIImage imageNamed:@"shoppingcar_unselect_icon"] forState:UIControlStateNormal];
+        }
+        btn_userrestmoney.titleLabel.font=[UIFont systemFontOfSize:15];
+        [btn_userrestmoney setTitle:@"使用钱包" forState:UIControlStateNormal];
+        [btn_userrestmoney setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn_userrestmoney addTarget:self action:@selector(usePurse:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:btn_userrestmoney];
+        if (payWay) {
+            UILabel * lbl_sendWay=[[UILabel alloc] initWithFrame:CGRectMake(btn_userrestmoney.frame.origin.x-100, 20, 90, 20)];
+            lbl_sendWay.textColor=[UIColor grayColor];
+            lbl_sendWay.text=payWay;
+            lbl_sendWay.textAlignment=NSTextAlignmentRight;
+            [cell addSubview:lbl_sendWay];
+        }
         return cell;
 
     }
@@ -401,18 +401,14 @@
     else if(actionSheet.tag==2)
     {
         if (buttonIndex==0) {
-            payWay=@"钱包支付";
-            payWayToPay=@"qb";
-        }
-        if (buttonIndex==1) {
             payWay=@"微信支付";
             payWayToPay=@"wx";
         }
-        if (buttonIndex==2) {
+        if (buttonIndex==1) {
             payWay=@"支付宝支付";
             payWayToPay=@"alipay";
         }
-        if (buttonIndex==3) {
+        if (buttonIndex==2) {
             payWay=@"货到付款";
             payWayToPay=@"";
         }
@@ -420,14 +416,10 @@
     else
     {
         if (buttonIndex==0) {
-            payWay=@"钱包支付";
-            payWayToPay=@"qb";
-        }
-        if (buttonIndex==1) {
             payWay=@"微信支付";
             payWayToPay=@"wx";
         }
-        if (buttonIndex==2) {
+        if (buttonIndex==1) {
             payWay=@"支付宝支付";
             payWayToPay=@"alipay";
         }

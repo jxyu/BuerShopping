@@ -28,7 +28,7 @@
     NSArray * orderListArray;
     int actionIndex;
     
-    int ishasmorepage;
+    NSString * ishasmorepage;
     
     BOOL isalertShow;
 }
@@ -45,7 +45,7 @@
     isalertShow=NO;
     curpage=1;
     actionIndex=0;
-    ishasmorepage=0;
+    ishasmorepage=@"0";
     orderListArray=[[NSArray alloc] init];
     [self changeIndex];
     [self InitAllView];
@@ -316,7 +316,7 @@
 {
     [SVProgressHUD dismiss];
     if (!dict[@"datas"][@"error"]) {
-        ishasmorepage=(int)dict[@"hasmore"];
+        ishasmorepage=[NSString stringWithFormat:@"%@",dict[@"hasmore"]];
         orderListArray=dict[@"datas"][@"order_group_list"];
         [_myTableview reloadData];
     }
@@ -325,21 +325,14 @@
 
 -(void)FootRefresh
 {
-    if (ishasmorepage==1) {
-        curpage++;
-        DataProvider * dataprovider=[[DataProvider alloc] init];
-        [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
-        [dataprovider GetOrderListWithKey:_key andcurpage:[NSString stringWithFormat:@"%d",curpage] andorder_state:_OrderStatus];
-    }else{
-        if(!isalertShow)
-        {
-            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"亲，" message:@"没有更多数据了哦" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
-            [alert show];
-            isalertShow=YES;
-        }
-        [_myTableview.footer endRefreshing];
-        isfooterrefresh=NO;
-    }
+    
+    curpage++;
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
+    [dataprovider GetOrderListWithKey:_key andcurpage:[NSString stringWithFormat:@"%d",curpage] andorder_state:_OrderStatus];
+    
+    [_myTableview.footer endRefreshing];
+    isfooterrefresh=NO;
 }
 
 
@@ -350,12 +343,22 @@
     NSLog(@"上拉刷新");
     NSMutableArray *itemarray=[[NSMutableArray alloc] initWithArray:orderListArray];
     if (!dict[@"datas"][@"error"]) {
-        ishasmorepage=(int)dict[@"hasmore"];
+        ishasmorepage=[NSString stringWithFormat:@"%@",dict[@"hasmore"]];
         NSArray * arrayitem=dict[@"datas"][@"order_group_list"];
         for (id item in arrayitem) {
             [itemarray addObject:item];
         }
         orderListArray=[[NSArray alloc] initWithArray:itemarray];
+    }
+    else
+    {
+        if(!isalertShow)
+        {
+            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+            [alert show];
+            isalertShow=YES;
+        }
+        
     }
     [_myTableview reloadData];
 }

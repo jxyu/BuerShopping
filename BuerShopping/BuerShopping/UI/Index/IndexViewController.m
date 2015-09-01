@@ -125,7 +125,7 @@
     [BackView_buttionlist addSubview:btn_nanshi];
     UIButton * btn_muying=[[UIButton alloc] initWithFrame:CGRectMake(x*3+100, 5, 50, 60)];
     [btn_muying setImage:[UIImage imageNamed:@"muying"] forState:UIControlStateNormal];
-    btn_muying.tag=1100;
+    btn_muying.tag=1063;
     [btn_muying addTarget:self action:@selector(JumpToGoodList:) forControlEvents:UIControlEventTouchUpInside];
     [BackView_buttionlist addSubview:btn_muying];
     UIButton * btn_huazhuang=[[UIButton alloc] initWithFrame:CGRectMake(x*4+150, 5, 50, 60)];

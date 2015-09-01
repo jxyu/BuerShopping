@@ -10,10 +10,10 @@
 #import "AppDelegate.h"
 #import "RegisterViewController.h"
 #import "DataProvider.h"
-#import "UMSocialSnsPlatformManager.h"
-#import "UMSocialAccountManager.h"
+#import "UMSocial.h"
+#import "AppDelegate.h"
 
-@interface LoginViewController ()
+@interface LoginViewController ()<UMSocialUIDelegate>
 @property(nonatomic,strong)RegisterViewController *myRegister;
 @end
 
@@ -90,18 +90,20 @@
 
 - (IBAction)btn_weixinClick:(UIButton *)sender {
     @try {
+    [UMSocialControllerService defaultControllerService].socialUIDelegate = self;
         UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
-        
+    
         snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
             
             if (response.responseCode == UMSResponseCodeSuccess) {
                 
                 
-                
                 UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
                 
                 NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
-                
+                DataProvider * dataprovider=[[DataProvider alloc] init];
+                [dataprovider setDelegateObject:self setBackFunctionName:@"loginBackcall:"];
+                [dataprovider LoginForWXWithopenid:snsAccount.usid andusername:snsAccount.userName];
             }
             
         });
@@ -113,7 +115,6 @@
     @finally {
         
     }
-    
 }
 
 - (IBAction)btn_qqClick:(UIButton *)sender {

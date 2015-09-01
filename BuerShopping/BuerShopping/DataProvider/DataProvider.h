@@ -425,6 +425,13 @@
  */
 -(void)LoginForQQWithopenid:(NSString *)openid andusername:(NSString * )username;
 /**
+ *  微信登录
+ *
+ *  @param openid   <#openid description#>
+ *  @param username <#username description#>
+ */
+-(void)LoginForWXWithopenid:(NSString *)openid andusername:(NSString * )username;
+/**
  *  获取钱包余额和积分
  *
  *  @param key <#key description#>

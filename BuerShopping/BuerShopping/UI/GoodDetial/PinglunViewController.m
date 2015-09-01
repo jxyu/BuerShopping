@@ -19,6 +19,7 @@
 @implementation PinglunViewController
 {
     BOOL isfooterrefresh;
+    BOOL ishasMore;
     int curpage;
     NSArray * arrayPinglun;
 }
@@ -31,6 +32,7 @@
     _lblTitle.textColor=[UIColor whiteColor];
     arrayPinglun=[[NSArray alloc] init];
     isfooterrefresh=NO;
+    ishasMore=YES;
     curpage=0;
     [self InitAllView];
 }
@@ -66,15 +68,22 @@
     curpage=1;
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetMorepinglunBackCall:"];
-    [dataprovider GetMorePinglun:@"100024"];
+    [dataprovider GetMorePinglun:_good_id];
 }
 
 -(void)StoreFootRefresh
 {
-    curpage++;
-    DataProvider * dataprovider=[[DataProvider alloc] init];
-    [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
-    [dataprovider GetMorePinglun:@"100024"];
+    if (ishasMore) {
+        curpage++;
+        DataProvider * dataprovider=[[DataProvider alloc] init];
+        [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
+        [dataprovider GetMorePinglun:_good_id];
+    }
+    else
+    {
+         [__myTableview.footer endRefreshing];
+    }
+    
 }
 
 -(void)FootRefireshBackCall:(id)dict
@@ -85,6 +94,13 @@
     isfooterrefresh=NO;
     NSMutableArray *itemarray=[[NSMutableArray alloc] initWithArray:arrayPinglun];
     if (!dict[@"datas"][@"error"]) {
+        if ([dict[@"hasmore"] intValue]==1) {
+            ishasMore=YES;
+        }
+        else
+        {
+            ishasMore=NO;
+        }
         NSArray * arrayitem=dict[@"datas"][@"evaluate_list"];
         for (id item in arrayitem) {
             [itemarray addObject:item];
@@ -100,6 +116,13 @@
 {
     NSLog(@"更多评论%@",dict);
     if (!dict[@"datas"][@"error"]) {
+        if ([dict[@"hasmore"] intValue]==1) {
+            ishasMore=YES;
+        }
+        else
+        {
+            ishasMore=NO;
+        }
         arrayPinglun=dict[@"datas"][@"evaluate_list"];
         [__myTableview reloadData];
         [__myTableview.header endRefreshing];

@@ -30,7 +30,7 @@
 
 @implementation GoodDetialViewController
 {
-    NSDictionary * arrayslider;
+    NSDictionary * arrayslider;//轮播图
     NSDictionary * goodInfo;
     NSDictionary * evaluate;
     NSDictionary * imgdict;
@@ -349,12 +349,12 @@
 
 
 
--(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    UIView * footerview=[[UIView alloc] init];
-    footerview.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
-    return footerview;
-}
+//-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+//{
+////    UIView * footerview=[[UIView alloc] init];
+////    footerview.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
+////    return footerview;
+//}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat h=50;
@@ -455,10 +455,10 @@
     return cell;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 5;
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    return 5;
+//}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 1;
@@ -473,6 +473,7 @@
     NSLog(@"更多评论");
     PinglunViewController * pinglun=[[PinglunViewController alloc] initWithNibName:@"PinglunViewController" bundle:[NSBundle mainBundle]];
     pinglun.num_pinglun=goodInfo[@"evaluation_count"];
+    pinglun.good_id=_gc_id;
     [self.navigationController pushViewController:pinglun animated:YES];
 }
 

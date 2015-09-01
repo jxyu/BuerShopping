@@ -45,6 +45,7 @@
     BOOL keyboardZhezhaoShow;
     
     int ishasmorepage;
+    BOOL isalertShow;
 }
 
 - (void)viewDidLoad {
@@ -54,7 +55,7 @@
     self.view.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
     arrayGoodList=[[NSArray alloc] init];
     keyboardZhezhaoShow=NO;
-    
+    isalertShow=NO;
     isfooterrefresh=NO;
     isSelectViewShow=NO;
     isxiaoliangup=NO;
@@ -452,6 +453,15 @@
         }
         arrayGoodList=[[NSArray alloc] initWithArray:itemarray];
     }
+    else
+    {
+        if(!isalertShow)
+        {
+            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+            [alert show];
+            isalertShow=YES;
+        }
+    }
     [_myTableView reloadData];
 }
 -(void)SpecFootRefireshBackCall:(id)dict
@@ -519,7 +529,6 @@
                         [img_icon setImage:[UIImage imageNamed:@"order_down_icon"]];
                         isjiageup=NO;
                     }
-                    
                 }
             }
             break;

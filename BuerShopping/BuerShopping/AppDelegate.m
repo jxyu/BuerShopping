@@ -91,6 +91,7 @@
     
     //设置微信AppId，设置分享url，默认使用友盟的网址
     [UMSocialWechatHandler setWXAppId:@"wxb54187fbe1e447bd" appSecret:@"b0a3885263e3842f24a64e09717f2597" url:@"http://www.umeng.com/social"];
+    //    //设置支持没有客户端情况下使用SSO授权
     
     //    //设置分享到QQ空间的应用Id，和分享url 链接
     [UMSocialQQHandler setQQWithAppId:@"1104753536" appKey:@"gfNQrmLumGooHdCf" url:@"http://www.umeng.com/social"];
@@ -103,7 +104,7 @@
     
     /***************************************分享结束**********************************************/
     
-    
+//    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatsession,UMShareToWechatTimeline]];
     
     /*****************************************推送开始********************************************/
     //set AppKey and LaunchOptions
@@ -345,6 +346,10 @@
                    }
                }];
         return  YES;
+    }
+    else
+    {
+        return  [UMSocialSnsService handleOpenURL:url];
     }
     return result;
     

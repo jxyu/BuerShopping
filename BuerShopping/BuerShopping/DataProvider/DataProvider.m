@@ -549,6 +549,15 @@
     }
 }
 
+-(void)LoginForWXWithopenid:(NSString *)openid andusername:(NSString * )username
+{
+    if (openid&&username) {
+        NSString * url=[NSString stringWithFormat:@"%@index.php?act=login&op=weixin",Url];
+        NSDictionary * prm=@{@"openid":openid,@"username":username,@"client":@"ios"};
+        [self PostRequest:url andpram:prm];
+    }
+}
+
 -(void)GetPolicatandjifenWithKey:(NSString *)key
 {
     if (key) {

@@ -158,7 +158,7 @@
         DataProvider * dataprovider=[[DataProvider alloc] init];
         ++uplodaimage;
         [dataprovider setDelegateObject:self setBackFunctionName:@"UploadeImgBackCall:"];
-        [dataprovider ShowOrderUpLoadImg:imgData andkey:_key];
+        [dataprovider UploadPingJiaImg:imgData andkey:_key];
     }
 }
 
@@ -342,7 +342,7 @@
 -(void)starRateView:(CWStarRateView *)starRateView scroePercentDidChange:(CGFloat)newScorePercent
 {
     NSLog(@"%f",newScorePercent);
-    [startdict setObject:[NSString stringWithFormat:@"%.0f",newScorePercent*10] forKey:goodList[starRateView.tag][@"goods_id"]];
+    [startdict setObject:[NSString stringWithFormat:@"%.0f",newScorePercent*5] forKey:goodList[starRateView.tag][@"goods_id"]];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

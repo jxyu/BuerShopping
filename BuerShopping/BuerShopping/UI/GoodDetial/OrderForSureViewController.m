@@ -168,7 +168,8 @@
         cell.lbl_orderTitle.text=[NSString stringWithFormat:@"%@",gooddict[@"goods_name"]];
         cell.lbl_price.text=[NSString stringWithFormat:@"¥%@",gooddict[@"goods_price"]];
         cell.lbl_num.text=[NSString stringWithFormat:@"x%@",gooddict[@"goods_num"]];
-//        cell.lbl_guige.text=gooddict[@"goods_spec"];
+
+        cell.lbl_guige.text=gooddict[@"goods_spec"];
         [cell.img_log sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",gooddict[@"goods_image_url"]]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
         //        cell.lbl_rescuncun.text=goods_like[indexPath.row][@""];
         return cell;

@@ -363,14 +363,14 @@
     cell  = [[[NSBundle mainBundle] loadNibNamed:@"GoodsTableViewCell" owner:self options:nil] lastObject];
     cell.layer.masksToBounds=YES;
     cell.frame=CGRectMake(cell.frame.origin.x, cell.frame.origin.y, tableView.frame.size.width, cell.frame.size.height);
-    cell.lbl_goodsName.text=arrayGoodList[indexPath.row][@"goods_name"];
-    cell.lbl_goodsDetial.text=arrayGoodList[indexPath.row][@"goods_jingle"];
-    cell.lbl_long.text=arrayGoodList[indexPath.row][@"juli"];
-    cell.lbl_price.text=arrayGoodList[indexPath.row][@"goods_price"];
-    cell.lbl_rescuncun.text=arrayGoodList[indexPath.row][@"goods_storage"];
-    cell.lbl_resxiaoliang.text=arrayGoodList[indexPath.row][@"goods_salenum"];
-    cell.lbl_liulanliang.text=arrayGoodList[indexPath.row][@"goods_click"];
-    [cell.img_goodsicon sd_setImageWithURL:[NSURL URLWithString:arrayGoodList[indexPath.row][@"goods_image_url"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    cell.lbl_goodsName.text=arrayGoodList[indexPath.section][@"goods_name"];
+    cell.lbl_goodsDetial.text=arrayGoodList[indexPath.section][@"goods_jingle"];
+    cell.lbl_long.text=arrayGoodList[indexPath.section][@"juli"];
+    cell.lbl_price.text=arrayGoodList[indexPath.section][@"goods_price"];
+    cell.lbl_rescuncun.text=arrayGoodList[indexPath.section][@"goods_storage"];
+    cell.lbl_resxiaoliang.text=arrayGoodList[indexPath.section][@"goods_salenum"];
+    cell.lbl_liulanliang.text=arrayGoodList[indexPath.section][@"goods_click"];
+    [cell.img_goodsicon sd_setImageWithURL:[NSURL URLWithString:arrayGoodList[indexPath.section][@"goods_image_url"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     //        cell.lbl_rescuncun.text=goods_like[indexPath.row][@""];
     return cell;
 }

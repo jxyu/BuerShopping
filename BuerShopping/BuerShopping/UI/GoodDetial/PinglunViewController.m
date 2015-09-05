@@ -28,7 +28,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self addLeftButton:@"Icon_Back@2x.png"];
-    _lblTitle.text=@"评价（1）";
+    _lblTitle.text=@"评价（0）";
     _lblTitle.textColor=[UIColor whiteColor];
     arrayPinglun=[[NSArray alloc] init];
     isfooterrefresh=NO;
@@ -124,6 +124,7 @@
             ishasMore=NO;
         }
         arrayPinglun=dict[@"datas"][@"evaluate_list"];
+        _lblTitle.text=[NSString stringWithFormat:@"评价（%lu）",(unsigned long)arrayPinglun.count];
         [__myTableview reloadData];
         [__myTableview.header endRefreshing];
     }

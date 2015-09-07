@@ -69,10 +69,11 @@
                         <color key="textColor" red="0.63921568630000003" green="0.63921568630000003" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="72评价" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXx-Ak-SA5">
-                        <rect key="frame" x="195" y="27" width="54" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="72评价" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXx-Ak-SA5">
+                        <rect key="frame" x="228" y="27" width="54" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="45o-WZ-7n9"/>
+                            <constraint firstAttribute="width" constant="54" id="QNh-N9-ZbW"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.63921568630000003" green="0.63921568630000003" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -83,7 +84,7 @@
                     <constraint firstItem="k1O-hS-EPP" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="CA1-CR-bdW"/>
                     <constraint firstItem="xPy-kt-5EN" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="LAK-MK-DZZ"/>
                     <constraint firstItem="Jtz-Ls-Oi1" firstAttribute="top" secondItem="FpW-F3-1y6" secondAttribute="bottom" constant="-3" id="OLt-vV-n9N"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="JXx-Ak-SA5" secondAttribute="trailing" constant="63" id="VNG-y7-6WQ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="JXx-Ak-SA5" secondAttribute="trailing" constant="30" id="VNG-y7-6WQ"/>
                     <constraint firstItem="1DW-bE-6eX" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="Xro-go-L5a"/>
                     <constraint firstAttribute="trailingMargin" secondItem="k1O-hS-EPP" secondAttribute="trailing" constant="10" id="cAh-uA-J9e"/>
                     <constraint firstItem="fZa-Ks-456" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="cQ3-yx-UnD"/>

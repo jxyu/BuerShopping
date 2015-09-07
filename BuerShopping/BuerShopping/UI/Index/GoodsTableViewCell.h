@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbl_goodsDetial;
 @property (weak, nonatomic) IBOutlet UILabel *lbl_price;
 - (IBAction)MoreClick:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_oldprice;
 
 @property (weak, nonatomic) IBOutlet UIView *BackView_more;
 @property (weak, nonatomic) IBOutlet UILabel *lbl_rescuncun;

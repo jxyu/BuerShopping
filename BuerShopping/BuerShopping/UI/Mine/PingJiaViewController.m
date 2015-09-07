@@ -353,7 +353,12 @@
     NSMutableDictionary * prm=[[NSMutableDictionary alloc] init];
     for (int i=0; i<goodList.count; i++) {
         NSString * goods_id=goodList[i][@"goods_id"];
-        NSDictionary * itemprm=@{@"comment":messagedict[goods_id],@"score":startdict[goods_id],@"image":imagedict[goods_id]};
+        NSMutableDictionary *itemprm=[[NSMutableDictionary alloc] init];
+        [itemprm setObject:messagedict[goods_id] forKey:@"comment"];
+        [itemprm setObject:startdict[goods_id] forKey:@"score"];
+        if (imagedict[goods_id]) {
+            [itemprm setObject:imagedict[goods_id] forKey:@"image"];
+        }
         [prm setObject:itemprm forKey:goods_id];
     }
     
@@ -362,6 +367,7 @@
 //                                                         error:nil];
 //    NSString *jsonString = [[NSString alloc] initWithData:jsonData
 //                                                 encoding:NSUTF8StringEncoding];
+    
     NSDictionary * sendprm=@{@"key":_key,@"order_id":_orderData[@"order_id"],@"goods":prm};
     DataProvider * dataprovider=[[DataProvider alloc] init];
     

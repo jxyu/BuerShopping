@@ -238,11 +238,11 @@
     }
 }
 
--(void)GetMorePinglun:(NSString *)goodid
+-(void)GetMorePinglun:(NSString *)goodid andcurpage:(NSString *)curpage
 {
     if (goodid) {
         NSString * url=[NSString stringWithFormat:@"%@index.php?act=goods&op=more_evaluate",Url];
-        NSDictionary * prm=@{@"goods_id":goodid};
+        NSDictionary * prm=@{@"goods_id":goodid,@"curpage":curpage};
         [self GetRequest:url andpram:prm];
     }
 }

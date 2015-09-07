@@ -333,29 +333,41 @@ typedef NS_ENUM(NSInteger, TravelTypes)
 
 - (void)AMapNaviViewControllerCloseButtonClicked:(AMapNaviViewController *)naviViewController
 {
-    if (self.naviType == NavigationTypeGPS)
-    {
-        [self.iFlySpeechSynthesizer stopSpeaking];
-        
-        self.iFlySpeechSynthesizer.delegate = nil;
-        self.iFlySpeechSynthesizer          = nil;
-        
-        [self.naviManager stopNavi];
-    }
-    else if (self.naviType == NavigationTypeSimulator)
-    {
-        [self.iFlySpeechSynthesizer stopSpeaking];
-        
-        self.iFlySpeechSynthesizer.delegate = nil;
-        self.iFlySpeechSynthesizer          = nil;
+    @try {
+        [self.naviManager dismissNaviViewControllerAnimated:YES];
+        // 退出导航界面后恢复地图的状态
+        [self configMapView];
+        if (self.naviType == NavigationTypeGPS)
+        {
+            [self.iFlySpeechSynthesizer stopSpeaking];
+            
+            self.iFlySpeechSynthesizer.delegate = nil;
+            self.iFlySpeechSynthesizer          = nil;
+            
+            [self.naviManager stopNavi];
+        }
+        else if (self.naviType == NavigationTypeSimulator)
+        {
+            [self.iFlySpeechSynthesizer stopSpeaking];
+            
+            self.iFlySpeechSynthesizer.delegate = nil;
+            self.iFlySpeechSynthesizer          = nil;
+            
+            [self.naviManager stopNavi];
+        }
 
-        [self.naviManager stopNavi];
     }
-
-    [self.naviManager dismissNaviViewControllerAnimated:YES];
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     
-    // 退出导航界面后恢复地图的状态
-    [self configMapView];
+    
+    
+    
+    
 }
 
 

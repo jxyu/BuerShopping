@@ -224,14 +224,15 @@
         lbl_proformprice.textColor=[UIColor grayColor];
         lbl_proformprice.text=[NSString stringWithFormat:@"价格:¥%@",goodInfo[@"goods_price"]];
         lbl_proformprice.font=[UIFont systemFontOfSize:15];
-        lbl_proformprice.textAlignment=NSTextAlignmentCenter;
+//        lbl_proformprice.textAlignment=NSTextAlignmentCenter;
         [backview_goodinfo2 addSubview:lbl_proformprice];
-        UIView * delLine=[[UIView alloc] initWithFrame:CGRectMake(0, lbl_proformprice.frame.size.height/2, lbl_proformprice.frame.size.width, 1)];
-        delLine.backgroundColor=[UIColor blackColor];
+        NSString * stroldPrice=[NSString stringWithFormat:@"价格:¥%@",goodInfo[@"goods_price"]];
+        UIView * delLine=[[UIView alloc] initWithFrame:CGRectMake(0, lbl_proformprice.frame.size.height/2, stroldPrice.length*10, 1)];
+        delLine.backgroundColor=[UIColor lightGrayColor];
         [lbl_proformprice addSubview:delLine];
         x=lbl_proformprice.frame.size.height+lbl_proformprice.frame.origin.y+5;
     }
-    UILabel * lbl_class=[[UILabel alloc] initWithFrame:CGRectMake(0, x, SCREEN_WIDTH/3, 20)];
+    UILabel * lbl_class=[[UILabel alloc] initWithFrame:CGRectMake(10, x, SCREEN_WIDTH/3, 20)];
     lbl_class.text=[NSString stringWithFormat:@"所属%@分类",goodInfo[@"gc_name"]];
     lbl_class.textColor=[UIColor grayColor];
     lbl_class.textAlignment=NSTextAlignmentCenter;
@@ -360,7 +361,7 @@
     CGFloat h=50;
     if (indexPath.section==1) {
         if (evaluate.count>0) {
-            h=260;
+            h=210;
         }
         else
         {
@@ -388,7 +389,7 @@
 {
     UITableViewCell *cell=[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
     if (indexPath.section==0) {
-        UILabel * lbl_select=[[UILabel alloc] initWithFrame:CGRectMake(10, 15, 200, 20)];
+        UILabel * lbl_select=[[UILabel alloc] initWithFrame:CGRectMake(15, 15, 200, 20)];
         lbl_select.text=@"选择规格类型";
         lbl_select.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
         [cell addSubview:lbl_select];
@@ -398,7 +399,7 @@
     }
     if (indexPath.section==1) {
         if (evaluate.count>0) {
-            UILabel * lbl_pinglunTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 150, 20)];
+            UILabel * lbl_pinglunTitle=[[UILabel alloc] initWithFrame:CGRectMake(15, 10, 150, 20)];
             lbl_pinglunTitle.text=[NSString stringWithFormat:@"宝贝评价(%@)",goodInfo[@"evaluation_count"]];
             [cell addSubview:lbl_pinglunTitle];
             UILabel * lbl_zogpingfen=[[UILabel alloc] initWithFrame:CGRectMake(lbl_pinglunTitle.frame.size.width+lbl_pinglunTitle.frame.origin.x, 10, SCREEN_WIDTH-(lbl_pinglunTitle.frame.size.width+lbl_pinglunTitle.frame.origin.x)-20, 20)];
@@ -406,7 +407,7 @@
             lbl_zogpingfen.textColor=[UIColor colorWithRed:243/255.0 green:152/255.0 blue:0/255.0 alpha:1.0];
             lbl_zogpingfen.textAlignment=NSTextAlignmentRight;
             [cell addSubview:lbl_zogpingfen];
-            UIImageView * img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(10, lbl_pinglunTitle.frame.origin.y+lbl_pinglunTitle.frame.size.height+5, 30, 30)];
+            UIImageView * img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(15, lbl_pinglunTitle.frame.origin.y+lbl_pinglunTitle.frame.size.height+5, 30, 30)];
             [img_avatar sd_setImageWithURL:[NSURL URLWithString:evaluate[@"geval_avatar"]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
             img_avatar.layer.masksToBounds=YES;
             img_avatar.layer.cornerRadius=15;
@@ -419,7 +420,7 @@
             weisheng.allowIncompleteStar = NO;
             weisheng.hasAnimation = YES;
             [cell addSubview:weisheng];
-            UILabel * lbl_content=[[UILabel alloc] initWithFrame:CGRectMake(10, weisheng.frame.size.height+weisheng.frame.origin.y+10, SCREEN_WIDTH, 20)];
+            UILabel * lbl_content=[[UILabel alloc] initWithFrame:CGRectMake(15, weisheng.frame.size.height+weisheng.frame.origin.y+10, SCREEN_WIDTH, 20)];
             lbl_content.text=evaluate[@"geval_content"];
             lbl_content.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
             [cell addSubview:lbl_content];
@@ -435,13 +436,13 @@
                 }
             }
             UIView * lastview=[cell.subviews lastObject];
-            UILabel * lbl_spec=[[UILabel alloc] initWithFrame:CGRectMake(10, lastview.frame.size.height+lastview.frame.origin.y+10, SCREEN_WIDTH-20, 20)];
+            UILabel * lbl_spec=[[UILabel alloc] initWithFrame:CGRectMake(15, lastview.frame.size.height+lastview.frame.origin.y+10, SCREEN_WIDTH-20, 20)];
             lbl_spec.text=evaluate[@"geval_spec"];
-            lbl_spec.textColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
+            lbl_spec.textColor=[UIColor lightGrayColor];
             lbl_spec.font=[UIFont systemFontOfSize:15];
             [cell addSubview:lbl_spec];
-            UIView * backview_fenge=[[UIView alloc] initWithFrame:CGRectMake(10, lbl_spec.frame.origin.y+lbl_spec.frame.size.height+5, SCREEN_WIDTH-20, 1)];
-            backview_fenge.backgroundColor=[UIColor grayColor];
+            UIView * backview_fenge=[[UIView alloc] initWithFrame:CGRectMake(10, lbl_spec.frame.origin.y+lbl_spec.frame.size.height+5, SCREEN_WIDTH-20, 0.5)];
+            backview_fenge.backgroundColor=[UIColor lightGrayColor];
             [cell addSubview:backview_fenge];
             UIButton * btn_morePinglun=[[UIButton alloc] initWithFrame:CGRectMake(0, backview_fenge.frame.origin.y+backview_fenge.frame.size.height, SCREEN_WIDTH, 50)];
             [btn_morePinglun setTitle:@"查看更多评价" forState:UIControlStateNormal];
@@ -501,9 +502,9 @@
         [btn_cancel setImage:[UIImage imageNamed:@"cancel_for_select@2x.png"] forState:UIControlStateNormal];
         [btn_cancel addTarget:self action:@selector(cancelPageSelect:) forControlEvents:UIControlEventTouchUpInside];
         [BackVew_selectTitle addSubview:btn_cancel];
-        lbl_price=[[UILabel alloc] initWithFrame:CGRectMake(140, btn_cancel.frame.size.height+btn_cancel.frame.origin.y+5, BackVew_selectTitle.frame.size.width-150, 20)];
+        lbl_price=[[UILabel alloc] initWithFrame:CGRectMake(140, btn_cancel.frame.origin.y, BackVew_selectTitle.frame.size.width-150, 20)];
         lbl_price.textColor=[UIColor colorWithRed:255/255.0 green:154/255.0 blue:1/255.0 alpha:1.0];
-        lbl_price.text=goodInfo[@"goods_price"];
+        lbl_price.text=[NSString stringWithFormat:@"¥%@",goodInfo[@"goods_price"]];
         [BackVew_selectTitle addSubview:lbl_price];
         lbl_kucun=[[UILabel alloc] initWithFrame:CGRectMake(lbl_price.frame.origin.x, lbl_price.frame.origin.y+lbl_price.frame.size.height+5, lbl_price.frame.size.width, 20)];
         lbl_kucun.font=[UIFont systemFontOfSize:13];
@@ -540,7 +541,7 @@
                         [btn_item addTarget:self action:@selector(itemselectchange:) forControlEvents:UIControlEventTouchUpInside];
                         btn_item.layer.cornerRadius=5;
                         btn_item.layer.borderWidth=1;
-                        btn_item.layer.borderColor=[RGB(102, 102, 102) CGColor];
+                        btn_item.layer.borderColor=[RGB(229, 229, 229) CGColor];
                         [firstselect addSubview:btn_item];
                     }
                 }

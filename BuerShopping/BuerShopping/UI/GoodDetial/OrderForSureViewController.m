@@ -64,6 +64,7 @@
 {
     _mytableview.delegate=self;
     _mytableview.dataSource=self;
+    _mytableview.showsVerticalScrollIndicator=NO;
     _lbl_price.text=[NSString stringWithFormat:@"¥%@",gooddict[@"goods_price"]];
 }
 
@@ -180,13 +181,19 @@
         lbl_cellTitle.text=@"配送方式";
         lbl_cellTitle.textColor=[UIColor grayColor];
         [cell addSubview:lbl_cellTitle];
+        UILabel * lbl_sendWay=[[UILabel alloc] initWithFrame:CGRectMake(cell.frame.size.width-100, 20, 90, 20)];
+        lbl_sendWay.textColor=[UIColor grayColor];
         if (sendWay) {
-            UILabel * lbl_sendWay=[[UILabel alloc] initWithFrame:CGRectMake(cell.frame.size.width-100, 20, 90, 20)];
-            lbl_sendWay.textColor=[UIColor grayColor];
+            
             lbl_sendWay.text=sendWay;
-            lbl_sendWay.textAlignment=NSTextAlignmentRight;
-            [cell addSubview:lbl_sendWay];
+            
         }
+        else
+        {
+            lbl_sendWay.text=@"请选择";
+        }
+        lbl_sendWay.textAlignment=NSTextAlignmentRight;
+        [cell addSubview:lbl_sendWay];
         return cell;
     }
     else if(indexPath.row==2)
@@ -209,13 +216,18 @@
         [btn_userrestmoney setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [btn_userrestmoney addTarget:self action:@selector(usePurse:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:btn_userrestmoney];
+        UILabel * lbl_sendWay=[[UILabel alloc] initWithFrame:CGRectMake(btn_userrestmoney.frame.origin.x-100, 20, 90, 20)];
+        lbl_sendWay.textColor=[UIColor grayColor];
         if (payWay) {
-            UILabel * lbl_sendWay=[[UILabel alloc] initWithFrame:CGRectMake(btn_userrestmoney.frame.origin.x-100, 20, 90, 20)];
-            lbl_sendWay.textColor=[UIColor grayColor];
+            
             lbl_sendWay.text=payWay;
-            lbl_sendWay.textAlignment=NSTextAlignmentRight;
-            [cell addSubview:lbl_sendWay];
         }
+        else
+        {
+            lbl_sendWay.text=@"请选择";
+        }
+        lbl_sendWay.textAlignment=NSTextAlignmentRight;
+        [cell addSubview:lbl_sendWay];
         return cell;
     }
     else if(indexPath.row==3)
@@ -268,16 +280,16 @@
 {
     UIView * headerview=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
     if (addressdict.count>0) {
-        UIImageView * img_location=[[UIImageView alloc] initWithFrame:CGRectMake(10, 30, 15, 20)];
+        UIImageView * img_location=[[UIImageView alloc] initWithFrame:CGRectMake(10, 45, 15, 20)];
         img_location.image=[UIImage imageNamed:@"location_icon"];
         [headerview addSubview:img_location];
-        UILabel * lbl_addressTitle=[[UILabel alloc] initWithFrame:CGRectMake(img_location.frame.origin.x+img_location.frame.size.width+10, 10, 120, 20)];
+        UILabel * lbl_addressTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 120, 20)];
         lbl_addressTitle.text=[NSString stringWithFormat:@"收货人:%@",[addressdict[@"true_name"] isKindOfClass:[NSNull class]]?@"":addressdict[@"true_name"]];
         [headerview addSubview:lbl_addressTitle];
         UILabel * lbl_phone=[[UILabel alloc] initWithFrame:CGRectMake(lbl_addressTitle.frame.origin.x+lbl_addressTitle.frame.size.width, 10, headerview.frame.size.width-lbl_addressTitle.frame.origin.x-lbl_addressTitle.frame.size.width-20, 20)];
-        lbl_phone.text=[addressdict[@"tel_phone"] isKindOfClass:[NSNull class]]?@"4":addressdict[@"tel_phone"];
+        lbl_phone.text=[addressdict[@"mob_phone"] isKindOfClass:[NSNull class]]?@"":addressdict[@"mob_phone"];
         [headerview addSubview:lbl_phone];
-        UILabel * lbl_address=[[UILabel alloc] initWithFrame:CGRectMake(lbl_addressTitle.frame.origin.x, lbl_addressTitle.frame.origin.y+lbl_addressTitle.frame.size.height+5, lbl_phone.frame.size.width+lbl_phone.frame.origin.x-lbl_addressTitle.frame.origin.x, 40)];
+        UILabel * lbl_address=[[UILabel alloc] initWithFrame:CGRectMake(img_location.frame.origin.x+img_location.frame.size.width+10, lbl_addressTitle.frame.origin.y+lbl_addressTitle.frame.size.height+5, lbl_phone.frame.size.width+lbl_phone.frame.origin.x-lbl_addressTitle.frame.origin.x, 40)];
         lbl_address.text=[NSString stringWithFormat:@"收货地址:%@",[addressdict[@"address"] isKindOfClass:[NSNull class]]?@"":addressdict[@"address"]];
         lbl_address.numberOfLines=2;
         lbl_address.font=[UIFont systemFontOfSize:14];

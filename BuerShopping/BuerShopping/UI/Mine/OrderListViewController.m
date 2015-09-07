@@ -338,7 +338,6 @@
 
 -(void)FootRefireshBackCall:(id)dict
 {
-    isalertShow=NO;
     isfooterrefresh=NO;
     NSLog(@"上拉刷新");
     NSMutableArray *itemarray=[[NSMutableArray alloc] initWithArray:orderListArray];

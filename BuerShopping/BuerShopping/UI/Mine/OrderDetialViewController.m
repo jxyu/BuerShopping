@@ -144,7 +144,7 @@
     {
         UITableViewCell * cell=[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 90)];
         UILabel * lbl_cellTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 150, 20)];
-        lbl_cellTitle.text=@"运费";
+        lbl_cellTitle.text=@" 运费";
         lbl_cellTitle.textColor=[UIColor grayColor];
         [cell addSubview:lbl_cellTitle];
         UILabel * lbl_cellTitleitem=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-160, 10, 150, 20)];
@@ -152,7 +152,7 @@
         lbl_cellTitleitem.textAlignment=NSTextAlignmentRight;
         [cell addSubview:lbl_cellTitleitem];
         UILabel * lbl_payWay=[[UILabel alloc] initWithFrame:CGRectMake(10, lbl_cellTitle.frame.size.height+lbl_cellTitle.frame.origin.y+10, 150, 20)];
-        lbl_payWay.text=@"付款方式";
+        lbl_payWay.text=@" 付款方式";
         lbl_payWay.textColor=[UIColor grayColor];
         [cell addSubview:lbl_payWay];
         UILabel * lbl_payWayitem=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-160, lbl_payWay.frame.origin.y, 150, 20)];
@@ -160,7 +160,7 @@
         lbl_payWayitem.textAlignment=NSTextAlignmentRight;
         [cell addSubview:lbl_payWayitem];
         UILabel * lbl_senderway=[[UILabel alloc] initWithFrame:CGRectMake(10, lbl_payWay.frame.size.height+lbl_payWay.frame.origin.y+10, 150, 20)];
-        lbl_senderway.text=@"收货方式";
+        lbl_senderway.text=@" 收货方式";
         lbl_senderway.textColor=[UIColor grayColor];
         [cell addSubview:lbl_senderway];
         UILabel * lbl_senderwayitem=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-160, lbl_senderway.frame.origin.y, 150, 20)];
@@ -173,7 +173,7 @@
     {
         UITableViewCell * cell=[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
         UILabel * lbl_cellTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 20, 80, 20)];
-        lbl_cellTitle.text=@"订单编号";
+        lbl_cellTitle.text=@" 订单编号";
         lbl_cellTitle.textColor=[UIColor grayColor];
         [cell addSubview:lbl_cellTitle];
         CGFloat x=lbl_cellTitle.frame.size.width+lbl_cellTitle.frame.origin.x;
@@ -189,7 +189,7 @@
     {
         UITableViewCell * cell=[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
         UILabel * lbl_cellTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 20, 150, 20)];
-        lbl_cellTitle.text=@"卖家留言";
+        lbl_cellTitle.text=@" 卖家留言";
         lbl_cellTitle.textColor=[UIColor grayColor];
         [cell addSubview:lbl_cellTitle];
         CGFloat x=lbl_cellTitle.frame.size.width+lbl_cellTitle.frame.origin.x+10;
@@ -446,16 +446,16 @@
 {
     UIView * headerview=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
     if (extend_order_common) {
-        UIImageView * img_location=[[UIImageView alloc] initWithFrame:CGRectMake(10, 30, 15, 20)];
+        UIImageView * img_location=[[UIImageView alloc] initWithFrame:CGRectMake(10, 45, 15, 20)];
         img_location.image=[UIImage imageNamed:@"location_icon"];
         [headerview addSubview:img_location];
-        UILabel * lbl_addressTitle=[[UILabel alloc] initWithFrame:CGRectMake(img_location.frame.origin.x+img_location.frame.size.width+10, 10, 120, 20)];
+        UILabel * lbl_addressTitle=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 120, 20)];
         lbl_addressTitle.text=[NSString stringWithFormat:@"收货人:%@",[extend_order_common[@"reciver_name"] isKindOfClass:[NSNull class]]?@"":extend_order_common[@"reciver_name"]];
         [headerview addSubview:lbl_addressTitle];
         UILabel * lbl_phone=[[UILabel alloc] initWithFrame:CGRectMake(lbl_addressTitle.frame.origin.x+lbl_addressTitle.frame.size.width, 10, headerview.frame.size.width-lbl_addressTitle.frame.origin.x-lbl_addressTitle.frame.size.width-20, 20)];
         lbl_phone.text=[extend_order_common[@"reciver_info"][@"mob_phone"] isKindOfClass:[NSNull class]]?@"4":extend_order_common[@"reciver_info"][@"mob_phone"];
         [headerview addSubview:lbl_phone];
-        UILabel * lbl_address=[[UILabel alloc] initWithFrame:CGRectMake(lbl_addressTitle.frame.origin.x, lbl_addressTitle.frame.origin.y+lbl_addressTitle.frame.size.height+5, lbl_phone.frame.size.width+lbl_phone.frame.origin.x-lbl_addressTitle.frame.origin.x, 40)];
+        UILabel * lbl_address=[[UILabel alloc] initWithFrame:CGRectMake(img_location.frame.origin.x+img_location.frame.size.width+10, lbl_addressTitle.frame.origin.y+lbl_addressTitle.frame.size.height+5, lbl_phone.frame.size.width+lbl_phone.frame.origin.x-lbl_addressTitle.frame.origin.x, 40)];
         lbl_address.text=[NSString stringWithFormat:@"收货地址:%@",[extend_order_common[@"reciver_info"][@"address"] isKindOfClass:[NSNull class]]?@"":extend_order_common[@"reciver_info"][@"address"]];
         lbl_address.numberOfLines=2;
         lbl_address.font=[UIFont systemFontOfSize:14];

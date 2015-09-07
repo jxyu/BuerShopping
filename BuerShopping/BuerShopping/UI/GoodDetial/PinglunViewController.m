@@ -45,7 +45,6 @@
     // 下拉刷新
     [__myTableview addLegendHeaderWithRefreshingBlock:^{
         [self StoreTopRefresh];
-        
     }];
     [__myTableview.header beginRefreshing];
     
@@ -68,7 +67,7 @@
     curpage=1;
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"GetMorepinglunBackCall:"];
-    [dataprovider GetMorePinglun:_good_id];
+    [dataprovider GetMorePinglun:_good_id andcurpage:[NSString stringWithFormat:@"%d",curpage]];
 }
 
 -(void)StoreFootRefresh
@@ -77,7 +76,8 @@
         curpage++;
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
-        [dataprovider GetMorePinglun:_good_id];
+        [dataprovider GetMorePinglun:_good_id andcurpage:[NSString stringWithFormat:@"%d",curpage]];
+        [__myTableview.footer endRefreshing];
     }
     else
     {
@@ -107,9 +107,15 @@
         }
         arrayPinglun=[[NSArray alloc] initWithArray:itemarray];
         [__myTableview reloadData];
-        // 结束刷新
-        [__myTableview.footer endRefreshing];
+        
     }
+    else
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+    }
+    // 结束刷新
+    [__myTableview.footer endRefreshing];
 }
 
 -(void)GetMorepinglunBackCall:(id)dict

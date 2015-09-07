@@ -181,7 +181,7 @@
  *
  *  @param goodid <#goodid description#>
  */
--(void)GetMorePinglun:(NSString *)goodid;
+-(void)GetMorePinglun:(NSString *)goodid andcurpage:(NSString *)curpage;
 /**
  *  获取城市列表
  */

@@ -496,13 +496,13 @@
                 lbl_goodName.text=day_special[0][@"goods_name"];
                 [BackView_Specialprice addSubview:lbl_goodName];
                 
-                UILabel * lbl_GoodDetial=[[UILabel alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, lbl_goodName.frame.origin.y+lbl_goodName.frame.size.height+4, SCREEN_WIDTH-img_Specialprice.frame.origin.x-img_Specialprice.frame.size.width-40, 40)];
+                UILabel * lbl_GoodDetial=[[UILabel alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, lbl_goodName.frame.origin.y+lbl_goodName.frame.size.height, SCREEN_WIDTH-img_Specialprice.frame.origin.x-img_Specialprice.frame.size.width-40, 40)];
                 lbl_GoodDetial.text=day_special[0][@"goods_jingle"];
                 lbl_GoodDetial.textColor=[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0];
                 lbl_GoodDetial.numberOfLines=2;
                 lbl_GoodDetial.font=[UIFont systemFontOfSize:14];
                 [BackView_Specialprice addSubview:lbl_GoodDetial];
-                UILabel * lbl_priceNow=[[UILabel alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, lbl_GoodDetial.frame.origin.y+lbl_GoodDetial.frame.size.height-8, 60, 20)];
+                UILabel * lbl_priceNow=[[UILabel alloc] initWithFrame:CGRectMake(lbl_goodName.frame.origin.x, lbl_GoodDetial.frame.origin.y+lbl_GoodDetial.frame.size.height, 60, 20)];
                 lbl_priceNow.text=[NSString stringWithFormat:@"¥%@",day_special[0][@"goods_promotion_price"]];
                 lbl_priceNow.textColor=[UIColor redColor];
                 [BackView_Specialprice addSubview:lbl_priceNow];
@@ -530,7 +530,7 @@
         if (indexPath.section==1) {
             NSMutableArray *viewsArray = [@[] mutableCopy];
             for (int i = 0; i < circle.count; ++i) {
-                UIView *item=[[UIView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH-20, 140)];
+                UIView *item=[[UIView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH-20, 150)];
                 item.backgroundColor=[UIColor whiteColor];
                 UIImageView * img_head=[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 20,20)];
                 [img_head sd_setImageWithURL:[NSURL URLWithString:circle[i][@"avatar"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
@@ -538,12 +538,12 @@
                 UILabel * lbl_niceName=[[UILabel alloc] initWithFrame:CGRectMake(img_head.frame.origin.x+img_head.frame.size.width+10, 10, 100, 20)];
                 lbl_niceName.text=circle[i][@"member_name"];
                 [item addSubview:lbl_niceName];
-                UIView * BackView_OrderDetial=[[UIView alloc] initWithFrame:CGRectMake(10, img_head.frame.origin.y+img_head.frame.size.height+10, item.frame.size.width-10, 150)];
+                UIView * BackView_OrderDetial=[[UIView alloc] initWithFrame:CGRectMake(10, img_head.frame.origin.y+img_head.frame.size.height+10, item.frame.size.width-10, 160)];
 //                BackView_OrderDetial.backgroundColor=[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0];
-                UIImageView * img_orderImg=[[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 60, 60)];
+                UIImageView * img_orderImg=[[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 75, 75)];
                 [img_orderImg sd_setImageWithURL:[NSURL URLWithString:circle[i][@"image"][@"0"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
                 [BackView_OrderDetial addSubview:img_orderImg];
-                UILabel * lbl_orderTitle=[[UILabel alloc] initWithFrame:CGRectMake(img_orderImg.frame.size.width+10, 5, BackView_OrderDetial.frame.size.width-100, 18)];
+                UILabel * lbl_orderTitle=[[UILabel alloc] initWithFrame:CGRectMake(img_orderImg.frame.size.width+10, img_orderImg.frame.origin.y, BackView_OrderDetial.frame.size.width-img_orderImg.frame.size.width-20, 18)];
                 lbl_orderTitle.font=[UIFont systemFontOfSize:15];
                 lbl_orderTitle.text=@"觉得撒附近的索科洛夫绝世独立开发建设独立开发建设的旅客福建省大力开发建设的快乐见风";
                 [BackView_OrderDetial addSubview:lbl_orderTitle];
@@ -561,21 +561,21 @@
                 [btn_dianzan setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
                 btn_dianzan.imageView.bounds=CGRectMake(0, 0, 12, 15);
                 btn_dianzan.titleLabel.font=[UIFont systemFontOfSize:15];
-                [btn_dianzan setTitle:[NSString stringWithFormat:@"   %@",circle[i][@"praise"]] forState:UIControlStateNormal];
+                [btn_dianzan setTitle:[NSString stringWithFormat:@"  %@",circle[i][@"praise"]] forState:UIControlStateNormal];
                 [btn_dianzan setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
                 [BackView_OrderDetial addSubview:btn_dianzan];
                 UIButton * btn_pinglun=[[UIButton alloc] initWithFrame:CGRectMake(btn_dianzan.frame.origin.x+btn_dianzan.frame.size.width+5, btn_dianzan.frame.origin.y, 80, 15)];
                 [btn_pinglun setImage:[UIImage imageNamed:@"pinglun"] forState:UIControlStateNormal];
                 btn_pinglun.imageView.bounds=CGRectMake(0, 0, 15, 15);
                 btn_pinglun.titleLabel.font=[UIFont systemFontOfSize:15];
-                [btn_pinglun setTitle:[ NSString stringWithFormat:@"    %@",circle[i][@"replys"]] forState:UIControlStateNormal];
+                [btn_pinglun setTitle:[ NSString stringWithFormat:@"  %@",circle[i][@"replys"]] forState:UIControlStateNormal];
                 [btn_pinglun setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
                 [BackView_OrderDetial addSubview:btn_pinglun];
                 [item addSubview:BackView_OrderDetial];
                 [viewsArray addObject:item];
             }
             
-            self.mainScorllView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0,10, SCREEN_WIDTH-20, 120) animationDuration:2];
+            self.mainScorllView = [[CycleScrollView alloc] initWithFrame:CGRectMake(10,10, SCREEN_WIDTH-30, 150) animationDuration:2];
             self.mainScorllView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:0.1];
             self.mainScorllView.totalPagesCount = ^NSInteger(void){
                 return viewsArray.count;
@@ -621,6 +621,15 @@
         cell.lbl_resxiaoliang.text=goods_like[indexPath.row][@"goods_salenum"];
         cell.lbl_liulanliang.text=goods_like[indexPath.row][@"goods_click"];
         cell.lbl_price.text=[NSString stringWithFormat:@"¥%@",goods_like[indexPath.row][@"goods_price"]];
+        if ([goods_like[indexPath.row][@"is_special"] intValue]==1)
+        {
+            cell.lbl_price.text=[NSString stringWithFormat:@"¥%@",goods_like[indexPath.row][@"goods_promotion_price"]];
+            cell.lbl_oldprice.text=[NSString stringWithFormat:@"¥%@",goods_like[indexPath.row][@"goods_price"]];
+            NSString * stroldprice=[NSString stringWithFormat:@"¥%@",goods_like[indexPath.row][@"goods_price"]];
+            UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(0, cell.lbl_oldprice.frame.size.height/2, stroldprice.length*7, 1)];
+            fenge.backgroundColor=[UIColor lightGrayColor];
+            [cell.lbl_oldprice addSubview:fenge];
+        }
         [cell.img_goodsicon sd_setImageWithURL:[NSURL URLWithString:goods_like[indexPath.row][@"goods_image"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
 //        cell.lbl_rescuncun.text=goods_like[indexPath.row][@""];
         return cell;

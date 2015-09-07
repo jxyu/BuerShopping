@@ -56,7 +56,7 @@
     arrayGoodList=[[NSArray alloc] init];
     keyboardZhezhaoShow=NO;
     isalertShow=NO;
-    isfooterrefresh=NO;
+    
     isSelectViewShow=NO;
     isxiaoliangup=NO;
     isjiageup=NO;
@@ -157,7 +157,7 @@
         [_myTableView.header beginRefreshing];
     }];
     
-    
+    isfooterrefresh=NO;
     // 上拉刷新
     [_myTableView addLegendFooterWithRefreshingBlock:^{
         if (!isfooterrefresh) {
@@ -342,7 +342,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 85;
+    return 80;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -367,6 +367,15 @@
     cell.lbl_goodsDetial.text=arrayGoodList[indexPath.section][@"goods_jingle"];
     cell.lbl_long.text=arrayGoodList[indexPath.section][@"juli"];
     cell.lbl_price.text=arrayGoodList[indexPath.section][@"goods_price"];
+    if ([arrayGoodList[indexPath.section][@"is_special"] intValue]==1)
+    {
+        cell.lbl_price.text=[NSString stringWithFormat:@"¥%@",arrayGoodList[indexPath.section][@"goods_promotion_price"]];
+        cell.lbl_oldprice.text=[NSString stringWithFormat:@"¥%@",arrayGoodList[indexPath.section][@"goods_price"]];
+        NSString * stroldprice=[NSString stringWithFormat:@"¥%@",arrayGoodList[indexPath.section][@"goods_price"]];
+        UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(0, cell.lbl_oldprice.frame.size.height/2, stroldprice.length*7, 1)];
+        fenge.backgroundColor=[UIColor lightGrayColor];
+        [cell.lbl_oldprice addSubview:fenge];
+    }
     cell.lbl_rescuncun.text=arrayGoodList[indexPath.section][@"goods_storage"];
     cell.lbl_resxiaoliang.text=arrayGoodList[indexPath.section][@"goods_salenum"];
     cell.lbl_liulanliang.text=arrayGoodList[indexPath.section][@"goods_click"];
@@ -413,7 +422,7 @@
 -(void)FootRefresh
 {
     
-    if (ishasmorepage==1) {
+//    if (ishasmorepage==1) {
         curpage++;
         if (_type!=1&&_type!=2) {
             DataProvider * dataprovider=[[DataProvider alloc] init];
@@ -432,12 +441,7 @@
             [dataprovider setDelegateObject:self setBackFunctionName:@"FootRefireshBackCall:"];
             [dataprovider GessYouLike:[self BuildPrmfunc]];
         }
-    }else{
-        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"亲，" message:@"没有更多数据了哦" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
-        [alert show];
-        [_myTableView.footer endRefreshing];
-        isfooterrefresh=NO;
-    }
+//    }
 }
 
 -(void)FootRefireshBackCall:(id)dict
@@ -476,6 +480,15 @@
             [itemarray addObject:item];
         }
         arrayGoodList=[[NSArray alloc] initWithArray:itemarray];
+    }
+    else
+    {
+        if(!isalertShow)
+        {
+            UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"提示" message:dict[@"datas"][@"error"] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+            [alert show];
+            isalertShow=YES;
+        }
     }
     [_myTableView reloadData];
 }

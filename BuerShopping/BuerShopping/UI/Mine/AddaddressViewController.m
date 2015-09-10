@@ -134,7 +134,7 @@
     _mypicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-200, SCREEN_WIDTH, 200)];
     _mypicker.delegate=self;
     _mypicker.dataSource=self;
-    _mytbView=[[UITableView alloc] initWithFrame:CGRectMake(0, 65, SCREEN_WIDTH, SCREEN_HEIGHT-125)];
+    _mytbView=[[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-124)];
     _mytbView.delegate=self;
     _mytbView.dataSource=self;
     [_mytbView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];

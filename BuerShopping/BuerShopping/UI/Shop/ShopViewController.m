@@ -161,7 +161,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 85;
+    return 80;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -179,13 +179,15 @@
     cell.layer.masksToBounds=YES;
     cell.frame=CGRectMake(cell.frame.origin.x, cell.frame.origin.y, tableView.frame.size.width, cell.frame.size.height);
     [cell.img_resLogo sd_setImageWithURL:[NSURL URLWithString:arrayStoreList[indexPath.section][@"store_avatar"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    cell.img_resLogo.layer.masksToBounds=YES;
+    cell.img_resLogo.layer.cornerRadius=6;
     cell.lbl_resTitle.text=arrayStoreList[indexPath.section][@"store_name"];
     cell.lbl_resaddress.text=arrayStoreList[indexPath.section][@"store_address"];
     cell.lbl_pingjia.text=[NSString stringWithFormat:@"%@评价",arrayStoreList[indexPath.section][@"store_evaluate_count"]];
     cell.lbl_juli.text=arrayStoreList[indexPath.section][@"juli"];
     cell.lbl_classify.text=arrayStoreList[indexPath.section][@"sc_name"];
     
-    CWStarRateView * weisheng=[[CWStarRateView alloc] initWithFrame:CGRectMake(0,4,cell.starView.frame.size.width,15) numberOfStars:5];
+    CWStarRateView * weisheng=[[CWStarRateView alloc] initWithFrame:CGRectMake(5,4,cell.starView.frame.size.width,15) numberOfStars:5];
     weisheng.scorePercent = [arrayStoreList[indexPath.section][@"store_desccredit"] floatValue]/5;
     weisheng.allowIncompleteStar = NO;
     weisheng.hasAnimation = YES;

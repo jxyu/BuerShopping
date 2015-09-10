@@ -380,6 +380,8 @@
     cell.lbl_resxiaoliang.text=arrayGoodList[indexPath.section][@"goods_salenum"];
     cell.lbl_liulanliang.text=arrayGoodList[indexPath.section][@"goods_click"];
     [cell.img_goodsicon sd_setImageWithURL:[NSURL URLWithString:arrayGoodList[indexPath.section][@"goods_image_url"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    cell.img_goodsicon.layer.masksToBounds=YES;
+    cell.img_goodsicon.layer.cornerRadius=6;
     //        cell.lbl_rescuncun.text=goods_like[indexPath.row][@""];
     return cell;
 }

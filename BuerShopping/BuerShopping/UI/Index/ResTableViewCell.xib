@@ -32,7 +32,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xPy-kt-5EN">
-                        <rect key="frame" x="252" y="4" width="60" height="21"/>
+                        <rect key="frame" x="262" y="4" width="60" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="xtD-OF-Sjy"/>
                             <constraint firstAttribute="height" constant="21" id="yU1-Vg-VPk"/>
@@ -56,7 +56,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jtz-Ls-Oi1">
-                        <rect key="frame" x="87" y="22" width="93" height="29"/>
+                        <rect key="frame" x="90" y="22" width="93" height="29"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="29" id="Js8-sP-xPc"/>
@@ -64,7 +64,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="店铺地址（略）" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k1O-hS-EPP">
-                        <rect key="frame" x="173" y="50" width="129" height="21"/>
+                        <rect key="frame" x="173" y="50" width="149" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="0.63921568630000003" green="0.63921568630000003" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -82,14 +82,14 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="k1O-hS-EPP" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="CA1-CR-bdW"/>
-                    <constraint firstItem="xPy-kt-5EN" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="LAK-MK-DZZ"/>
+                    <constraint firstItem="xPy-kt-5EN" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="10" id="LAK-MK-DZZ"/>
                     <constraint firstItem="Jtz-Ls-Oi1" firstAttribute="top" secondItem="FpW-F3-1y6" secondAttribute="bottom" constant="-3" id="OLt-vV-n9N"/>
                     <constraint firstAttribute="trailingMargin" secondItem="JXx-Ak-SA5" secondAttribute="trailing" constant="30" id="VNG-y7-6WQ"/>
                     <constraint firstItem="1DW-bE-6eX" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="Xro-go-L5a"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="k1O-hS-EPP" secondAttribute="trailing" constant="10" id="cAh-uA-J9e"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="k1O-hS-EPP" secondAttribute="trailing" constant="-10" id="cAh-uA-J9e"/>
                     <constraint firstItem="fZa-Ks-456" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="cQ3-yx-UnD"/>
                     <constraint firstItem="k1O-hS-EPP" firstAttribute="leading" secondItem="1DW-bE-6eX" secondAttribute="trailing" constant="14" id="cx7-4H-KbI"/>
-                    <constraint firstItem="Jtz-Ls-Oi1" firstAttribute="leading" secondItem="fZa-Ks-456" secondAttribute="trailing" constant="8" id="eCd-t5-eEf"/>
+                    <constraint firstItem="Jtz-Ls-Oi1" firstAttribute="leading" secondItem="fZa-Ks-456" secondAttribute="trailing" constant="11" id="eCd-t5-eEf"/>
                     <constraint firstItem="FpW-F3-1y6" firstAttribute="leading" secondItem="fZa-Ks-456" secondAttribute="trailing" constant="8" id="h4Y-lm-zSN"/>
                     <constraint firstItem="k1O-hS-EPP" firstAttribute="top" secondItem="JXx-Ak-SA5" secondAttribute="bottom" constant="2" id="jXe-u1-HJm"/>
                     <constraint firstItem="xPy-kt-5EN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="jsc-NT-ngE"/>

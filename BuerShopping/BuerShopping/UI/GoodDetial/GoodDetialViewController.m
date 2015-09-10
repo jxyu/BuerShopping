@@ -83,7 +83,7 @@
     UIImageView * img_dianpuicon=[[UIImageView alloc] initWithFrame:CGRectMake((btn_dianpu.frame.size.width-20)/2, 5, 20, 20)];
     img_dianpuicon.image=[UIImage imageNamed:@"dianpu_gray_icon"];
     [btn_dianpu addSubview:img_dianpuicon];
-    UILabel * lbl_dianpuTitle=[[UILabel alloc] initWithFrame:CGRectMake(0, img_dianpuicon.frame.origin.y+img_dianpuicon.frame.size.height+10, btn_dianpu.frame.size.width, 15)];
+    UILabel * lbl_dianpuTitle=[[UILabel alloc] initWithFrame:CGRectMake(0, img_dianpuicon.frame.origin.y+img_dianpuicon.frame.size.height+5, btn_dianpu.frame.size.width, 15)];
     lbl_dianpuTitle.font=[UIFont systemFontOfSize:15];
     lbl_dianpuTitle.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
     lbl_dianpuTitle.text=@"店铺";
@@ -97,7 +97,7 @@
     UIImageView * img_shoucangicon=[[UIImageView alloc] initWithFrame:CGRectMake((btn_shoucang.frame.size.width-20)/2+1, 5, 20, 20)];
     img_shoucangicon.image=[UIImage imageNamed:@"star_gray_icon"];
     [btn_shoucang addSubview:img_shoucangicon];
-    UILabel * lbl_shoucangTitle=[[UILabel alloc] initWithFrame:CGRectMake(0, img_shoucangicon.frame.origin.y+img_shoucangicon.frame.size.height+10, btn_shoucang.frame.size.width, 15)];
+    UILabel * lbl_shoucangTitle=[[UILabel alloc] initWithFrame:CGRectMake(0, img_shoucangicon.frame.origin.y+img_shoucangicon.frame.size.height+5, btn_shoucang.frame.size.width, 15)];
     lbl_shoucangTitle.font=[UIFont systemFontOfSize:15];
     lbl_shoucangTitle.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
     lbl_shoucangTitle.text=@"收藏";
@@ -183,7 +183,7 @@
     backview_titleandShare.backgroundColor=[UIColor whiteColor];
     UILabel * lbl_title=[[UILabel alloc] initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH-81, 40)];
     lbl_title.numberOfLines=2;
-    lbl_title.font=[UIFont systemFontOfSize:15];
+    lbl_title.font=[UIFont systemFontOfSize:17];
     lbl_title.text=goodInfo[@"goods_name"];
     [backview_titleandShare addSubview:lbl_title];
     UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(lbl_title.frame.size.width+lbl_title.frame.origin.x
@@ -235,7 +235,7 @@
     UILabel * lbl_class=[[UILabel alloc] initWithFrame:CGRectMake(10, x, SCREEN_WIDTH/3, 20)];
     lbl_class.text=[NSString stringWithFormat:@"所属%@分类",goodInfo[@"gc_name"]];
     lbl_class.textColor=[UIColor grayColor];
-    lbl_class.textAlignment=NSTextAlignmentCenter;
+//    lbl_class.textAlignment=NSTextAlignmentLeft;
     lbl_class.font=[UIFont systemFontOfSize:15];
     [backview_goodinfo2 addSubview:lbl_class];
     UILabel * lbl_sell=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/3, x, SCREEN_WIDTH/3, 20)];
@@ -244,10 +244,10 @@
     lbl_sell.textAlignment=NSTextAlignmentCenter;
     lbl_sell.font=[UIFont systemFontOfSize:15];
     [backview_goodinfo2 addSubview:lbl_sell];
-    UILabel * lbl_liulan=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/3*2, x, SCREEN_WIDTH/3, 20)];
+    UILabel * lbl_liulan=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/3*2, x, SCREEN_WIDTH/3-20, 20)];
     lbl_liulan.text=[NSString stringWithFormat:@"浏览%@",goodInfo[@"goods_click"]];
     lbl_liulan.textColor=[UIColor grayColor];
-    lbl_liulan.textAlignment=NSTextAlignmentCenter;
+    lbl_liulan.textAlignment=NSTextAlignmentRight;
     lbl_liulan.font=[UIFont systemFontOfSize:15];
     [backview_goodinfo2 addSubview:lbl_liulan];
     backview_goodinfo2.frame=CGRectMake(backview_goodinfo2.frame.origin.x, backview_goodinfo2.frame.origin.y, backview_goodinfo2.frame.size.width, x+30);
@@ -255,15 +255,15 @@
     backview_HeaderVeiw.frame=CGRectMake(backview_HeaderVeiw.frame.origin.x, backview_HeaderVeiw.frame.origin.y, backview_HeaderVeiw.frame.size.width, backview_goodinfo2.frame.size.height+backview_goodinfo2.frame.origin.y+10);
     _tableV.tableHeaderView=backview_HeaderVeiw;
     
-    UIView * tableFooterView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
-    tableFooterView.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
-    UILabel * lbl_footer=[[UILabel alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 20)];
-    lbl_footer.text=@"继续拖动，查看图文详情";
-    lbl_footer.textAlignment=NSTextAlignmentCenter;
-    lbl_footer.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
-    [tableFooterView addSubview:lbl_footer];
-    
-    _tableV.tableFooterView=tableFooterView;
+//    UIView * tableFooterView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
+//    tableFooterView.backgroundColor=[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
+//    UILabel * lbl_footer=[[UILabel alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 20)];
+//    lbl_footer.text=@"继续拖动，查看图文详情";
+//    lbl_footer.textAlignment=NSTextAlignmentCenter;
+//    lbl_footer.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+//    [tableFooterView addSubview:lbl_footer];
+//    
+//    _tableV.tableFooterView=tableFooterView;
 }
 -(void)btnShare:(UIButton *)sender
 {
@@ -371,6 +371,13 @@
     }
     return h;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if (section==0) {
+        return 10;
+    }
+    return 0;
+}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0) {
@@ -399,14 +406,17 @@
     }
     if (indexPath.section==1) {
         if (evaluate.count>0) {
-            UILabel * lbl_pinglunTitle=[[UILabel alloc] initWithFrame:CGRectMake(15, 10, 150, 20)];
+            UILabel * lbl_pinglunTitle=[[UILabel alloc] initWithFrame:CGRectMake(15, 6, 150, 20)];
             lbl_pinglunTitle.text=[NSString stringWithFormat:@"宝贝评价(%@)",goodInfo[@"evaluation_count"]];
             [cell addSubview:lbl_pinglunTitle];
-            UILabel * lbl_zogpingfen=[[UILabel alloc] initWithFrame:CGRectMake(lbl_pinglunTitle.frame.size.width+lbl_pinglunTitle.frame.origin.x, 10, SCREEN_WIDTH-(lbl_pinglunTitle.frame.size.width+lbl_pinglunTitle.frame.origin.x)-20, 20)];
+            UILabel * lbl_zogpingfen=[[UILabel alloc] initWithFrame:CGRectMake(lbl_pinglunTitle.frame.size.width+lbl_pinglunTitle.frame.origin.x, 7, SCREEN_WIDTH-(lbl_pinglunTitle.frame.size.width+lbl_pinglunTitle.frame.origin.x)-20, 20)];
             lbl_zogpingfen.text=[NSString stringWithFormat:@"总评分:%@",goodInfo[@"evaluation_good_star"]];
             lbl_zogpingfen.textColor=[UIColor colorWithRed:243/255.0 green:152/255.0 blue:0/255.0 alpha:1.0];
             lbl_zogpingfen.textAlignment=NSTextAlignmentRight;
             [cell addSubview:lbl_zogpingfen];
+            UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(13, lbl_pinglunTitle.frame.size.height+lbl_pinglunTitle.frame.origin.y+2, SCREEN_WIDTH-13, 0.5)];
+            fenge.backgroundColor=[UIColor grayColor];
+            [cell addSubview:fenge];
             UIImageView * img_avatar=[[UIImageView alloc] initWithFrame:CGRectMake(15, lbl_pinglunTitle.frame.origin.y+lbl_pinglunTitle.frame.size.height+5, 30, 30)];
             [img_avatar sd_setImageWithURL:[NSURL URLWithString:evaluate[@"geval_avatar"]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
             img_avatar.layer.masksToBounds=YES;
@@ -415,12 +425,12 @@
             UILabel * lbl_pingluner=[[UILabel alloc] initWithFrame:CGRectMake(img_avatar.frame.size.width+img_avatar.frame.origin.x+10, img_avatar.frame.origin.y+5, 200, 20)];
             lbl_pingluner.text=evaluate[@"geval_frommembername"];
             [cell addSubview:lbl_pingluner];
-            CWStarRateView * weisheng=[[CWStarRateView alloc] initWithFrame:CGRectMake(10,img_avatar.frame.origin.y+img_avatar.frame.size.height+10,150,15) numberOfStars:5];
+            CWStarRateView * weisheng=[[CWStarRateView alloc] initWithFrame:CGRectMake(10,img_avatar.frame.origin.y+img_avatar.frame.size.height+10,100,15) numberOfStars:5];
             weisheng.scorePercent = [evaluate[@"geval_scores"] floatValue]/5;
             weisheng.allowIncompleteStar = NO;
             weisheng.hasAnimation = YES;
             [cell addSubview:weisheng];
-            UILabel * lbl_content=[[UILabel alloc] initWithFrame:CGRectMake(15, weisheng.frame.size.height+weisheng.frame.origin.y+10, SCREEN_WIDTH, 20)];
+            UILabel * lbl_content=[[UILabel alloc] initWithFrame:CGRectMake(15, weisheng.frame.size.height+weisheng.frame.origin.y+14, SCREEN_WIDTH, 20)];
             lbl_content.text=evaluate[@"geval_content"];
             lbl_content.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
             [cell addSubview:lbl_content];
@@ -437,11 +447,11 @@
             }
             UIView * lastview=[cell.subviews lastObject];
             UILabel * lbl_spec=[[UILabel alloc] initWithFrame:CGRectMake(15, lastview.frame.size.height+lastview.frame.origin.y+10, SCREEN_WIDTH-20, 20)];
-            lbl_spec.text=evaluate[@"geval_spec"];
+            lbl_spec.text=[NSString stringWithFormat:@"%@ %@",evaluate[@"geval_spec"],evaluate[@"geval_addtime"]];
             lbl_spec.textColor=[UIColor lightGrayColor];
             lbl_spec.font=[UIFont systemFontOfSize:15];
             [cell addSubview:lbl_spec];
-            UIView * backview_fenge=[[UIView alloc] initWithFrame:CGRectMake(10, lbl_spec.frame.origin.y+lbl_spec.frame.size.height+5, SCREEN_WIDTH-20, 0.5)];
+            UIView * backview_fenge=[[UIView alloc] initWithFrame:CGRectMake(13, lbl_spec.frame.origin.y+lbl_spec.frame.size.height+5, SCREEN_WIDTH-13, 0.5)];
             backview_fenge.backgroundColor=[UIColor lightGrayColor];
             [cell addSubview:backview_fenge];
             UIButton * btn_morePinglun=[[UIButton alloc] initWithFrame:CGRectMake(0, backview_fenge.frame.origin.y+backview_fenge.frame.size.height, SCREEN_WIDTH, 50)];

@@ -307,7 +307,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     GoodDetialViewController * gooddetial=[[GoodDetialViewController alloc] initWithNibName:@"GoodDetialViewController" bundle:[NSBundle mainBundle]];
-    gooddetial.gc_id=goods_list[indexPath.row][@"goods_id"];
+    gooddetial.gc_id=goods_list[indexPath.section][@"goods_id"];
     [self.navigationController pushViewController:gooddetial animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
